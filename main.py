@@ -54,8 +54,9 @@ def main() -> None:
                 executor.map(work, orders, chunksize=10)
             if once:
                 break
-            keep_alive(listenKey=listenKey)
-            time.sleep(delay_seconds)
+            else:
+                keep_alive(listenKey=listenKey)
+                time.sleep(delay_seconds)
 
     except Exception as e:
         logging.error(msg=e)
