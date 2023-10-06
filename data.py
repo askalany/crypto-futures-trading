@@ -1,5 +1,13 @@
 from dataclasses import dataclass
-from enums import TIF, OrderType, PositionSide, PriceMatch, Side, TickerSymbol
+from enums import (
+    TIF,
+    OrderType,
+    PositionSide,
+    PriceMatch,
+    PriceMatchNone,
+    Side,
+    TickerSymbol,
+)
 
 
 @dataclass
@@ -9,6 +17,6 @@ class Order:
     quantity: float
     positionSide: PositionSide
     price: float
-    type: OrderType
-    timeInForce = TIF.GTC
-    priceMatch: PriceMatch
+    type: OrderType = OrderType.LIMIT
+    timeInForce: TIF = TIF.GTC
+    priceMatch: PriceMatch = PriceMatchNone.NONE

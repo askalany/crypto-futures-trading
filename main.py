@@ -26,12 +26,17 @@ logging.basicConfig(
 config_logging(logging, logging.ERROR)
 
 
-def message_handler(_, message):
+def message_handler(_, message) -> None:
     print(message)
 
 
-def main():
-    once = True
+def main() -> None:
+    """
+    The main function sets up a websocket client, cancels all orders for a specific symbol, and then
+    executes a trading strategy using a process pool executor.
+    """
+    delay_seconds = 20
+    once = False
     listenKey = get_listen_key()
     ws_client = UMFuturesWebsocketClient(on_message=message_handler)
     ws_client.user_data(
@@ -42,7 +47,7 @@ def main():
     try:
         while True:
             print_date_and_time()
-            cancel_all_orders(symbol)
+            cancel_all_orders(symbol=symbol)
             orders = trade(
                 strategy=Strategy.FIXED_RANGE,
                 symbol=symbol,
@@ -53,14 +58,14 @@ def main():
                 executor.map(work, orders, chunksize=10)
             if once:
                 break
-            time.sleep(60 * 15)
+            time.sleep(delay_seconds)
 
     except Exception as e:
-        logging.error(e)
+        logging.error(msg=e)
     finally:
         ws_client.stop()
-        close_listen_key(listenKey)
+        close_listen_key(listenKey=listenKey)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    typer.run(function=main)

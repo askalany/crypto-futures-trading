@@ -1,4 +1,5 @@
 import datetime
+from typing import Any
 
 import numpy as np
 
@@ -33,7 +34,7 @@ def create_order(
         "positionSide": positionSide,
     }
     if priceMatch is PriceMatchNone.NONE:
-        order["price"] = (price,)
+        order["price"] = price
     else:
         order["priceMatch"] = priceMatch
     return order
@@ -111,3 +112,43 @@ def get_orders_quantities_and_prices(
 
 def print_date_and_time():
     print(f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+
+
+def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
+    scaled: list[float] = [1]
+    for i in range(0, num - 1):
+        scaled.append(scaled[-1] * volume_scale)
+    print(f"{scaled=}")
+    sum_scaled: float = float(sum(scaled))
+    return scaled, sum_scaled
+
+
+def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:
+    return list(map(lambda x: x / sum_scaled, scaled))
+
+
+def make_it_smaller(
+    total_amount: float, final_scaled: list[float]
+) -> Any | list[float]:
+    sum_final_scaled = sum(final_scaled)
+    final_scaled[-1] = final_scaled[-1] - (sum_final_scaled - total_amount)
+    if sum_final_scaled > total_amount:
+        final_scaled = make_it_smaller(
+            total_amount=total_amount, final_scaled=final_scaled
+        )
+    return final_scaled
+
+
+def get_final_scaled(scaled_mults: list[float], total_amount: float) -> list[float]:
+    return make_it_smaller(
+        total_amount=total_amount,
+        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),
+    )
+
+
+def get_scaled_amounts(
+    total_amount: float, volume_scale: float, num: int
+) -> list[float]:
+    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)
+    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)
+    return get_final_scaled(scaled_mults=scaled_mults, total_amount=total_amount)
