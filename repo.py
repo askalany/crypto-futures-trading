@@ -26,6 +26,7 @@ from network import (
 def get_hedge_position_amount(symbol: TickerSymbol) -> float:
     return float(get_position_risk_request(symbol=symbol.name)[0]["positionAmt"])
 
+
 def get_position_entry_price(symbol: TickerSymbol):
     return float(get_position_risk_request(symbol=symbol.name)[0]["entryPrice"])
 
@@ -48,8 +49,8 @@ def new_order(
     timeInForce: TIF = TIF.GTC,
     priceMatch: PriceMatch = PriceMatchNone.NONE,
 ) -> Any | dict[Any, Any]:
-    if priceMatch is PriceMatchNone.NONE:
-        return new_order_request(
+    return (
+        new_order_request(
             symbol=symbol.name,
             side=side.name,
             quantity=quantity,
@@ -58,8 +59,8 @@ def new_order(
             type=type.name,
             timeInForce=timeInForce.name,
         )
-    else:
-        return new_price_match_order_request(
+        if priceMatch is PriceMatchNone.NONE
+        else new_price_match_order_request(
             symbol=symbol.name,
             side=side.name,
             quantity=quantity,
@@ -68,11 +69,11 @@ def new_order(
             timeInForce=timeInForce.name,
             priceMatch=priceMatch.name,
         )
+    )
 
 
 def get_leverage(symbol: TickerSymbol) -> int:
-    position_risk = get_leverage_request(symbol=symbol.name)
-    return int(position_risk[0]["leverage"])
+    return int(get_leverage_request(symbol=symbol.name)[0]["leverage"])
 
 
 def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:

@@ -1268,7 +1268,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    position_risk = get_leverage_request(symbol=symbol.name)\n    return int(position_risk[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:",
+        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    return int(get_leverage_request(symbol=symbol.name)[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
