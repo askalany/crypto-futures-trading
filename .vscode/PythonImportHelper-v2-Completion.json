@@ -845,7 +845,7 @@
         "kind": 5,
         "importPath": "consts",
         "description": "consts",
-        "peekOfCode": "KEY = \"1bd171c9e4c7831ace3c358d9c93ba3cc0304728d90a243830428a2c0dabfead\"\n# The line `SECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"` is assigning\n# a value to the variable `SECRET`. Similar to the `KEY` variable, the value assigned is a string,\n# which appears to be a secret used for authentication or authorization purposes in the code.\nSECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\n# The line `BASE_URL = \"https://testnet.binancefuture.com\"` is assigning a value to the variable\n# `BASE_URL`. The value assigned is a string, which represents the base URL for making API requests to\n# the Binance Futures testnet. This URL is used as the starting point for constructing the complete\n# URLs for different API endpoints.\nBASE_URL = \"https://testnet.binancefuture.com\"",
+        "peekOfCode": "KEY = \"1bd171c9e4c7831ace3c358d9c93ba3cc0304728d90a243830428a2c0dabfead\"\nSECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"",
         "detail": "consts",
         "documentation": {}
     },
@@ -854,7 +854,7 @@
         "kind": 5,
         "importPath": "consts",
         "description": "consts",
-        "peekOfCode": "SECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\n# The line `BASE_URL = \"https://testnet.binancefuture.com\"` is assigning a value to the variable\n# `BASE_URL`. The value assigned is a string, which represents the base URL for making API requests to\n# the Binance Futures testnet. This URL is used as the starting point for constructing the complete\n# URLs for different API endpoints.\nBASE_URL = \"https://testnet.binancefuture.com\"",
+        "peekOfCode": "SECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"",
         "detail": "consts",
         "documentation": {}
     },
@@ -881,7 +881,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class AutoName(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\n# The PriceMatch class is an enumeration that represents different types of price matching options.\nclass PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\n# The PriceMatchNone class is a subclass of PriceMatch.\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()",
+        "peekOfCode": "class AutoName(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -890,7 +890,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\n# The PriceMatchNone class is a subclass of PriceMatch.\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\n# The PriceMatchOpponent class is a subclass of PriceMatch.\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()",
+        "peekOfCode": "class PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -899,7 +899,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatchNone(PriceMatch):\n    NONE = auto()\n# The PriceMatchOpponent class is a subclass of PriceMatch.\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()\n# The PriceMatchQueue class is a subclass of PriceMatch.\nclass PriceMatchQueue(PriceMatch):",
+        "peekOfCode": "class PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()\nclass PriceMatchQueue(PriceMatch):\n    QUEUE = auto()\n    QUEUE_5 = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -908,7 +908,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()\n# The PriceMatchQueue class is a subclass of PriceMatch.\nclass PriceMatchQueue(PriceMatch):\n    QUEUE = auto()\n    QUEUE_5 = auto()\n    QUEUE_10 = auto()",
+        "peekOfCode": "class PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()\nclass PriceMatchQueue(PriceMatch):\n    QUEUE = auto()\n    QUEUE_5 = auto()\n    QUEUE_10 = auto()\n    QUEUE_20 = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -917,7 +917,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatchQueue(PriceMatch):\n    QUEUE = auto()\n    QUEUE_5 = auto()\n    QUEUE_10 = auto()\n    QUEUE_20 = auto()\n# The TickerSymbol class is a subclass of AutoName.\nclass TickerSymbol(AutoName):\n    BTCUSDT = auto()\n# The Side class is a subclass of AutoName.\nclass Side(AutoName):",
+        "peekOfCode": "class PriceMatchQueue(PriceMatch):\n    QUEUE = auto()\n    QUEUE_5 = auto()\n    QUEUE_10 = auto()\n    QUEUE_20 = auto()\nclass TickerSymbol(AutoName):\n    BTCUSDT = auto()\nclass Side(AutoName):\n    BUY = auto()\n    SELL = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -926,7 +926,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class TickerSymbol(AutoName):\n    BTCUSDT = auto()\n# The Side class is a subclass of AutoName.\nclass Side(AutoName):\n    BUY = auto()\n    SELL = auto()\n# The PositionSide class is a subclass of AutoName.\nclass PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()",
+        "peekOfCode": "class TickerSymbol(AutoName):\n    BTCUSDT = auto()\nclass Side(AutoName):\n    BUY = auto()\n    SELL = auto()\nclass PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()\n    SHORT = auto()\nclass Strategy(Enum):",
         "detail": "enums",
         "documentation": {}
     },
@@ -935,7 +935,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class Side(AutoName):\n    BUY = auto()\n    SELL = auto()\n# The PositionSide class is a subclass of AutoName.\nclass PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()\n    SHORT = auto()\n# The Strategy class is an enumeration that represents different strategies.\nclass Strategy(Enum):",
+        "peekOfCode": "class Side(AutoName):\n    BUY = auto()\n    SELL = auto()\nclass PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()\n    SHORT = auto()\nclass Strategy(Enum):\n    FIXED_RANGE = auto()\n    PRICE_MATCH_QUEUE = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -944,7 +944,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()\n    SHORT = auto()\n# The Strategy class is an enumeration that represents different strategies.\nclass Strategy(Enum):\n    FIXED_RANGE = auto()\n    PRICE_MATCH_QUEUE = auto()\n# The OrderType class is a subclass of AutoName.\nclass OrderType(AutoName):",
+        "peekOfCode": "class PositionSide(AutoName):\n    BOTH = auto()\n    LONG = auto()\n    SHORT = auto()\nclass Strategy(Enum):\n    FIXED_RANGE = auto()\n    PRICE_MATCH_QUEUE = auto()\nclass OrderType(AutoName):\n    LIMIT = auto()\n    MARKET = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -953,7 +953,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class Strategy(Enum):\n    FIXED_RANGE = auto()\n    PRICE_MATCH_QUEUE = auto()\n# The OrderType class is a subclass of AutoName.\nclass OrderType(AutoName):\n    LIMIT = auto()\n    MARKET = auto()\n    STOP = auto()\n    STOP_MARKET = auto()\n    TAKE_PROFIT = auto()",
+        "peekOfCode": "class Strategy(Enum):\n    FIXED_RANGE = auto()\n    PRICE_MATCH_QUEUE = auto()\nclass OrderType(AutoName):\n    LIMIT = auto()\n    MARKET = auto()\n    STOP = auto()\n    STOP_MARKET = auto()\n    TAKE_PROFIT = auto()\n    TAKE_PROFIT_MARKET = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -962,7 +962,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class OrderType(AutoName):\n    LIMIT = auto()\n    MARKET = auto()\n    STOP = auto()\n    STOP_MARKET = auto()\n    TAKE_PROFIT = auto()\n    TAKE_PROFIT_MARKET = auto()\n    TRAILING_STOP_MARKET = auto()\n# The TIF class is a subclass of AutoName.\nclass TIF(AutoName):",
+        "peekOfCode": "class OrderType(AutoName):\n    LIMIT = auto()\n    MARKET = auto()\n    STOP = auto()\n    STOP_MARKET = auto()\n    TAKE_PROFIT = auto()\n    TAKE_PROFIT_MARKET = auto()\n    TRAILING_STOP_MARKET = auto()\nclass TIF(AutoName):\n    GTC = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -980,7 +980,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    \"\"\"\n    The main function sets up a websocket client, cancels all orders for a specific symbol, and then\n    executes a trading strategy using a process pool executor.\n    \"\"\"\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,",
         "detail": "main",
         "documentation": {}
     },
@@ -989,7 +989,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    \"\"\"\n    The main function sets up a websocket client, cancels all orders for a specific symbol, and then\n    executes a trading strategy using a process pool executor.\n    \"\"\"\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(",
+        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
         "detail": "main",
         "documentation": {}
     },
@@ -1016,7 +1016,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    \"\"\"\n    The function logs the details of a client error.\n    :param error: The parameter `error` is of type `ClientError`\n    :type error: ClientError\n    \"\"\"\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function cancels all open orders for a given symbol in a futures trading platform.",
+        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:\n        log_client_error(error)",
         "detail": "network",
         "documentation": {}
     },
@@ -1025,7 +1025,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function cancels all open orders for a given symbol in a futures trading platform.\n    :param symbol: The symbol parameter represents the trading pair symbol for which you want to cancel\n    all open orders. For example, if you want to cancel all open orders for the BTC/USDT trading pair,\n    you would pass \"BTCUSDT\" as the symbol parameter\n    :param recvWindow: The `recvWindow` parameter is an optional parameter that specifies the number of\n    milliseconds the request is valid for. It is used to ensure that the request is processed within a\n    certain time frame. If the request takes longer than the specified `recvWindow` value, it will be\n    rejected. The default value, defaults to 2000",
+        "peekOfCode": "def cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1034,7 +1034,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_price_match_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    type: str,\n    timeInForce: str,\n    priceMatch: str,\n) -> Any | dict[Any, Any]:\n    \"\"\"",
+        "peekOfCode": "def new_price_match_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    type: str,\n    timeInForce: str,\n    priceMatch: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1043,7 +1043,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    price: float,\n    type: str,\n    timeInForce: str,\n) -> Any | dict[Any, Any]:\n    \"\"\"",
+        "peekOfCode": "def new_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    price: float,\n    type: str,\n    timeInForce: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1052,7 +1052,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_batch_order_request(params) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `new_batch_order_request` sends a request to a futures client to place a new batch\n    order and returns the response.\n    :param params: The `params` parameter is a dictionary that contains the necessary information for\n    creating a new batch order request. The specific keys and values in the dictionary will depend on\n    the requirements of the `um_futures_client.new_batch_order()` function\n    :return: the response from the `um_futures_client.new_batch_order(params)` method.\n    \"\"\"\n    response = {}",
+        "peekOfCode": "def new_batch_order_request(params) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.new_batch_order(batchOrders=params)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1061,7 +1061,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_position_risk_request` retrieves the position risk for a given symbol using the\n    `um_futures_client` API, and returns the response.\n    :param symbol: The symbol parameter is a string that represents the trading pair or instrument\n    symbol for which you want to retrieve the position risk information. For example, it could be\n    \"BTCUSDT\" for the Bitcoin to USDT trading pair\n    :type symbol: str\n    :return: a response object.\n    \"\"\"",
+        "peekOfCode": "def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.get_position_risk(symbol=symbol, recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1070,7 +1070,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_leverage_request` attempts to retrieve position risk information for a given\n    symbol and returns the response, or logs any client errors encountered.\n    :param symbol: The symbol parameter is a string that represents the trading symbol of a financial\n    instrument, such as a stock or a cryptocurrency\n    :type symbol: str\n    :return: a dictionary object.\n    \"\"\"\n    response = {}",
+        "peekOfCode": "def get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = get_position_risk_request(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1079,7 +1079,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_account_info_request() -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_account_info_request` retrieves account information from a futures client,\n    handling any potential errors.\n    :return: the response from the `um_futures_client.account()` method.\n    \"\"\"\n    response = {}\n    try:\n        response = um_futures_client.account(recvWindow=6000)\n    except ClientError as error:",
+        "peekOfCode": "def get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.account(recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1088,7 +1088,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_mark_price_request` sends a request to the UM Futures API to get the mark price\n    for a given symbol and returns the response.\n    :param symbol: The `symbol` parameter is a string that represents the trading pair symbol for which\n    you want to get the mark price\n    :type symbol: str\n    :return: a response, which is a dictionary.\n    \"\"\"\n    response = {}",
+        "peekOfCode": "def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.mark_price(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1097,7 +1097,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_listen_key_request() -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_listen_key_request` sends a request to create a new listen key and returns the\n    response.\n    :return: The `get_listen_key_request` function is returning a response object.\n    \"\"\"\n    response = {}\n    try:\n        response = um_futures_client.new_listen_key()\n    except ClientError as error:",
+        "peekOfCode": "def get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.new_listen_key()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1106,7 +1106,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `close_listen_key_request` closes a listen key using the `um_futures_client` and\n    returns the response.\n    :param listenKey: The listenKey parameter is a string that represents a unique identifier for a\n    user's WebSocket connection. It is typically used in API calls to close the WebSocket connection and\n    stop receiving updates\n    :type listenKey: str\n    :return: a response, which is a dictionary.\n    \"\"\"",
+        "peekOfCode": "def close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.close_listen_key(listenKey=listenKey)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1115,7 +1115,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_open_orders_request` retrieves open orders for a given symbol using the\n    `um_futures_client` and handles any potential errors.\n    :param symbol: The symbol parameter is a string that represents the trading pair or symbol for which\n    you want to retrieve the open orders. It could be something like \"BTCUSDT\" for the Bitcoin to USDT\n    trading pair\n    :type symbol: str\n    :return: the response from the `um_futures_client.get_open_orders` method.\n    \"\"\"",
+        "peekOfCode": "def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.get_open_orders(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1124,7 +1124,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\num_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    \"\"\"\n    The function logs the details of a client error.\n    :param error: The parameter `error` is of type `ClientError`\n    :type error: ClientError\n    \"\"\"\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:",
+        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\num_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )",
         "detail": "network",
         "documentation": {}
     },
@@ -1133,7 +1133,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    \"\"\"\n    The function logs the details of a client error.\n    :param error: The parameter `error` is of type `ClientError`\n    :type error: ClientError\n    \"\"\"\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    \"\"\"",
+        "peekOfCode": "um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:",
         "detail": "network",
         "documentation": {}
     },
@@ -1142,7 +1142,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_hedge_position_amount(symbol: TickerSymbol) -> float:\n    \"\"\"\n    The function `get_hedge_position_amount` returns the position amount of a given symbol.\n    :param symbol: The parameter `symbol` is of type `TickerSymbol`\n    :type symbol: TickerSymbol\n    :return: the position amount as a float.\n    \"\"\"\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"])\ndef get_available_balance() -> float:\n    \"\"\"",
+        "peekOfCode": "def get_hedge_position_amount(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,",
         "detail": "repo",
         "documentation": {}
     },
@@ -1151,7 +1151,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_available_balance() -> float:\n    \"\"\"\n    The function `get_available_balance` returns the available balance from an account information\n    request.\n    :return: The available balance of the account as a float value.\n    \"\"\"\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    \"\"\"\n    The function `get_mark_price` takes a `TickerSymbol` object as input and returns the mark price of",
+        "peekOfCode": "def get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = -1.0,",
         "detail": "repo",
         "documentation": {}
     },
@@ -1160,7 +1160,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_mark_price(symbol: TickerSymbol) -> float:\n    \"\"\"\n    The function `get_mark_price` takes a `TickerSymbol` object as input and returns the mark price of\n    the symbol.\n    :param symbol: The parameter `symbol` is of type `TickerSymbol`\n    :type symbol: TickerSymbol\n    :return: the mark price of a given ticker symbol as a float value.\n    \"\"\"\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(",
+        "peekOfCode": "def get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = -1.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,",
         "detail": "repo",
         "documentation": {}
     },
@@ -1178,7 +1178,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    \"\"\"\n    The function `get_leverage` takes a `TickerSymbol` object as input, sends a request to get the\n    leverage for that symbol, and returns the leverage as an integer.\n    :param symbol: The parameter \"symbol\" is of type \"TickerSymbol\"\n    :type symbol: TickerSymbol\n    :return: an integer value representing the leverage for a given ticker symbol.\n    \"\"\"\n    position_risk = get_leverage_request(symbol=symbol.name)\n    return int(position_risk[0][\"leverage\"])",
+        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    position_risk = get_leverage_request(symbol=symbol.name)\n    return int(position_risk[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:",
         "detail": "repo",
         "documentation": {}
     },
@@ -1187,7 +1187,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function cancels all orders for a given ticker symbol.\n    :param symbol: The parameter \"symbol\" is of type \"TickerSymbol\"\n    :type symbol: TickerSymbol\n    :return: The cancel_all_orders_request function is being returned.\n    \"\"\"\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    \"\"\"",
+        "peekOfCode": "def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1196,7 +1196,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_listen_key() -> str:\n    \"\"\"\n    The function `get_listen_key` returns the listen key obtained from a request to the\n    `get_listen_key_request` function.\n    :return: the value of the \"listenKey\" key from the response of the \"get_listen_key_request()\"\n    function.\n    \"\"\"\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    \"\"\"",
+        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1205,7 +1205,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function \"close_listen_key\" takes a listenKey as input and returns the result of a\n    close_listen_key_request.\n    :param listenKey: The listenKey parameter is a unique identifier that is used to establish a\n    WebSocket connection for receiving real-time updates from a server\n    :return: the result of the `close_listen_key_request` function, which is not specified in the given\n    code.\n    \"\"\"\n    return close_listen_key_request(listenKey=listenKey)",
+        "peekOfCode": "def close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1214,7 +1214,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `get_open_orders` takes a `TickerSymbol` object as input and returns the result of a\n    request for open orders for that symbol.\n    :param symbol: The parameter `symbol` is of type `TickerSymbol`\n    :type symbol: TickerSymbol\n    :return: the result of the `get_open_orders_request` function call.\n    \"\"\"\n    return get_open_orders_request(symbol=symbol.name)",
+        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1223,7 +1223,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    \"\"\"\n    The function `work` takes an order as input and creates a new order with the same parameters, but\n    with a different price depending on whether the \"priceMatch\" key is present in the order.\n    :param order: The `order` parameter is a dictionary that contains the details of an order. It has\n    the following keys:\n    :return: a new order. If the \"priceMatch\" key is present in the order dictionary, it will create a\n    new order with the \"priceMatch\" value. Otherwise, it will create a new order with the \"price\" value.\n    \"\"\"\n    if \"priceMatch\" in order:",
+        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            positionSide=order[\"positionSide\"],\n            priceMatch=order[\"priceMatch\"],\n        )\n    else:",
         "detail": "trade",
         "documentation": {}
     },
@@ -1232,7 +1232,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    \"\"\"\n    The `trade` function executes trading orders based on the specified strategy, symbol, position side,",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    orders = []\n    if strategy is Strategy.FIXED_RANGE:",
         "detail": "trade",
         "documentation": {}
     },
@@ -1250,7 +1250,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    \"\"\"\n    The function `trade_all_price_match_queue` creates a list of buy and sell orders with specified",
+        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = 1.0  # get_max_buy_amount(symbol)\n    buy_order_amount = buy_amount / float(buy_orders_num)",
         "detail": "trade",
         "documentation": {}
     },
@@ -1259,7 +1259,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def get_max_buy_amount(symbol: TickerSymbol):\n    \"\"\"\n    The function calculates the maximum amount that can be bought for a given symbol based on leverage,\n    available balance, and mark price.\n    :param symbol: The parameter \"symbol\" is of type TickerSymbol, which represents the symbol of a\n    financial instrument such as a stock or cryptocurrency\n    :type symbol: TickerSymbol\n    :return: the maximum buy amount for a given symbol.\n    \"\"\"\n    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(",
+        "peekOfCode": "def get_max_buy_amount(symbol: TickerSymbol):\n    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(\n        symbol=symbol\n    )",
         "detail": "trade",
         "documentation": {}
     },
@@ -1268,7 +1268,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = 0.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n):",
+        "peekOfCode": "def create_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = 0.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n) -> dict[str, Any]:",
         "detail": "utils",
         "documentation": {}
     },
@@ -1277,7 +1277,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, positionSide: PositionSide, quantity: float\n):\n    orders = []\n    for name, member in PriceMatchQueue.__members__.items():\n        if quantity > 0.0:\n            orders.append(\n                create_order(\n                    symbol=symbol,\n                    side=side,",
+        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, positionSide: PositionSide, quantity: float\n) -> list[Any]:\n    orders = []\n    for name, member in PriceMatchQueue.__members__.items():\n        if quantity > 0.0:\n            orders.append(\n                create_order(\n                    symbol=symbol,\n                    side=side,",
         "detail": "utils",
         "documentation": {}
     },
@@ -1286,7 +1286,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_multiple_orders(\n    symbol: TickerSymbol,\n    side: Side,\n    quantities_and_prices: list[tuple[float, float]],\n    positionSide: PositionSide,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n):\n    result = []",
+        "peekOfCode": "def create_multiple_orders(\n    symbol: TickerSymbol,\n    side: Side,\n    quantities_and_prices: list[tuple[float, float]],\n    positionSide: PositionSide,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n) -> list[Any]:\n    result = []",
         "detail": "utils",
         "documentation": {}
     },
@@ -1295,7 +1295,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n):\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        quantity = amount / orders_num\n        opt_a = np.geomspace(start=low_price, stop=high_price, num=orders_num)",
+        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        quantity = amount / orders_num\n        opt_a = np.geomspace(start=low_price, stop=high_price, num=orders_num)",
         "detail": "utils",
         "documentation": {}
     },
@@ -1304,7 +1304,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def print_date_and_time():\n    print(f\"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\")\ndef get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    print(f\"{scaled=}\")\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:",
+        "peekOfCode": "def print_date_and_time() -> None:\n    print(f\"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\")\ndef get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))",
         "detail": "utils",
         "documentation": {}
     },
@@ -1313,7 +1313,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    print(f\"{scaled=}\")\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(",
+        "peekOfCode": "def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(\n    total_amount: float, final_scaled: list[float]",
         "detail": "utils",
         "documentation": {}
     },
@@ -1336,20 +1336,11 @@
         "documentation": {}
     },
     {
-        "label": "get_final_scaled",
-        "kind": 2,
-        "importPath": "utils",
-        "description": "utils",
-        "peekOfCode": "def get_final_scaled(scaled_mults: list[float], total_amount: float) -> list[float]:\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )\ndef get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)",
-        "detail": "utils",
-        "documentation": {}
-    },
-    {
         "label": "get_scaled_amounts",
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return get_final_scaled(scaled_mults=scaled_mults, total_amount=total_amount)",
+        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )",
         "detail": "utils",
         "documentation": {}
     }

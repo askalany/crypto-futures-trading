@@ -24,7 +24,7 @@ def create_order(
     type: OrderType = OrderType.LIMIT,
     timeInForce: TIF = TIF.GTC,
     priceMatch: PriceMatch = PriceMatchNone.NONE,
-):
+) -> dict[str, Any]:
     order = {
         "symbol": symbol,
         "side": side,
@@ -42,7 +42,7 @@ def create_order(
 
 def create_all_queue_price_match_orders(
     symbol: TickerSymbol, side: Side, positionSide: PositionSide, quantity: float
-):
+) -> list[Any]:
     orders = []
     for name, member in PriceMatchQueue.__members__.items():
         if quantity > 0.0:
@@ -66,7 +66,7 @@ def create_multiple_orders(
     type: OrderType = OrderType.LIMIT,
     timeInForce: TIF = TIF.GTC,
     priceMatch: PriceMatch = PriceMatchNone.NONE,
-):
+) -> list[Any]:
     result = []
     for i in quantities_and_prices:
         if priceMatch is PriceMatchNone.NONE:
@@ -99,7 +99,7 @@ def get_orders_quantities_and_prices(
     high_price: float,
     low_price: float,
     amount: float,
-):
+) -> list[Any]:
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
         quantity = amount / orders_num
@@ -110,7 +110,7 @@ def get_orders_quantities_and_prices(
     return quantities_and_prices
 
 
-def print_date_and_time():
+def print_date_and_time() -> None:
     print(f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
 
 
@@ -118,7 +118,6 @@ def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
     scaled: list[float] = [1]
     for i in range(0, num - 1):
         scaled.append(scaled[-1] * volume_scale)
-    print(f"{scaled=}")
     sum_scaled: float = float(sum(scaled))
     return scaled, sum_scaled
 
@@ -139,16 +138,12 @@ def make_it_smaller(
     return final_scaled
 
 
-def get_final_scaled(scaled_mults: list[float], total_amount: float) -> list[float]:
-    return make_it_smaller(
-        total_amount=total_amount,
-        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),
-    )
-
-
 def get_scaled_amounts(
     total_amount: float, volume_scale: float, num: int
 ) -> list[float]:
     scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)
     scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)
-    return get_final_scaled(scaled_mults=scaled_mults, total_amount=total_amount)
+    return make_it_smaller(
+        total_amount=total_amount,
+        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),
+    )

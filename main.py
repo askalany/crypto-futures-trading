@@ -31,10 +31,6 @@ def message_handler(_, message) -> None:
 
 
 def main() -> None:
-    """
-    The main function sets up a websocket client, cancels all orders for a specific symbol, and then
-    executes a trading strategy using a process pool executor.
-    """
     delay_seconds = 20
     once = False
     listenKey = get_listen_key()
