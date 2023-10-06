@@ -265,6 +265,30 @@
         "documentation": {}
     },
     {
+        "label": "TickerSymbol",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "TIF",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "PositionSide",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "Strategy",
         "importPath": "enums",
         "description": "enums",
@@ -653,6 +677,14 @@
         "documentation": {}
     },
     {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "ClientError",
         "importPath": "binance.error",
         "description": "binance.error",
@@ -763,6 +795,22 @@
         "importPath": "numpy",
         "description": "numpy",
         "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "trade_all_price_match_queue",
+        "importPath": "strategy",
+        "description": "strategy",
+        "isExtraImport": true,
+        "detail": "strategy",
+        "documentation": {}
+    },
+    {
+        "label": "trade_fixed_range",
+        "importPath": "strategy",
+        "description": "strategy",
+        "isExtraImport": true,
+        "detail": "strategy",
         "documentation": {}
     },
     {
@@ -1270,6 +1318,24 @@
         "documentation": {}
     },
     {
+        "label": "trade_fixed_range",
+        "kind": 2,
+        "importPath": "strategy",
+        "description": "strategy",
+        "peekOfCode": "def trade_fixed_range(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    center_price: float,\n    available_balance: float,\n    sell_amount: float,\n    leverage: int,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
+        "detail": "strategy",
+        "documentation": {}
+    },
+    {
+        "label": "trade_all_price_match_queue",
+        "kind": 2,
+        "importPath": "strategy",
+        "description": "strategy",
+        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = 1.0  # get_max_buy_amount(symbol)\n    buy_order_amount = buy_amount / float(buy_orders_num)",
+        "detail": "strategy",
+        "documentation": {}
+    },
+    {
         "label": "work",
         "kind": 2,
         "importPath": "trade",
@@ -1284,24 +1350,6 @@
         "importPath": "trade",
         "description": "trade",
         "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    orders = []\n    if strategy is Strategy.FIXED_RANGE:",
-        "detail": "trade",
-        "documentation": {}
-    },
-    {
-        "label": "trade_fixed_range",
-        "kind": 2,
-        "importPath": "trade",
-        "description": "trade",
-        "peekOfCode": "def trade_fixed_range(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    center_price: float,\n    available_balance: float,\n    sell_amount: float,\n    leverage: int,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
-        "detail": "trade",
-        "documentation": {}
-    },
-    {
-        "label": "trade_all_price_match_queue",
-        "kind": 2,
-        "importPath": "trade",
-        "description": "trade",
-        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = 1.0  # get_max_buy_amount(symbol)\n    buy_order_amount = buy_amount / float(buy_orders_num)",
         "detail": "trade",
         "documentation": {}
     },
