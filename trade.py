@@ -52,24 +52,26 @@ def trade(
     orders = []
     if strategy is Strategy.FIXED_RANGE:
         center_price = entry_price if entry_price > 0.0 else mark_price
-        for order in trade_fixed_range(
-            symbol=symbol,
-            positionSide=positionSide,
-            center_price=center_price,
-            available_balance=get_available_balance(),
-            sell_amount=position_amount,
-            leverage=get_leverage(symbol),
-            tif=tif,
-        ):
-            orders.append(order)
+        orders.extend(
+            trade_fixed_range(
+                symbol=symbol,
+                positionSide=positionSide,
+                center_price=center_price,
+                available_balance=get_available_balance(),
+                sell_amount=position_amount,
+                leverage=get_leverage(symbol),
+                tif=tif,
+            )
+        )
     elif strategy is Strategy.PRICE_MATCH_QUEUE:
-        for order in trade_all_price_match_queue(
-            symbol=symbol,
-            positionSide=positionSide,
-            sell_amount=position_amount,
-            tif=tif,
-        ):
-            orders.append(order)
+        orders.extend(
+            trade_all_price_match_queue(
+                symbol=symbol,
+                positionSide=positionSide,
+                sell_amount=position_amount,
+                tif=tif,
+            )
+        )
     return orders
 
 
