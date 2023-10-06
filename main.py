@@ -32,7 +32,7 @@ def message_handler(_, message) -> None:
 
 def main() -> None:
     delay_seconds = 20
-    once = False
+    once = True
     listenKey = get_listen_key()
     ws_client = UMFuturesWebsocketClient(on_message=message_handler)
     ws_client.user_data(
