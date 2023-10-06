@@ -43,19 +43,19 @@ def trade(
     sell_orders_num: int = 100,
     tif: TIF = TIF.GTC,
 ) -> list[Any]:
+    mark_price = get_mark_price(symbol=symbol)
+    print(f"{mark_price=}")
     entry_price = get_position_entry_price(symbol=symbol)
     print(f"{entry_price=}")
     position_amount = get_hedge_position_amount(symbol=symbol)
     print(f"{position_amount=}")
     orders = []
     if strategy is Strategy.FIXED_RANGE:
-        if entry_price <= 0.0:
-            entry_price = get_mark_price(symbol=symbol)
-        
+        center_price = entry_price if entry_price > 0.0 else mark_price
         for order in trade_fixed_range(
             symbol=symbol,
             positionSide=positionSide,
-            center_price=entry_price,
+            center_price=center_price,
             available_balance=get_available_balance(),
             sell_amount=position_amount,
             leverage=get_leverage(symbol),

@@ -1349,7 +1349,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    entry_price = get_position_entry_price(symbol=symbol)\n    print(f\"{entry_price=}\")",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    print(f\"{mark_price=}\")",
         "detail": "trade",
         "documentation": {}
     },
