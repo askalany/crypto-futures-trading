@@ -1052,7 +1052,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = True\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,",
         "detail": "main",
         "documentation": {}
     },
@@ -1061,7 +1061,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = True\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
+        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
         "detail": "main",
         "documentation": {}
     },
@@ -1349,7 +1349,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    orders = []\n    if strategy is Strategy.FIXED_RANGE:",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    entry_price = get_position_entry_price(symbol=symbol)\n    print(f\"{entry_price=}\")",
         "detail": "trade",
         "documentation": {}
     },
