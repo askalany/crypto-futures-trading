@@ -62,15 +62,14 @@ def trade(
             tif=tif,
         ):
             orders.append(order)
-    else:
-        if strategy is Strategy.PRICE_MATCH_QUEUE:
-            for order in trade_all_price_match_queue(
-                symbol=symbol,
-                positionSide=positionSide,
-                sell_amount=position_amount,
-                tif=tif,
-            ):
-                orders.append(order)
+    elif strategy is Strategy.PRICE_MATCH_QUEUE:
+        for order in trade_all_price_match_queue(
+            symbol=symbol,
+            positionSide=positionSide,
+            sell_amount=position_amount,
+            tif=tif,
+        ):
+            orders.append(order)
     return orders
 
 
