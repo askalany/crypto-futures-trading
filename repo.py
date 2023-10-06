@@ -17,6 +17,7 @@ from network import (
     get_mark_price_request,
     get_open_orders_request,
     get_position_risk_request,
+    keep_alive_request,
     new_order_request,
     new_price_match_order_request,
 )
@@ -24,6 +25,9 @@ from network import (
 
 def get_hedge_position_amount(symbol: TickerSymbol) -> float:
     return float(get_position_risk_request(symbol=symbol.name)[0]["positionAmt"])
+
+def get_position_entry_price(symbol: TickerSymbol):
+    return float(get_position_risk_request(symbol=symbol.name)[0]["entryPrice"])
 
 
 def get_available_balance() -> float:
@@ -85,3 +89,7 @@ def close_listen_key(listenKey) -> Any | dict[Any, Any]:
 
 def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:
     return get_open_orders_request(symbol=symbol.name)
+
+
+def keep_alive(listenKey: str):
+    return keep_alive_request(listenKey=listenKey)

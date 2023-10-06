@@ -12,6 +12,7 @@ from repo import (
     get_hedge_position_amount,
     get_leverage,
     get_mark_price,
+    get_position_entry_price,
     new_order,
 )
 from utils import create_multiple_orders, create_order, get_orders_quantities_and_prices
@@ -46,10 +47,14 @@ def trade(
 ) -> list[Any]:
     orders = []
     if strategy is Strategy.FIXED_RANGE:
+        center_price = get_position_entry_price(symbol=symbol)
+        print(f"{center_price=}")
+        if center_price <= 0.0:
+            center_price=get_mark_price(symbol=symbol)
         for order in trade_fixed_range(
             symbol=symbol,
             positionSide=positionSide,
-            mark_price=get_mark_price(symbol=symbol),
+            center_price=center_price,
             available_balance=get_available_balance(),
             sell_amount=get_hedge_position_amount(symbol=symbol),
             leverage=get_leverage(symbol),
@@ -71,7 +76,7 @@ def trade(
 def trade_fixed_range(
     symbol: TickerSymbol,
     positionSide: PositionSide,
-    mark_price: float,
+    center_price: float,
     available_balance: float,
     sell_amount: float,
     leverage: int,
@@ -80,11 +85,11 @@ def trade_fixed_range(
     tif: TIF = TIF.GTC,
 ) -> list[Any]:
     leveraged_balance = leverage * available_balance
-    buy_amount = leveraged_balance / mark_price
-    buy_high_price = mark_price * (1.0 - 0.0014)
-    buy_low_price = mark_price * (1.0 - 0.1)
-    sell_high_price = mark_price * (1.0 + 0.025)
-    sell_low_price = mark_price * (1.0 + 0.0014)
+    buy_amount = leveraged_balance / center_price
+    buy_high_price = center_price * (1.0 - 0.0009)
+    buy_low_price = center_price * (1.0 - 0.2)
+    sell_high_price = center_price * (1.0 + 0.5)
+    sell_low_price = center_price * (1.0 + 0.0009)
     buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
         orders_num=buy_orders_num,
         high_price=buy_high_price,

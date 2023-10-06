@@ -159,3 +159,13 @@ def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:
         log_client_error(error)
     finally:
         return response
+
+
+def keep_alive_request(listenKey: str):
+    response = {}
+    try:
+        response = um_futures_client.renew_listen_key(listenKey=listenKey)
+    except ClientError as error:
+        log_client_error(error)
+    finally:
+        return response

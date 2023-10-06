@@ -10,7 +10,7 @@ from rich import print
 from rich.logging import RichHandler
 
 from enums import TIF, PositionSide, Strategy, TickerSymbol
-from repo import cancel_all_orders, close_listen_key, get_listen_key
+from repo import cancel_all_orders, close_listen_key, get_listen_key, keep_alive
 from trade import trade, work
 from utils import print_date_and_time
 
@@ -54,6 +54,7 @@ def main() -> None:
                 executor.map(work, orders, chunksize=10)
             if once:
                 break
+            keep_alive(listenKey=listenKey)
             time.sleep(delay_seconds)
 
     except Exception as e:
