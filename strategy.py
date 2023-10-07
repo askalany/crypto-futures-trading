@@ -27,6 +27,7 @@ def trade_fixed_range(
         high_price=buy_high_price,
         low_price=buy_low_price,
         amount=buy_amount,
+        min_sell_amount=0.001,
     )
     buy_orders = create_multiple_orders(
         symbol=symbol,
@@ -40,6 +41,7 @@ def trade_fixed_range(
         high_price=sell_high_price,
         low_price=sell_low_price,
         amount=sell_amount,
+        min_sell_amount=0.001,
     )
     sell_orders = create_multiple_orders(
         symbol=symbol,
@@ -49,7 +51,6 @@ def trade_fixed_range(
         timeInForce=tif,
     )
     orders = buy_orders + sell_orders
-    print(f"{orders=}")
     return orders
 
 

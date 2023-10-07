@@ -59,7 +59,7 @@ def trade(
                 center_price=center_price,
                 available_balance=get_available_balance(),
                 sell_amount=position_amount,
-                leverage=get_leverage(symbol),
+                leverage=get_leverage(symbol=symbol),
                 tif=tif,
             )
         )

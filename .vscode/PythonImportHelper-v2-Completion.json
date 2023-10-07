@@ -1394,7 +1394,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        min_sell_amount = 0.001\n        quantity = amount / orders_num if amount > min_sell_amount else min_sell_amount",
+        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n    min_sell_amount: float = -1.0,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        order_amount = amount / orders_num",
         "detail": "utils",
         "documentation": {}
     },
