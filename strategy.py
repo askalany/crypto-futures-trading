@@ -25,9 +25,9 @@ def trade_fixed_range(
 ) -> list[Any]:
     leveraged_balance = leverage * available_balance
     amount_buy = leveraged_balance / center_price
-    price_sell_max_mult = 1.0 + 0.02
-    price_sell_min_mult = 1.0 + 0.0009
-    price_buy_max_mult = 1.0 - 0.0009
+    price_sell_max_mult = 1.0 + 0.05
+    price_sell_min_mult = 1.0 + 0.0014
+    price_buy_max_mult = 1.0 - 0.0014
     price_buy_min_mult = 1.0 - 0.2
     (
         price_sell_max,
