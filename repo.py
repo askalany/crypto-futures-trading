@@ -21,6 +21,7 @@ from network import (
     keep_alive_request,
     new_order_request,
     new_price_match_order_request,
+    get_time_request,
 )
 
 
@@ -95,3 +96,7 @@ def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:
 
 def keep_alive(listen_key: str):
     return keep_alive_request(listen_key=listen_key)
+
+
+def get_time() -> int:
+    return get_time_request()["serverTime"]

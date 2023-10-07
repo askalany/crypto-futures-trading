@@ -170,3 +170,13 @@ def keep_alive_request(listen_key: str):
         log_client_error(error)
     finally:
         return response
+
+
+def get_time_request() -> Any | dict[Any, Any]:
+    response = {}
+    try:
+        response = client.time()
+    except ClientError as error:
+        log_client_error(error)
+    finally:
+        return response

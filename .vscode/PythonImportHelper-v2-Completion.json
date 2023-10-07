@@ -565,6 +565,14 @@
         "documentation": {}
     },
     {
+        "label": "get_time",
+        "importPath": "repo",
+        "description": "repo",
+        "isExtraImport": true,
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
         "label": "get_available_balance",
         "importPath": "repo",
         "description": "repo",
@@ -626,14 +634,6 @@
         "description": "trade",
         "isExtraImport": true,
         "detail": "trade",
-        "documentation": {}
-    },
-    {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
         "documentation": {}
     },
     {
@@ -789,12 +789,11 @@
         "documentation": {}
     },
     {
-        "label": "numpy",
-        "kind": 6,
+        "label": "get_time_request",
+        "importPath": "network",
+        "description": "network",
         "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
+        "detail": "network",
         "documentation": {}
     },
     {
@@ -820,6 +819,15 @@
         "importPath": "datetime",
         "description": "datetime",
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
         "documentation": {}
     },
     {
@@ -1196,7 +1204,16 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def keep_alive_request(listen_key: str):\n    response = {}\n    try:\n        response = client.renew_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
+        "peekOfCode": "def keep_alive_request(listen_key: str):\n    response = {}\n    try:\n        response = client.renew_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_time_request() -> Any | dict[Any, Any]:\n    response = {}",
+        "detail": "network",
+        "documentation": {}
+    },
+    {
+        "label": "get_time_request",
+        "kind": 2,
+        "importPath": "network",
+        "description": "network",
+        "peekOfCode": "def get_time_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.time()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1286,7 +1303,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
+        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
         "detail": "repo",
         "documentation": {}
     },
@@ -1295,7 +1312,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
+        "peekOfCode": "def close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
         "detail": "repo",
         "documentation": {}
     },
@@ -1304,7 +1321,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
+        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
         "detail": "repo",
         "documentation": {}
     },
@@ -1313,7 +1330,16 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
+        "peekOfCode": "def keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
+        "label": "get_time",
+        "kind": 2,
+        "importPath": "repo",
+        "description": "repo",
+        "peekOfCode": "def get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
         "detail": "repo",
         "documentation": {}
     },
