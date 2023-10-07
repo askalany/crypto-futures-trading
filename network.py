@@ -3,6 +3,7 @@ from typing import Any
 
 from binance.error import ClientError
 from binance.um_futures import UMFutures
+from numpy import rec
 from requests.adapters import HTTPAdapter
 
 from consts import BASE_URL, KEY, SECRET
@@ -74,6 +75,7 @@ def new_order_request(
             quantity=str(quantity),
             timeInForce=time_in_force,
             price=price,
+            recvWindow=6000,
         )
     except ClientError as error:
         log_client_error(error)
