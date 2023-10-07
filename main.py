@@ -50,7 +50,7 @@ def main() -> None:
                 sell_orders_num=100,
                 tif=TIF.GTC,
             )
-            with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
                 executor.map(work, orders, chunksize=10)
             if once:
                 break

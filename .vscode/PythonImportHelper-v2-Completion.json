@@ -1096,7 +1096,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)",
+        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 6000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)",
         "detail": "network",
         "documentation": {}
     },
@@ -1105,7 +1105,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
+        "peekOfCode": "def cancel_all_orders_request(\n    symbol, receive_window: int = 6000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1222,7 +1222,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\nclient = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:",
+        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\nclient = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 6000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:",
         "detail": "network",
         "documentation": {}
     },
@@ -1231,7 +1231,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)",
+        "peekOfCode": "client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 6000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)",
         "detail": "network",
         "documentation": {}
     },
