@@ -482,6 +482,14 @@
         "documentation": {}
     },
     {
+        "label": "ThreadPoolExecutor",
+        "importPath": "concurrent.futures",
+        "description": "concurrent.futures",
+        "isExtraImport": true,
+        "detail": "concurrent.futures",
+        "documentation": {}
+    },
+    {
         "label": "logging",
         "kind": 6,
         "isExtraImport": true,
@@ -895,6 +903,23 @@
         "documentation": {}
     },
     {
+        "label": "itertools",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "itertools",
+        "description": "itertools",
+        "detail": "itertools",
+        "documentation": {}
+    },
+    {
+        "label": "islice",
+        "importPath": "itertools",
+        "description": "itertools",
+        "isExtraImport": true,
+        "detail": "itertools",
+        "documentation": {}
+    },
+    {
         "label": "trade_all_price_match_queue",
         "importPath": "strategy",
         "description": "strategy",
@@ -917,14 +942,6 @@
         "importPath": "datetime",
         "description": "datetime",
         "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "islice",
-        "importPath": "itertools",
-        "description": "itertools",
-        "isExtraImport": true,
-        "detail": "itertools",
         "documentation": {}
     },
     {
@@ -1455,6 +1472,24 @@
         "description": "repo",
         "peekOfCode": "def get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
         "detail": "repo",
+        "documentation": {}
+    },
+    {
+        "label": "m_2",
+        "kind": 2,
+        "importPath": "scratch",
+        "description": "scratch",
+        "peekOfCode": "def m_2(n: int):\n    return pow(n,2)\ndef main():\n    thread_it = True\n    a: list[int] = list(range(1000))\n    b = [] if thread_it else [m_2(i) for i in a]\n    if thread_it:\n        with ThreadPoolExecutor() as executor:\n            b.extend([i for i in executor.map(m_2, a)])\n    print(f\"{b=}\")",
+        "detail": "scratch",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "scratch",
+        "description": "scratch",
+        "peekOfCode": "def main():\n    thread_it = True\n    a: list[int] = list(range(1000))\n    b = [] if thread_it else [m_2(i) for i in a]\n    if thread_it:\n        with ThreadPoolExecutor() as executor:\n            b.extend([i for i in executor.map(m_2, a)])\n    print(f\"{b=}\")\nif __name__ == \"__main__\":\n    t0 = time.time()",
+        "detail": "scratch",
         "documentation": {}
     },
     {
