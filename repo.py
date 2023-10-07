@@ -1,5 +1,5 @@
 from typing import Any
-
+from rich import print
 from enums import (
     OrderType,
     PositionSide,

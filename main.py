@@ -51,7 +51,7 @@ def main() -> None:
                 tif=TIF.GTC,
             )
             print(f"{len(orders)=}")
-            with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
+            with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:
                 executor.map(work, orders, chunksize=10)
             if once:
                 break

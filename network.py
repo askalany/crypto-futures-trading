@@ -5,6 +5,7 @@ from binance.error import ClientError
 from binance.um_futures import UMFutures
 from numpy import rec
 from requests.adapters import HTTPAdapter
+from rich import print
 
 from consts import BASE_URL, KEY, SECRET
 

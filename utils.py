@@ -1,19 +1,12 @@
 import datetime
+from math import floor
 from typing import Any
 
 import numpy as np
+from rich import print
 
-from enums import (
-    AmountSpacing,
-    OrderType,
-    PositionSide,
-    PriceMatch,
-    PriceMatchNone,
-    PriceMatchQueue,
-    Side,
-    TickerSymbol,
-    TIF,
-)
+from enums import (TIF, AmountSpacing, OrderType, PositionSide, PriceMatch,
+                   PriceMatchNone, PriceMatchQueue, Side, TickerSymbol)
 
 
 def create_order(
@@ -160,3 +153,8 @@ def get_scaled_amounts(
         total_amount=total_amount,
         final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),
     )
+
+def split_into_num(num: int, length: int):
+    multiples = floor(length / num)
+    remainder = length % 5
+    return multiples, remainder

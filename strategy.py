@@ -1,6 +1,8 @@
 from typing import Any
 
-from enums import AmountSpacing, PositionSide, PriceMatchQueue, Side, TickerSymbol, TIF
+from rich import print
+
+from enums import TIF, AmountSpacing, PositionSide, PriceMatchQueue, Side, TickerSymbol
 from utils import create_multiple_orders, create_order, get_orders_quantities_and_prices
 
 
@@ -17,10 +19,10 @@ def trade_fixed_range(
 ) -> list[Any]:
     leveraged_balance = leverage * available_balance
     amount_buy = leveraged_balance / center_price
-    price_sell_max_mult = 1.0 + 0.1
+    price_sell_max_mult = 1.0 + 0.02
     price_sell_min_mult = 1.0 + 0.0009
     price_buy_max_mult = 1.0 - 0.0009
-    price_buy_min_mult = 1.0 - 0.1
+    price_buy_min_mult = 1.0 - 0.2
     (
         price_sell_max,
         price_sell_min,
@@ -33,6 +35,7 @@ def trade_fixed_range(
         price_buy_max_mult=price_buy_max_mult,
         price_buy_min_mult=price_buy_min_mult,
     )
+    print(f"{price_buy_min=}, {price_buy_max=}, {price_sell_min=}, {price_sell_max=}")
     buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
         orders_num=buy_orders_num,
         high_price=price_buy_max,

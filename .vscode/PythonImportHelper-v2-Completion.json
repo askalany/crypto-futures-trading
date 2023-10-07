@@ -233,6 +233,14 @@
         "documentation": {}
     },
     {
+        "label": "TIF",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "AmountSpacing",
         "importPath": "enums",
         "description": "enums",
@@ -377,14 +385,6 @@
         "documentation": {}
     },
     {
-        "label": "TIF",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
         "label": "create_order",
         "importPath": "utils",
         "description": "utils",
@@ -394,6 +394,14 @@
     },
     {
         "label": "get_scaled_amounts",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "split_into_num",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -506,6 +514,46 @@
         "description": "binance.websocket.um_futures.websocket_client",
         "isExtraImport": true,
         "detail": "binance.websocket.um_futures.websocket_client",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
         "documentation": {}
     },
     {
@@ -839,6 +887,14 @@
         "documentation": {}
     },
     {
+        "label": "floor",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
         "label": "test_key",
         "kind": 2,
         "importPath": "tests.consts_test",
@@ -924,7 +980,16 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def test_scaled_amounts_sum():\n    expected_sum = 1000\n    result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)\n    assert sum(result) == expected_sum",
+        "peekOfCode": "def test_scaled_amounts_sum():\n    expected_sum = 1000\n    result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)\n    assert sum(result) == expected_sum\ndef test_split_into_num():\n    num = 5\n    length = 199\n    multiples, remainder = split_into_num(num=num, length=length)\n    assert (multiples, remainder) == (39, 4)",
+        "detail": "tests.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_split_into_num",
+        "kind": 2,
+        "importPath": "tests.test_utils",
+        "description": "tests.test_utils",
+        "peekOfCode": "def test_split_into_num():\n    num = 5\n    length = 199\n    multiples, remainder = split_into_num(num=num, length=length)\n    assert (multiples, remainder) == (39, 4)",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -1491,7 +1556,16 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )",
+        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )\ndef split_into_num(num: int, length: int):",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "split_into_num",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def split_into_num(num: int, length: int):\n    multiples = floor(length / num)\n    remainder = length % 5\n    return multiples, remainder",
         "detail": "utils",
         "documentation": {}
     }
