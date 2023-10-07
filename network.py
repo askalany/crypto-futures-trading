@@ -19,7 +19,7 @@ def log_client_error(error: ClientError) -> None:
 
 
 def cancel_all_orders_request(
-    symbol, receive_window: int = 6000
+    symbol, receive_window: int = 4000
 ) -> Any | dict[Any, Any]:
     response = {}
     try:
