@@ -109,7 +109,7 @@ def get_orders_quantities_and_prices(
         quantity = (
             order_amount if order_amount > order_quantity_min else order_quantity_min
         )
-        if order_amount > order_quantity_min:
+        if order_amount < order_quantity_min:
             quantity = order_quantity_min
             orders_num = int(amount / order_quantity_min)
         amount_spacing_list = (

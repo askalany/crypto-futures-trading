@@ -30,7 +30,7 @@ def message_handler(_, message) -> None:
 
 def main() -> None:
     delay_seconds = 60
-    once = False
+    once = True
     listen_key = get_listen_key()
     ws_client = UMFuturesWebsocketClient(on_message=message_handler)
     ws_client.user_data(
@@ -50,6 +50,7 @@ def main() -> None:
                 sell_orders_num=100,
                 tif=TIF.GTC,
             )
+            print(f"{len(orders)=}")
             with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
                 executor.map(work, orders, chunksize=10)
             if once:
