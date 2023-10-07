@@ -78,7 +78,3 @@ def trade(
     return orders
 
 
-def get_max_buy_amount(symbol: TickerSymbol):
-    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(
-        symbol=symbol
-    )

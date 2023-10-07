@@ -63,7 +63,6 @@ def main() -> None:
             time_difference = t1 - t0
             print(f"{time_difference=} seconds")
             time.sleep(delay_seconds)
-
     except Exception as e:
         logging.error(msg=e)
     finally:

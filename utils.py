@@ -17,6 +17,7 @@ from enums import (
     Side,
     TickerSymbol,
 )
+from repo import get_available_balance, get_leverage, get_mark_price
 
 
 def create_order(
@@ -176,3 +177,40 @@ def batched(iterable, n):
 def batched_lists(iterable, n) -> list[list[Any]]:
     b = batched(iterable=iterable, n=n)
     return [list(i) for i in b]
+
+
+def check_grid_maxs_and_mins(
+    price_sell_max, price_sell_min, price_buy_max, price_buy_min
+) -> None:
+    if price_sell_min >= price_sell_max:
+        raise Exception("price_sell_min >= price_sell_max")
+    if price_buy_max >= price_sell_min:
+        raise Exception("price_buy_max >= price_sell_min")
+    if price_buy_min >= price_buy_max:
+        raise Exception("price_buy_min >= price_buy_max")
+
+
+def get_grid_maxs_and_mins(
+    center_price: float,
+    price_sell_max_mult: float,
+    price_sell_min_mult: float,
+    price_buy_max_mult: float,
+    price_buy_min_mult: float,
+) -> tuple[float, float, float, float]:
+    price_sell_max = center_price * price_sell_max_mult
+    price_sell_min = center_price * price_sell_min_mult
+    price_buy_max = center_price * price_buy_max_mult
+    price_buy_min = center_price * price_buy_min_mult
+    check_grid_maxs_and_mins(
+        price_sell_max=price_sell_max,
+        price_sell_min=price_sell_min,
+        price_buy_max=price_buy_max,
+        price_buy_min=price_buy_min,
+    )
+    return price_sell_max, price_sell_min, price_buy_max, price_buy_min
+
+
+def get_max_buy_amount(symbol: TickerSymbol):
+    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(
+        symbol=symbol
+    )

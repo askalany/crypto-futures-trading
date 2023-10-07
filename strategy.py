@@ -3,7 +3,13 @@ from typing import Any
 from rich import print
 
 from enums import TIF, AmountSpacing, PositionSide, PriceMatchQueue, Side, TickerSymbol
-from utils import create_multiple_orders, create_order, get_orders_quantities_and_prices
+from utils import create_all_queue_price_match_orders, get_max_buy_amount
+from utils import (
+    create_multiple_orders,
+    create_order,
+    get_grid_maxs_and_mins,
+    get_orders_quantities_and_prices,
+)
 
 
 def trade_fixed_range(
@@ -71,37 +77,6 @@ def trade_fixed_range(
     return orders
 
 
-def check_grid_maxs_and_mins(
-    price_sell_max, price_sell_min, price_buy_max, price_buy_min
-) -> None:
-    if price_sell_min >= price_sell_max:
-        raise Exception("price_sell_min >= price_sell_max")
-    if price_buy_max >= price_sell_min:
-        raise Exception("price_buy_max >= price_sell_min")
-    if price_buy_min >= price_buy_max:
-        raise Exception("price_buy_min >= price_buy_max")
-
-
-def get_grid_maxs_and_mins(
-    center_price: float,
-    price_sell_max_mult: float,
-    price_sell_min_mult: float,
-    price_buy_max_mult: float,
-    price_buy_min_mult: float,
-) -> tuple[float, float, float, float]:
-    price_sell_max = center_price * price_sell_max_mult
-    price_sell_min = center_price * price_sell_min_mult
-    price_buy_max = center_price * price_buy_max_mult
-    price_buy_min = center_price * price_buy_min_mult
-    check_grid_maxs_and_mins(
-        price_sell_max=price_sell_max,
-        price_sell_min=price_sell_min,
-        price_buy_max=price_buy_max,
-        price_buy_min=price_buy_min,
-    )
-    return price_sell_max, price_sell_min, price_buy_max, price_buy_min
-
-
 def trade_all_price_match_queue(
     symbol: TickerSymbol,
     position_side: PositionSide,
@@ -110,24 +85,20 @@ def trade_all_price_match_queue(
     sell_orders_num: int = 4,
     tif: TIF = TIF.GTC,
 ) -> list[dict[str, Any]]:
-    buy_amount = 1.0  # get_max_buy_amount(symbol)
-    buy_order_amount = buy_amount / float(buy_orders_num)
-    sell_order_amount = sell_amount / float(sell_orders_num)
-    buy_orders = create_order(
+    buy_amount = get_max_buy_amount(symbol)
+    buy_order_amount = round(buy_amount / float(buy_orders_num), 4)
+    sell_order_amount = round(sell_amount / float(sell_orders_num), 4)
+    buy_orders = create_all_queue_price_match_orders(
         symbol=symbol,
         side=Side.BUY,
         position_side=position_side,
-        quantity=buy_order_amount,
-        price_match=PriceMatchQueue.QUEUE,
-        time_in_force=tif,
+        quantity=min(buy_order_amount, 1000.0),
     )
-    sell_orders = create_order(
+    sell_orders = create_all_queue_price_match_orders(
         symbol=symbol,
         side=Side.SELL,
         position_side=position_side,
-        quantity=sell_order_amount,
-        price_match=PriceMatchQueue.QUEUE,
-        time_in_force=tif,
+        quantity=min(sell_order_amount, 1000.0),
     )
-    orders = [buy_orders] + [sell_orders]
+    orders = buy_orders + sell_orders
     return orders
