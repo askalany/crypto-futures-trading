@@ -49,6 +49,7 @@ def trade_fixed_range(
         timeInForce=tif,
     )
     orders = buy_orders + sell_orders
+    print(f"{orders=}")
     return orders
 
 
