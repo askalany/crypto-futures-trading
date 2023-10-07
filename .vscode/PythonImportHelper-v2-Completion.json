@@ -401,7 +401,7 @@
         "documentation": {}
     },
     {
-        "label": "split_into_num",
+        "label": "batched_lists",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -450,6 +450,14 @@
     },
     {
         "label": "auto",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
         "importPath": "enum",
         "description": "enum",
         "isExtraImport": true,
@@ -661,6 +669,14 @@
         "documentation": {}
     },
     {
+        "label": "new_batch_order",
+        "importPath": "repo",
+        "description": "repo",
+        "isExtraImport": true,
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
         "label": "new_order",
         "importPath": "repo",
         "description": "repo",
@@ -766,6 +782,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "cancel_all_orders_request",
         "importPath": "network",
         "description": "network",
@@ -838,6 +863,14 @@
         "documentation": {}
     },
     {
+        "label": "new_batch_order_request",
+        "importPath": "network",
+        "description": "network",
+        "isExtraImport": true,
+        "detail": "network",
+        "documentation": {}
+    },
+    {
         "label": "new_order_request",
         "importPath": "network",
         "description": "network",
@@ -884,6 +917,14 @@
         "importPath": "datetime",
         "description": "datetime",
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "islice",
+        "importPath": "itertools",
+        "description": "itertools",
+        "isExtraImport": true,
+        "detail": "itertools",
         "documentation": {}
     },
     {
@@ -980,16 +1021,7 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def test_scaled_amounts_sum():\n    expected_sum = 1000\n    result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)\n    assert sum(result) == expected_sum\ndef test_split_into_num():\n    num = 5\n    length = 199\n    multiples, remainder = split_into_num(num=num, length=length)\n    assert (multiples, remainder) == (39, 4)",
-        "detail": "tests.test_utils",
-        "documentation": {}
-    },
-    {
-        "label": "test_split_into_num",
-        "kind": 2,
-        "importPath": "tests.test_utils",
-        "description": "tests.test_utils",
-        "peekOfCode": "def test_split_into_num():\n    num = 5\n    length = 199\n    multiples, remainder = split_into_num(num=num, length=length)\n    assert (multiples, remainder) == (39, 4)",
+        "peekOfCode": "def test_scaled_amounts_sum():\n    expected_sum = 1000\n    result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)\n    assert sum(result) == expected_sum",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -1354,6 +1386,15 @@
         "documentation": {}
     },
     {
+        "label": "new_batch_order",
+        "kind": 2,
+        "importPath": "repo",
+        "description": "repo",
+        "peekOfCode": "def new_batch_order(orders: list) -> Any | dict[Any, Any]:\n    new_orders = []\n    for order in orders:\n        new_dict = {}\n        for key in order:\n            key_value = order[key]\n            if isinstance(key_value, Enum):\n                new_dict[key] = key_value.value\n            else:\n                new_dict[key] = str(key_value)",
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
         "label": "get_leverage",
         "kind": 2,
         "importPath": "repo",
@@ -1457,7 +1498,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            position_side=order[\"positionSide\"],\n            price_match=order[\"priceMatch\"],\n        )\n    else:",
+        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if isinstance(order, list):\n        return new_batch_order(orders=order)\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            position_side=order[\"positionSide\"],\n            price_match=order[\"priceMatch\"],",
         "detail": "trade",
         "documentation": {}
     },
@@ -1556,16 +1597,25 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )\ndef split_into_num(num: int, length: int):",
+        "peekOfCode": "def get_scaled_amounts(\n    total_amount: float, volume_scale: float, num: int\n) -> list[float]:\n    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)\n    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)\n    return make_it_smaller(\n        total_amount=total_amount,\n        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),\n    )\ndef batched(iterable, n):",
         "detail": "utils",
         "documentation": {}
     },
     {
-        "label": "split_into_num",
+        "label": "batched",
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def split_into_num(num: int, length: int):\n    multiples = floor(length / num)\n    remainder = length % 5\n    return multiples, remainder",
+        "peekOfCode": "def batched(iterable, n):\n    if n < 1:\n        raise ValueError(\"n must be at least one\")\n    it = iter(iterable)\n    while batch := tuple(islice(it, n)):\n        yield batch\ndef batched_lists(iterable, n) -> list[list[Any]]:\n    b = batched(iterable=iterable, n=n)\n    return [list(i) for i in b]",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "batched_lists",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def batched_lists(iterable, n) -> list[list[Any]]:\n    b = batched(iterable=iterable, n=n)\n    return [list(i) for i in b]",
         "detail": "utils",
         "documentation": {}
     }

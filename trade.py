@@ -3,13 +3,21 @@ from typing import Any
 from rich import print
 
 from enums import TIF, PositionSide, Strategy, TickerSymbol
-from repo import (get_available_balance, get_hedge_position_amount,
-                  get_leverage, get_mark_price, get_position_entry_price,
-                  new_order)
+from repo import (
+    get_available_balance,
+    get_hedge_position_amount,
+    get_leverage,
+    get_mark_price,
+    get_position_entry_price,
+    new_batch_order,
+    new_order,
+)
 from strategy import trade_all_price_match_queue, trade_fixed_range
 
 
 def work(order) -> Any | dict[Any, Any]:
+    if isinstance(order, list):
+        return new_batch_order(orders=order)
     if "priceMatch" in order:
         return new_order(
             symbol=order["symbol"],

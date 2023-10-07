@@ -11,7 +11,7 @@ from rich.logging import RichHandler
 from enums import PositionSide, Strategy, TickerSymbol, TIF
 from repo import cancel_all_orders, close_listen_key, get_listen_key, keep_alive
 from trade import trade, work
-from utils import print_date_and_time
+from utils import batched_lists, print_date_and_time
 
 FORMAT = "%(message)s"
 
@@ -51,8 +51,10 @@ def main() -> None:
                 tif=TIF.GTC,
             )
             print(f"{len(orders)=}")
+            batched_orders = batched_lists(orders, 5)
+            print(f"{len(batched_orders)=}")
             with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:
-                executor.map(work, orders, chunksize=10)
+                executor.map(work, batched_orders, chunksize=5)
             if once:
                 break
             else:

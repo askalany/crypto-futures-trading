@@ -7,7 +7,7 @@ from enums import (
     Side,
     TickerSymbol,
 )
-from utils import create_order, get_scaled_amounts, split_into_num
+from utils import create_order, get_scaled_amounts
 
 
 def order_value():
@@ -215,10 +215,3 @@ def test_scaled_amounts_sum():
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
     assert sum(result) == expected_sum
-
-
-def test_split_into_num():
-    num = 5
-    length = 199
-    multiples, remainder = split_into_num(num=num, length=length)
-    assert (multiples, remainder) == (39, 4)

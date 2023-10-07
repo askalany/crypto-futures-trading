@@ -1,3 +1,5 @@
+from enum import Enum
+import json
 from typing import Any
 from rich import print
 from enums import (
@@ -19,6 +21,7 @@ from network import (
     get_open_orders_request,
     get_position_risk_request,
     keep_alive_request,
+    new_batch_order_request,
     new_order_request,
     new_price_match_order_request,
     get_time_request,
@@ -72,6 +75,20 @@ def new_order(
             price_match=price_match.name,
         )
     )
+
+
+def new_batch_order(orders: list) -> Any | dict[Any, Any]:
+    new_orders = []
+    for order in orders:
+        new_dict = {}
+        for key in order:
+            key_value = order[key]
+            if isinstance(key_value, Enum):
+                new_dict[key] = key_value.value
+            else:
+                new_dict[key] = str(key_value)
+        new_orders.append(new_dict)
+    return new_batch_order_request(params=new_orders)
 
 
 def get_leverage(symbol: TickerSymbol) -> int:
