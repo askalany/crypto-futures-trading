@@ -701,6 +701,14 @@
         "documentation": {}
     },
     {
+        "label": "get_position_unrealized_profit",
+        "importPath": "repo",
+        "description": "repo",
+        "isExtraImport": true,
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
         "label": "new_batch_order",
         "importPath": "repo",
         "description": "repo",
@@ -1406,11 +1414,20 @@
         "documentation": {}
     },
     {
+        "label": "get_position_risk",
+        "kind": 2,
+        "importPath": "repo",
+        "description": "repo",
+        "peekOfCode": "def get_position_risk(\n    symbol: TickerSymbol,\n) -> tuple[\n    float,\n    float,\n    str,\n    str,\n    float,\n    int,\n    float,",
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
         "label": "get_hedge_position_amount",
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_hedge_position_amount(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"])\ndef get_position_entry_price(symbol: TickerSymbol):\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,",
+        "peekOfCode": "def get_hedge_position_amount(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"])\ndef get_position_entry_price(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])",
         "detail": "repo",
         "documentation": {}
     },
@@ -1419,7 +1436,16 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_position_entry_price(symbol: TickerSymbol):\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,",
+        "peekOfCode": "def get_position_entry_price(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,",
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
+        "label": "get_position_unrealized_profit",
+        "kind": 2,
+        "importPath": "repo",
+        "description": "repo",
+        "peekOfCode": "def get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,",
         "detail": "repo",
         "documentation": {}
     },

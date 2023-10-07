@@ -9,6 +9,7 @@ from repo import (
     get_leverage,
     get_mark_price,
     get_position_entry_price,
+    get_position_unrealized_profit,
     new_batch_order,
     new_order,
 )
@@ -52,7 +53,12 @@ def trade(
     print(f"{position_amount=}")
     orders = []
     if strategy is Strategy.FIXED_RANGE:
-        center_price = entry_price if entry_price > 0.0 else mark_price
+        if entry_price > 0.0:
+            unrealized_profit = get_position_unrealized_profit(symbol=symbol)
+            print(f"{unrealized_profit=}")
+            center_price = entry_price
+        else:
+            center_price = mark_price
         orders.extend(
             trade_fixed_range(
                 symbol=symbol,
@@ -76,5 +82,3 @@ def trade(
             )
         )
     return orders
-
-

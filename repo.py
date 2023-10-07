@@ -28,12 +28,57 @@ from network import (
 )
 
 
+def get_position_risk(
+    symbol: TickerSymbol,
+) -> tuple[
+    float,
+    float,
+    str,
+    str,
+    float,
+    int,
+    float,
+    float,
+    float,
+    float,
+    float,
+    float,
+    str,
+    float,
+    str,
+    float,
+]:
+    position_risk = get_position_risk_request(symbol=symbol.name)[0]
+    return (
+        float(position_risk["entryPrice"]),
+        float(position_risk["breakEvenPrice"]),
+        str(position_risk["marginType"]),
+        str(position_risk["isAutoAddMargin"]),
+        float(position_risk["isolatedMargin"]),
+        int(position_risk["leverage"]),
+        float(position_risk["liquidationPrice"]),
+        float(position_risk["markPrice"]),
+        float(position_risk["maxNotionalValue"]),
+        float(position_risk["positionAmt"]),
+        float(position_risk["notional"]),
+        float(position_risk["isolatedWallet"]),
+        str(position_risk["symbol"]),
+        float(position_risk["unRealizedProfit"]),
+        str(position_risk["positionSide"]),
+        float(position_risk["updateTime"]),
+    )
+
+
 def get_hedge_position_amount(symbol: TickerSymbol) -> float:
     return float(get_position_risk_request(symbol=symbol.name)[0]["positionAmt"])
 
 
-def get_position_entry_price(symbol: TickerSymbol):
+def get_position_entry_price(symbol: TickerSymbol) -> float:
     return float(get_position_risk_request(symbol=symbol.name)[0]["entryPrice"])
+
+
+def get_position_unrealized_profit(symbol: TickerSymbol) -> float:
+    return float(get_position_risk_request(symbol=symbol.name)[0]["unRealizedProfit"])
 
 
 def get_available_balance() -> float:
