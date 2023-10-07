@@ -1,12 +1,13 @@
 from dataclasses import dataclass
+
 from enums import (
-    TIF,
     OrderType,
     PositionSide,
     PriceMatch,
     PriceMatchNone,
     Side,
     TickerSymbol,
+    TIF,
 )
 
 

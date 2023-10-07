@@ -89,14 +89,6 @@
         "documentation": {}
     },
     {
-        "label": "TIF",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
         "label": "OrderType",
         "importPath": "enums",
         "description": "enums",
@@ -241,6 +233,14 @@
         "documentation": {}
     },
     {
+        "label": "AmountSpacing",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "PositionSide",
         "importPath": "enums",
         "description": "enums",
@@ -313,6 +313,14 @@
         "documentation": {}
     },
     {
+        "label": "AmountSpacing",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "OrderType",
         "importPath": "enums",
         "description": "enums",
@@ -362,6 +370,14 @@
     },
     {
         "label": "TickerSymbol",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "TIF",
         "importPath": "enums",
         "description": "enums",
         "isExtraImport": true,
@@ -425,7 +441,7 @@
         "documentation": {}
     },
     {
-        "label": "Enum",
+        "label": "auto",
         "importPath": "enum",
         "description": "enum",
         "isExtraImport": true,
@@ -433,7 +449,7 @@
         "documentation": {}
     },
     {
-        "label": "auto",
+        "label": "Enum",
         "importPath": "enum",
         "description": "enum",
         "isExtraImport": true,
@@ -490,22 +506,6 @@
         "description": "binance.websocket.um_futures.websocket_client",
         "isExtraImport": true,
         "detail": "binance.websocket.um_futures.websocket_client",
-        "documentation": {}
-    },
-    {
-        "label": "HTTPAdapter",
-        "importPath": "requests.adapters",
-        "description": "requests.adapters",
-        "isExtraImport": true,
-        "detail": "requests.adapters",
-        "documentation": {}
-    },
-    {
-        "label": "HTTPAdapter",
-        "importPath": "requests.adapters",
-        "description": "requests.adapters",
-        "isExtraImport": true,
-        "detail": "requests.adapters",
         "documentation": {}
     },
     {
@@ -629,14 +629,6 @@
         "documentation": {}
     },
     {
-        "label": "List",
-        "importPath": "ast",
-        "description": "ast",
-        "isExtraImport": true,
-        "detail": "ast",
-        "documentation": {}
-    },
-    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -698,6 +690,14 @@
         "description": "binance.um_futures",
         "isExtraImport": true,
         "detail": "binance.um_futures",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPAdapter",
+        "importPath": "requests.adapters",
+        "description": "requests.adapters",
+        "isExtraImport": true,
+        "detail": "requests.adapters",
         "documentation": {}
     },
     {
@@ -863,7 +863,7 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def order_value():\n    symbol = TickerSymbol.BTCUSDT\n    side = Side.BUY\n    quantity = 1.0\n    price = 1.0\n    positionSide = PositionSide.LONG\n    type = OrderType.LIMIT\n    timeInForce = TIF.GTC\n    priceMatch = PriceMatchNone.NONE\n    return symbol, side, quantity, price, positionSide, type, timeInForce, priceMatch",
+        "peekOfCode": "def order_value():\n    symbol = TickerSymbol.BTCUSDT\n    side = Side.BUY\n    quantity = 1.0\n    price = 1.0\n    position_side = PositionSide.LONG\n    order_type = OrderType.LIMIT\n    time_in_force = TIF.GTC\n    price_match = PriceMatchNone.NONE\n    return (",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -872,7 +872,7 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def test_create_order_price():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        positionSide,\n        type,\n        timeInForce,\n        priceMatch,",
+        "peekOfCode": "def test_create_order_price():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        position_side,\n        order_type,\n        time_in_force,\n        price_match,",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -881,7 +881,7 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def test_create_order_price_value():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        positionSide,\n        type,\n        timeInForce,\n        priceMatch,",
+        "peekOfCode": "def test_create_order_price_value():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        position_side,\n        order_type,\n        time_in_force,\n        price_match,",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -890,7 +890,7 @@
         "kind": 2,
         "importPath": "tests.test_utils",
         "description": "tests.test_utils",
-        "peekOfCode": "def test_create_order_price_match():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        positionSide,\n        type,\n        timeInForce,\n        priceMatch,",
+        "peekOfCode": "def test_create_order_price_match():\n    (\n        symbol,\n        side,\n        quantity,\n        price,\n        position_side,\n        order_type,\n        time_in_force,\n        price_match,",
         "detail": "tests.test_utils",
         "documentation": {}
     },
@@ -953,7 +953,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class AutoName(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()",
+        "peekOfCode": "class AutoName(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -962,7 +962,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatch(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()\n    OPPONENT_20 = auto()",
+        "peekOfCode": "class PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -1043,7 +1043,16 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class TIF(AutoName):\n    GTC = auto()\n    IOC = auto()\n    FOK = auto()\n    GTX = auto()\n    GTD = auto()",
+        "peekOfCode": "class TIF(AutoName):\n    GTC = auto()\n    IOC = auto()\n    FOK = auto()\n    GTX = auto()\n    GTD = auto()\nclass AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()",
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "AmountSpacing",
+        "kind": 6,
+        "importPath": "enums",
+        "description": "enums",
+        "peekOfCode": "class AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -1052,7 +1061,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 60\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
         "detail": "main",
         "documentation": {}
     },
@@ -1061,16 +1070,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = False\n    listenKey = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listenKey,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "adapter",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\nFORMAT = \"%(message)s\"\nlogging.basicConfig(\n    level=logging.ERROR,\n    format=FORMAT,\n    datefmt=\"[%X]\",\n    handlers=[RichHandler(markup=True)],\n)\nconfig_logging(logging, logging.ERROR)\ndef message_handler(_, message) -> None:",
+        "peekOfCode": "def main() -> None:\n    delay_seconds = 60\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
         "detail": "main",
         "documentation": {}
     },
@@ -1088,7 +1088,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:\n        log_client_error(error)",
+        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)",
         "detail": "network",
         "documentation": {}
     },
@@ -1097,7 +1097,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
+        "peekOfCode": "def cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1106,7 +1106,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_price_match_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    type: str,\n    timeInForce: str,\n    priceMatch: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def new_price_match_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    position_side: str,\n    order_type: str,\n    time_in_force: str,\n    price_match: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1115,7 +1115,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    positionSide: str,\n    price: float,\n    type: str,\n    timeInForce: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def new_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    position_side: str,\n    price: float,\n    order_type: str,\n    time_in_force: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1124,7 +1124,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def new_batch_order_request(params) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.new_batch_order(batchOrders=params)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def new_batch_order_request(params) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.new_batch_order(batchOrders=params)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1133,7 +1133,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.get_position_risk(symbol=symbol, recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.get_position_risk(symbol=symbol, recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1151,7 +1151,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.account(recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        # noinspection PyCallingNonCallable\n        response = client.account(recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:",
         "detail": "network",
         "documentation": {}
     },
@@ -1160,7 +1160,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.mark_price(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.mark_price(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1169,7 +1169,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.new_listen_key()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.new_listen_key()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef close_listen_key_request(listen_key: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1178,7 +1178,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.close_listen_key(listenKey=listenKey)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
+        "peekOfCode": "def close_listen_key_request(listen_key: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.close_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1187,7 +1187,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.get_open_orders(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef keep_alive_request(listenKey: str):\n    response = {}",
+        "peekOfCode": "def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.get_open_orders(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef keep_alive_request(listen_key: str):\n    response = {}",
         "detail": "network",
         "documentation": {}
     },
@@ -1196,7 +1196,7 @@
         "kind": 2,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def keep_alive_request(listenKey: str):\n    response = {}\n    try:\n        response = um_futures_client.renew_listen_key(listenKey=listenKey)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
+        "peekOfCode": "def keep_alive_request(listen_key: str):\n    response = {}\n    try:\n        response = client.renew_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
         "detail": "network",
         "documentation": {}
     },
@@ -1205,16 +1205,16 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\num_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\num_futures_client.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow",
+        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\nclient = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:",
         "detail": "network",
         "documentation": {}
     },
     {
-        "label": "um_futures_client",
+        "label": "client",
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\num_futures_client.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )",
+        "peekOfCode": "client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 2000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)",
         "detail": "network",
         "documentation": {}
     },
@@ -1241,7 +1241,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = -1.0,",
+        "peekOfCode": "def get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,",
         "detail": "repo",
         "documentation": {}
     },
@@ -1250,7 +1250,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = -1.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,",
+        "peekOfCode": "def get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,",
         "detail": "repo",
         "documentation": {}
     },
@@ -1259,7 +1259,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = -1.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n) -> Any | dict[Any, Any]:",
+        "peekOfCode": "def new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,\n    price_match: PriceMatch = PriceMatchNone.NONE,\n) -> Any | dict[Any, Any]:",
         "detail": "repo",
         "documentation": {}
     },
@@ -1268,7 +1268,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    return int(get_leverage_request(symbol=symbol.name)[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
+        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    return int(get_leverage_request(symbol=symbol.name)[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1277,7 +1277,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listenKey: str):\n    return keep_alive_request(listenKey=listenKey)",
+        "peekOfCode": "def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1286,7 +1286,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listenKey: str):\n    return keep_alive_request(listenKey=listenKey)",
+        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1295,7 +1295,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def close_listen_key(listenKey) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listenKey=listenKey)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listenKey: str):\n    return keep_alive_request(listenKey=listenKey)",
+        "peekOfCode": "def close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1304,7 +1304,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listenKey: str):\n    return keep_alive_request(listenKey=listenKey)",
+        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1313,7 +1313,7 @@
         "kind": 2,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def keep_alive(listenKey: str):\n    return keep_alive_request(listenKey=listenKey)",
+        "peekOfCode": "def keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
         "detail": "repo",
         "documentation": {}
     },
@@ -1322,7 +1322,25 @@
         "kind": 2,
         "importPath": "strategy",
         "description": "strategy",
-        "peekOfCode": "def trade_fixed_range(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    center_price: float,\n    available_balance: float,\n    sell_amount: float,\n    leverage: int,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
+        "peekOfCode": "def trade_fixed_range(\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    center_price: float,\n    available_balance: float,\n    sell_amount: float,\n    leverage: int,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
+        "detail": "strategy",
+        "documentation": {}
+    },
+    {
+        "label": "check_grid_maxs_and_mins",
+        "kind": 2,
+        "importPath": "strategy",
+        "description": "strategy",
+        "peekOfCode": "def check_grid_maxs_and_mins(\n    price_sell_max, price_sell_min, price_buy_max, price_buy_min\n) -> None:\n    if price_sell_min >= price_sell_max:\n        raise Exception(\"price_sell_min >= price_sell_max\")\n    if price_buy_max >= price_sell_min:\n        raise Exception(\"price_buy_max >= price_sell_min\")\n    if price_buy_min >= price_buy_max:\n        raise Exception(\"price_buy_min >= price_buy_max\")\ndef get_grid_maxs_and_mins(",
+        "detail": "strategy",
+        "documentation": {}
+    },
+    {
+        "label": "get_grid_maxs_and_mins",
+        "kind": 2,
+        "importPath": "strategy",
+        "description": "strategy",
+        "peekOfCode": "def get_grid_maxs_and_mins(\n    center_price: float,\n    price_sell_max_mult: float,\n    price_sell_min_mult: float,\n    price_buy_max_mult: float,\n    price_buy_min_mult: float,\n) -> tuple[float, float, float, float]:\n    price_sell_max = center_price * price_sell_max_mult\n    price_sell_min = center_price * price_sell_min_mult\n    price_buy_max = center_price * price_buy_max_mult",
         "detail": "strategy",
         "documentation": {}
     },
@@ -1331,7 +1349,7 @@
         "kind": 2,
         "importPath": "strategy",
         "description": "strategy",
-        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = 1.0  # get_max_buy_amount(symbol)\n    buy_order_amount = buy_amount / float(buy_orders_num)",
+        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = 1.0  # get_max_buy_amount(symbol)\n    buy_order_amount = buy_amount / float(buy_orders_num)",
         "detail": "strategy",
         "documentation": {}
     },
@@ -1340,7 +1358,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            positionSide=order[\"positionSide\"],\n            priceMatch=order[\"priceMatch\"],\n        )\n    else:",
+        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            position_side=order[\"positionSide\"],\n            price_match=order[\"priceMatch\"],\n        )\n    else:",
         "detail": "trade",
         "documentation": {}
     },
@@ -1349,7 +1367,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    positionSide: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    print(f\"{mark_price=}\")",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    print(f\"{mark_price=}\")",
         "detail": "trade",
         "documentation": {}
     },
@@ -1367,7 +1385,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    positionSide: PositionSide,\n    price: float = 0.0,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n) -> dict[str, Any]:",
+        "peekOfCode": "def create_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = 0.0,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,\n    price_match: PriceMatch = PriceMatchNone.NONE,\n) -> dict[str, Any]:",
         "detail": "utils",
         "documentation": {}
     },
@@ -1376,7 +1394,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, positionSide: PositionSide, quantity: float\n) -> list[Any]:\n    orders = []\n    for name, member in PriceMatchQueue.__members__.items():\n        if quantity > 0.0:\n            orders.append(\n                create_order(\n                    symbol=symbol,\n                    side=side,",
+        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float\n) -> list[Any]:\n    orders = []\n    for name, member in PriceMatchQueue.__members__.items():\n        if quantity > 0.0:\n            orders.append(\n                create_order(\n                    symbol=symbol,\n                    side=side,",
         "detail": "utils",
         "documentation": {}
     },
@@ -1385,7 +1403,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_multiple_orders(\n    symbol: TickerSymbol,\n    side: Side,\n    quantities_and_prices: list[tuple[float, float]],\n    positionSide: PositionSide,\n    type: OrderType = OrderType.LIMIT,\n    timeInForce: TIF = TIF.GTC,\n    priceMatch: PriceMatch = PriceMatchNone.NONE,\n) -> list[Any]:\n    result = []",
+        "peekOfCode": "def create_multiple_orders(\n    symbol: TickerSymbol,\n    side: Side,\n    quantities_and_prices: list[tuple[float, float]],\n    position_side: PositionSide,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,\n    price_match: PriceMatch = PriceMatchNone.NONE,\n) -> list[Any]:\n    result = []",
         "detail": "utils",
         "documentation": {}
     },
@@ -1394,7 +1412,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n    min_sell_amount: float = -1.0,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        order_amount = amount / orders_num",
+        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n    order_quantity_min: float = -1.0,\n    amount_spacing: AmountSpacing = AmountSpacing.LINEAR,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:",
         "detail": "utils",
         "documentation": {}
     },
@@ -1421,7 +1439,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(\n    total_amount: float, final_scaled: list[float]\n) -> Any | list[float]:\n    sum_final_scaled = sum(final_scaled)\n    final_scaled[-1] = final_scaled[-1] - (sum_final_scaled - total_amount)\n    if sum_final_scaled > total_amount:\n        final_scaled = make_it_smaller(\n            total_amount=total_amount, final_scaled=final_scaled",
+        "peekOfCode": "def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(\n    total_amount: float, final_scaled: list[float]\n) -> Any | list[float]:\n    sum_final_scaled = sum(final_scaled)\n    final_scaled[-1] -= sum_final_scaled - total_amount\n    if sum_final_scaled > total_amount:\n        final_scaled = make_it_smaller(\n            total_amount=total_amount, final_scaled=final_scaled",
         "detail": "utils",
         "documentation": {}
     },
@@ -1430,7 +1448,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def make_it_smaller(\n    total_amount: float, final_scaled: list[float]\n) -> Any | list[float]:\n    sum_final_scaled = sum(final_scaled)\n    final_scaled[-1] = final_scaled[-1] - (sum_final_scaled - total_amount)\n    if sum_final_scaled > total_amount:\n        final_scaled = make_it_smaller(\n            total_amount=total_amount, final_scaled=final_scaled\n        )\n    return final_scaled",
+        "peekOfCode": "def make_it_smaller(\n    total_amount: float, final_scaled: list[float]\n) -> Any | list[float]:\n    sum_final_scaled = sum(final_scaled)\n    final_scaled[-1] -= sum_final_scaled - total_amount\n    if sum_final_scaled > total_amount:\n        final_scaled = make_it_smaller(\n            total_amount=total_amount, final_scaled=final_scaled\n        )\n    return final_scaled",
         "detail": "utils",
         "documentation": {}
     },

@@ -4,7 +4,7 @@ from typing import Any
 import numpy as np
 
 from enums import (
-    TIF,
+    AmountSpacing,
     OrderType,
     PositionSide,
     PriceMatch,
@@ -12,6 +12,7 @@ from enums import (
     PriceMatchQueue,
     Side,
     TickerSymbol,
+    TIF,
 )
 
 
@@ -19,29 +20,29 @@ def create_order(
     symbol: TickerSymbol,
     side: Side,
     quantity: float,
-    positionSide: PositionSide,
+    position_side: PositionSide,
     price: float = 0.0,
-    type: OrderType = OrderType.LIMIT,
-    timeInForce: TIF = TIF.GTC,
-    priceMatch: PriceMatch = PriceMatchNone.NONE,
+    order_type: OrderType = OrderType.LIMIT,
+    time_in_force: TIF = TIF.GTC,
+    price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> dict[str, Any]:
     order = {
         "symbol": symbol,
         "side": side,
-        "type": type,
+        "type": order_type,
         "quantity": quantity,
-        "timeInForce": timeInForce,
-        "positionSide": positionSide,
+        "timeInForce": time_in_force,
+        "positionSide": position_side,
     }
-    if priceMatch is PriceMatchNone.NONE:
+    if price_match is PriceMatchNone.NONE:
         order["price"] = price
     else:
-        order["priceMatch"] = priceMatch
+        order["priceMatch"] = price_match
     return order
 
 
 def create_all_queue_price_match_orders(
-    symbol: TickerSymbol, side: Side, positionSide: PositionSide, quantity: float
+    symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float
 ) -> list[Any]:
     orders = []
     for name, member in PriceMatchQueue.__members__.items():
@@ -51,8 +52,8 @@ def create_all_queue_price_match_orders(
                     symbol=symbol,
                     side=side,
                     quantity=quantity,
-                    positionSide=positionSide,
-                    priceMatch=member,
+                    position_side=position_side,
+                    price_match=member,
                 )
             )
     return orders
@@ -62,22 +63,22 @@ def create_multiple_orders(
     symbol: TickerSymbol,
     side: Side,
     quantities_and_prices: list[tuple[float, float]],
-    positionSide: PositionSide,
-    type: OrderType = OrderType.LIMIT,
-    timeInForce: TIF = TIF.GTC,
-    priceMatch: PriceMatch = PriceMatchNone.NONE,
+    position_side: PositionSide,
+    order_type: OrderType = OrderType.LIMIT,
+    time_in_force: TIF = TIF.GTC,
+    price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> list[Any]:
     result = []
     for i in quantities_and_prices:
-        if priceMatch is PriceMatchNone.NONE:
+        if price_match is PriceMatchNone.NONE:
             order = create_order(
                 symbol=symbol,
                 side=side,
                 quantity=i[1],
                 price=i[0],
-                positionSide=positionSide,
-                type=type,
-                timeInForce=timeInForce,
+                position_side=position_side,
+                order_type=order_type,
+                time_in_force=time_in_force,
             )
         else:
             order = create_order(
@@ -85,10 +86,10 @@ def create_multiple_orders(
                 side=side,
                 quantity=i[1],
                 price=i[0],
-                positionSide=positionSide,
-                type=type,
-                timeInForce=timeInForce,
-                priceMatch=priceMatch,
+                position_side=position_side,
+                order_type=order_type,
+                time_in_force=time_in_force,
+                price_match=price_match,
             )
         result.append(order)
     return result
@@ -99,19 +100,26 @@ def get_orders_quantities_and_prices(
     high_price: float,
     low_price: float,
     amount: float,
-    min_sell_amount: float = -1.0,
+    order_quantity_min: float = -1.0,
+    amount_spacing: AmountSpacing = AmountSpacing.LINEAR,
 ) -> list[Any]:
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
         order_amount = amount / orders_num
-        quantity = order_amount if order_amount > min_sell_amount else min_sell_amount
-        if order_amount > min_sell_amount:
-            order_amount = min_sell_amount
-            orders_num = int(amount / min_sell_amount)
-        opt_a = np.geomspace(start=low_price, stop=high_price, num=orders_num)
-        opt_b = np.linspace(start=low_price, stop=high_price, num=orders_num)
-        for i in opt_a:
-            quantities_and_prices.append((round(i, 1), round(quantity, 3)))
+        quantity = (
+            order_amount if order_amount > order_quantity_min else order_quantity_min
+        )
+        if order_amount > order_quantity_min:
+            quantity = order_quantity_min
+            orders_num = int(amount / order_quantity_min)
+        amount_spacing_list = (
+            np.linspace(start=low_price, stop=high_price, num=orders_num)
+            if amount_spacing is AmountSpacing.LINEAR
+            else np.geomspace(start=low_price, stop=high_price, num=orders_num)
+        )
+        quantities_and_prices = [
+            (round(i, 1), round(quantity, 3)) for i in amount_spacing_list
+        ]
     return quantities_and_prices
 
 
@@ -135,7 +143,7 @@ def make_it_smaller(
     total_amount: float, final_scaled: list[float]
 ) -> Any | list[float]:
     sum_final_scaled = sum(final_scaled)
-    final_scaled[-1] = final_scaled[-1] - (sum_final_scaled - total_amount)
+    final_scaled[-1] -= sum_final_scaled - total_amount
     if sum_final_scaled > total_amount:
         final_scaled = make_it_smaller(
             total_amount=total_amount, final_scaled=final_scaled

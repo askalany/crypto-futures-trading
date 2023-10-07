@@ -1,12 +1,14 @@
-from enum import Enum, auto
+from enum import auto, Enum
 
 
 class AutoName(Enum):
+    # noinspection PyMethodParameters
     def _generate_next_value_(name, start, count, last_values):
         return name
 
 
 class PriceMatch(Enum):
+    # noinspection PyMethodParameters
     def _generate_next_value_(name, start, count, last_values):
         return name
 
@@ -65,3 +67,8 @@ class TIF(AutoName):
     FOK = auto()
     GTX = auto()
     GTD = auto()
+
+
+class AmountSpacing(Enum):
+    LINEAR = auto()
+    GEOMETRIC = auto()

@@ -1,12 +1,13 @@
 from typing import Any
+
 from enums import (
-    TIF,
     OrderType,
     PositionSide,
     PriceMatch,
     PriceMatchNone,
     Side,
     TickerSymbol,
+    TIF,
 )
 from network import (
     cancel_all_orders_request,
@@ -43,31 +44,31 @@ def new_order(
     symbol: TickerSymbol,
     side: Side,
     quantity: float,
-    positionSide: PositionSide,
+    position_side: PositionSide,
     price: float = -1.0,
-    type: OrderType = OrderType.LIMIT,
-    timeInForce: TIF = TIF.GTC,
-    priceMatch: PriceMatch = PriceMatchNone.NONE,
+    order_type: OrderType = OrderType.LIMIT,
+    time_in_force: TIF = TIF.GTC,
+    price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> Any | dict[Any, Any]:
     return (
         new_order_request(
             symbol=symbol.name,
             side=side.name,
             quantity=quantity,
-            positionSide=positionSide.name,
+            position_side=position_side.name,
             price=price,
-            type=type.name,
-            timeInForce=timeInForce.name,
+            order_type=order_type.name,
+            time_in_force=time_in_force.name,
         )
-        if priceMatch is PriceMatchNone.NONE
+        if price_match is PriceMatchNone.NONE
         else new_price_match_order_request(
             symbol=symbol.name,
             side=side.name,
             quantity=quantity,
-            positionSide=positionSide.name,
-            type=type.name,
-            timeInForce=timeInForce.name,
-            priceMatch=priceMatch.name,
+            position_side=position_side.name,
+            order_type=order_type.name,
+            time_in_force=time_in_force.name,
+            price_match=price_match.name,
         )
     )
 
@@ -84,13 +85,13 @@ def get_listen_key() -> str:
     return get_listen_key_request()["listenKey"]
 
 
-def close_listen_key(listenKey) -> Any | dict[Any, Any]:
-    return close_listen_key_request(listenKey=listenKey)
+def close_listen_key(listen_key: str) -> Any | dict[Any, Any]:
+    return close_listen_key_request(listen_key=listen_key)
 
 
 def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:
     return get_open_orders_request(symbol=symbol.name)
 
 
-def keep_alive(listenKey: str):
-    return keep_alive_request(listenKey=listenKey)
+def keep_alive(listen_key: str):
+    return keep_alive_request(listen_key=listen_key)

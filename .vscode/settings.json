@@ -17,6 +17,8 @@
         "BTCUSDT",
         "consts",
         "geomspace",
+        "maxs",
+        "mult",
         "typer"
     ],
     "python.testing.pytestArgs": [

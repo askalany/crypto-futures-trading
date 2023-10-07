@@ -1,10 +1,6 @@
 from typing import Any
-from enums import (
-    TIF,
-    PositionSide,
-    Strategy,
-    TickerSymbol,
-)
+
+from enums import PositionSide, Strategy, TickerSymbol, TIF
 from repo import (
     get_available_balance,
     get_hedge_position_amount,
@@ -22,15 +18,15 @@ def work(order) -> Any | dict[Any, Any]:
             symbol=order["symbol"],
             side=order["side"],
             quantity=order["quantity"],
-            positionSide=order["positionSide"],
-            priceMatch=order["priceMatch"],
+            position_side=order["positionSide"],
+            price_match=order["priceMatch"],
         )
     else:
         return new_order(
             symbol=order["symbol"],
             side=order["side"],
             quantity=order["quantity"],
-            positionSide=order["positionSide"],
+            position_side=order["positionSide"],
             price=order["price"],
         )
 
@@ -38,7 +34,7 @@ def work(order) -> Any | dict[Any, Any]:
 def trade(
     strategy: Strategy,
     symbol: TickerSymbol,
-    positionSide: PositionSide,
+    position_side: PositionSide,
     buy_orders_num: int = 100,
     sell_orders_num: int = 100,
     tif: TIF = TIF.GTC,
@@ -55,11 +51,13 @@ def trade(
         orders.extend(
             trade_fixed_range(
                 symbol=symbol,
-                positionSide=positionSide,
+                position_side=position_side,
                 center_price=center_price,
                 available_balance=get_available_balance(),
                 sell_amount=position_amount,
                 leverage=get_leverage(symbol=symbol),
+                buy_orders_num=buy_orders_num,
+                sell_orders_num=sell_orders_num,
                 tif=tif,
             )
         )
@@ -67,7 +65,7 @@ def trade(
         orders.extend(
             trade_all_price_match_queue(
                 symbol=symbol,
-                positionSide=positionSide,
+                position_side=position_side,
                 sell_amount=position_amount,
                 tif=tif,
             )

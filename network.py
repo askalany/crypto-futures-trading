@@ -1,4 +1,3 @@
-from ast import List
 import logging
 from typing import Any
 
@@ -10,20 +9,20 @@ from consts import BASE_URL, KEY, SECRET
 
 adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
 
-um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
-um_futures_client.session.mount("https://", adapter)
+client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
+client.session.mount("https://", adapter)
 
 
 def log_client_error(error: ClientError) -> None:
     logging.error(f"{error.status_code=}, {error.error_code=}, {error.error_message=}")
 
 
-def cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:
+def cancel_all_orders_request(
+    symbol, receive_window: int = 2000
+) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.cancel_open_orders(
-            symbol=symbol, recvWindow=recvWindow
-        )
+        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -34,21 +33,21 @@ def new_price_match_order_request(
     symbol: str,
     side: str,
     quantity: float,
-    positionSide: str,
-    type: str,
-    timeInForce: str,
-    priceMatch: str,
+    position_side: str,
+    order_type: str,
+    time_in_force: str,
+    price_match: str,
 ) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.new_order(
+        response = client.new_order(
             symbol=symbol,
             side=side,
-            positionSide=positionSide,
-            type=type,
+            positionSide=position_side,
+            type=order_type,
             quantity=quantity,
-            timeInForce=timeInForce,
-            priceMatch=priceMatch,
+            timeInForce=time_in_force,
+            priceMatch=price_match,
         )
     except ClientError as error:
         log_client_error(error)
@@ -60,20 +59,20 @@ def new_order_request(
     symbol: str,
     side: str,
     quantity: float,
-    positionSide: str,
+    position_side: str,
     price: float,
-    type: str,
-    timeInForce: str,
+    order_type: str,
+    time_in_force: str,
 ) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.new_order(
+        response = client.new_order(
             symbol=symbol,
             side=side,
-            positionSide=positionSide,
-            type=type,
+            positionSide=position_side,
+            type=order_type,
             quantity=str(quantity),
-            timeInForce=timeInForce,
+            timeInForce=time_in_force,
             price=price,
         )
     except ClientError as error:
@@ -85,7 +84,7 @@ def new_order_request(
 def new_batch_order_request(params) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.new_batch_order(batchOrders=params)
+        response = client.new_batch_order(batchOrders=params)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -95,7 +94,7 @@ def new_batch_order_request(params) -> Any | dict[Any, Any]:
 def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.get_position_risk(symbol=symbol, recvWindow=6000)
+        response = client.get_position_risk(symbol=symbol, recvWindow=6000)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -115,7 +114,8 @@ def get_leverage_request(symbol: str) -> Any | dict[Any, Any]:
 def get_account_info_request() -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.account(recvWindow=6000)
+        # noinspection PyCallingNonCallable
+        response = client.account(recvWindow=6000)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -125,7 +125,7 @@ def get_account_info_request() -> Any | dict[Any, Any]:
 def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.mark_price(symbol=symbol)
+        response = client.mark_price(symbol=symbol)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -135,17 +135,17 @@ def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:
 def get_listen_key_request() -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.new_listen_key()
+        response = client.new_listen_key()
     except ClientError as error:
         log_client_error(error)
     finally:
         return response
 
 
-def close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:
+def close_listen_key_request(listen_key: str) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.close_listen_key(listenKey=listenKey)
+        response = client.close_listen_key(listenKey=listen_key)
     except ClientError as error:
         log_client_error(error)
     finally:
@@ -155,17 +155,17 @@ def close_listen_key_request(listenKey: str) -> Any | dict[Any, Any]:
 def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:
     response = {}
     try:
-        response = um_futures_client.get_open_orders(symbol=symbol)
+        response = client.get_open_orders(symbol=symbol)
     except ClientError as error:
         log_client_error(error)
     finally:
         return response
 
 
-def keep_alive_request(listenKey: str):
+def keep_alive_request(listen_key: str):
     response = {}
     try:
-        response = um_futures_client.renew_listen_key(listenKey=listenKey)
+        response = client.renew_listen_key(listenKey=listen_key)
     except ClientError as error:
         log_client_error(error)
     finally:

@@ -15,11 +15,20 @@ def order_value():
     side = Side.BUY
     quantity = 1.0
     price = 1.0
-    positionSide = PositionSide.LONG
-    type = OrderType.LIMIT
-    timeInForce = TIF.GTC
-    priceMatch = PriceMatchNone.NONE
-    return symbol, side, quantity, price, positionSide, type, timeInForce, priceMatch
+    position_side = PositionSide.LONG
+    order_type = OrderType.LIMIT
+    time_in_force = TIF.GTC
+    price_match = PriceMatchNone.NONE
+    return (
+        symbol,
+        side,
+        quantity,
+        price,
+        position_side,
+        order_type,
+        time_in_force,
+        price_match,
+    )
 
 
 def test_create_order_price():
@@ -28,20 +37,20 @@ def test_create_order_price():
         side,
         quantity,
         price,
-        positionSide,
-        type,
-        timeInForce,
-        priceMatch,
+        position_side,
+        order_type,
+        time_in_force,
+        price_match,
     ) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
         quantity=quantity,
         price=price,
-        positionSide=positionSide,
-        type=type,
-        timeInForce=timeInForce,
-        priceMatch=priceMatch,
+        position_side=position_side,
+        order_type=order_type,
+        time_in_force=time_in_force,
+        price_match=price_match,
     )
     assert "price" in order
 
@@ -52,20 +61,20 @@ def test_create_order_price_value():
         side,
         quantity,
         price,
-        positionSide,
-        type,
-        timeInForce,
-        priceMatch,
+        position_side,
+        order_type,
+        time_in_force,
+        price_match,
     ) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
         quantity=quantity,
         price=price,
-        positionSide=positionSide,
-        type=type,
-        timeInForce=timeInForce,
-        priceMatch=priceMatch,
+        position_side=position_side,
+        order_type=order_type,
+        time_in_force=time_in_force,
+        price_match=price_match,
     )
     assert order["price"] == price
 
@@ -76,20 +85,20 @@ def test_create_order_price_match():
         side,
         quantity,
         price,
-        positionSide,
-        type,
-        timeInForce,
-        priceMatch,
+        position_side,
+        order_type,
+        time_in_force,
+        price_match,
     ) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
         quantity=quantity,
         price=price,
-        positionSide=positionSide,
-        type=type,
-        timeInForce=timeInForce,
-        priceMatch=PriceMatchQueue.QUEUE,
+        position_side=position_side,
+        order_type=order_type,
+        time_in_force=time_in_force,
+        price_match=PriceMatchQueue.QUEUE,
     )
     assert "priceMatch" in order
 
@@ -200,7 +209,8 @@ def test_scaled_amounts():
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
     assert result == expected_list
-    
+
+
 def test_scaled_amounts_sum():
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
