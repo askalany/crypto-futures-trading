@@ -11,6 +11,7 @@ from consts import BASE_URL, KEY, SECRET
 adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
 
 um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
+um_futures_client.session.mount("https://", adapter)
 
 
 def log_client_error(error: ClientError) -> None:

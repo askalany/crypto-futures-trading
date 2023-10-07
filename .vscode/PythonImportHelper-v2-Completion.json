@@ -1205,7 +1205,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\num_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )",
+        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\num_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\num_futures_client.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow",
         "detail": "network",
         "documentation": {}
     },
@@ -1214,7 +1214,7 @@
         "kind": 5,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )\n    except ClientError as error:",
+        "peekOfCode": "um_futures_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\num_futures_client.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(symbol, recvWindow: int = 2000) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = um_futures_client.cancel_open_orders(\n            symbol=symbol, recvWindow=recvWindow\n        )",
         "detail": "network",
         "documentation": {}
     },
@@ -1394,7 +1394,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        quantity = amount / orders_num\n        opt_a = np.geomspace(start=low_price, stop=high_price, num=orders_num)",
+        "peekOfCode": "def get_orders_quantities_and_prices(\n    orders_num: int,\n    high_price: float,\n    low_price: float,\n    amount: float,\n) -> list[Any]:\n    quantities_and_prices = []\n    if amount > 0.0 and orders_num > 0:\n        min_sell_amount = 0.001\n        quantity = amount / orders_num if amount > min_sell_amount else min_sell_amount",
         "detail": "utils",
         "documentation": {}
     },

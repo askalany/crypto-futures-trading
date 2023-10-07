@@ -102,7 +102,8 @@ def get_orders_quantities_and_prices(
 ) -> list[Any]:
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
-        quantity = amount / orders_num
+        min_sell_amount = 0.001
+        quantity = amount / orders_num if amount > min_sell_amount else min_sell_amount
         opt_a = np.geomspace(start=low_price, stop=high_price, num=orders_num)
         opt_b = np.linspace(start=low_price, stop=high_price, num=orders_num)
         for i in opt_a:

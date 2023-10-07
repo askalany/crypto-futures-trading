@@ -19,8 +19,8 @@ def trade_fixed_range(
     leveraged_balance = leverage * available_balance
     buy_amount = leveraged_balance / center_price
     buy_high_price = center_price * (1.0 - 0.0009)
-    buy_low_price = center_price * (1.0 - 0.5)
-    sell_high_price = center_price * (1.0 + 0.2)
+    buy_low_price = center_price * (1.0 - 0.1)
+    sell_high_price = center_price * (1.0 + 0.1)
     sell_low_price = center_price * (1.0 + 0.0009)
     buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
         orders_num=buy_orders_num,
