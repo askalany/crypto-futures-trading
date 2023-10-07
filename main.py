@@ -40,6 +40,7 @@ def main() -> None:
     symbol = TickerSymbol.BTCUSDT
     try:
         while True:
+            t0 = time.time()
             print_date_and_time()
             cancel_all_orders(symbol=symbol)
             orders = trade(
@@ -57,9 +58,11 @@ def main() -> None:
                 executor.map(work, batched_orders, chunksize=5)
             if once:
                 break
-            else:
-                keep_alive(listen_key=listen_key)
-                time.sleep(delay_seconds)
+            keep_alive(listen_key=listen_key)
+            t1 = time.time()
+            time_difference = t1 - t0
+            print(f"{time_difference=} seconds")
+            time.sleep(delay_seconds)
 
     except Exception as e:
         logging.error(msg=e)
