@@ -67,6 +67,7 @@ def main() -> None:
     repo = TradeRepo()
     (
         once,
+        use_mark_price,
         delay_seconds,
         symbol,
         strategy,
@@ -88,7 +89,11 @@ def main() -> None:
             # print_date_and_time()
             repo.cancel_all_orders(symbol=symbol)
             mark_price = repo.get_mark_price(symbol=symbol)
-            entry_price = repo.get_position_entry_price(symbol=symbol)
+            entry_price = (
+                mark_price
+                if use_mark_price
+                else repo.get_position_entry_price(symbol=symbol)
+            )
             position_amount = repo.get_hedge_position_amount(symbol=symbol)
             trade = Trade(repo=repo)
             orders = trade.trade(

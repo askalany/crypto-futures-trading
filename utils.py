@@ -222,6 +222,7 @@ def get_enum_class_name(enum_class: EnumType) -> str:
 
 def check_file_inputs(
     once: bool,
+    use_mark_price: bool,
     delay_seconds: float,
     symbol: Any,
     strategy: Any,
@@ -229,7 +230,7 @@ def check_file_inputs(
     buy_orders_num: int,
     sell_orders_num: int,
     tif: Any,
-) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+)  -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
     if not isinstance(symbol, TickerSymbol):
         raise ValueError("incorrect input for symbol")
     if not isinstance(strategy, Strategy):
@@ -240,6 +241,7 @@ def check_file_inputs(
         raise ValueError("incorrect input for tif")
     return (
         once,
+        use_mark_price,
         delay_seconds,
         symbol,
         strategy,
@@ -268,12 +270,13 @@ def get_enum_member_from_name(name_str: str):
 
 def get_inputs_from_file(
     file_name: str = "my_trading.json",
-) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+) :
     f = open(file_name, "r")
     read = f.read()
     data = json.loads(read)
     return check_file_inputs(
         once=data["once"],
+        use_mark_price=data["use_mark_price"],
         delay_seconds=data["delay_seconds"],
         symbol=get_enum_member_from_name(data["symbol"]),
         strategy=get_enum_member_from_name(data["strategy"]),
