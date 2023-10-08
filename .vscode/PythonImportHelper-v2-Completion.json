@@ -670,6 +670,22 @@
         "documentation": {}
     },
     {
+        "label": "Singleton",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
+        "label": "Singleton",
+        "importPath": "helpers",
+        "description": "helpers",
+        "isExtraImport": true,
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
         "label": "HTTPAdapter",
         "importPath": "requests.adapters",
         "description": "requests.adapters",
@@ -997,6 +1013,15 @@
         "documentation": {}
     },
     {
+        "label": "Singleton",
+        "kind": 6,
+        "importPath": "helpers",
+        "description": "helpers",
+        "peekOfCode": "class Singleton(type):\n    _instances = {}\n    def __call__(cls, *args, **kwargs):\n        if cls not in cls._instances:\n            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)\n        return cls._instances[cls]",
+        "detail": "helpers",
+        "documentation": {}
+    },
+    {
         "label": "generate_table",
         "kind": 2,
         "importPath": "main",
@@ -1046,7 +1071,7 @@
         "kind": 6,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "class BinanceNetworkClient:\n    def __init__(self, client: UMFutures):\n        self.client = client\n    def log_client_error(self, error: ClientError) -> None:\n        logging.error(\n            f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\"\n        )\n    def cancel_all_orders_request(\n        self, symbol, receive_window: int = 4000\n    ) -> Any | dict[Any, Any]:",
+        "peekOfCode": "class BinanceNetworkClient(metaclass=Singleton):\n    def __init__(self, client: UMFutures):\n        self.client = client\n    def log_client_error(self, error: ClientError) -> None:\n        logging.error(\n            f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\"\n        )\n    def cancel_all_orders_request(\n        self, symbol, receive_window: int = 4000\n    ) -> Any | dict[Any, Any]:",
         "detail": "network",
         "documentation": {}
     },
@@ -1055,7 +1080,7 @@
         "kind": 6,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "class TradeRepo:\n    def __init__(self):\n        um_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\n        adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\n        um_client.session.mount(\"https://\", adapter)\n        self.client = BinanceNetworkClient(client=um_client)\n    def get_hedge_position_amount(self, symbol: TickerSymbol) -> float:\n        return float(\n            self.client.get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"]\n        )",
+        "peekOfCode": "class TradeRepo(metaclass=Singleton):\n    def __init__(self):\n        um_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\n        adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\n        um_client.session.mount(\"https://\", adapter)\n        self.client = BinanceNetworkClient(client=um_client)\n    def get_hedge_position_amount(self, symbol: TickerSymbol) -> float:\n        return float(\n            self.client.get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"]\n        )",
         "detail": "repo",
         "documentation": {}
     },

@@ -14,10 +14,11 @@ from enums import (
     Side,
     TickerSymbol,
 )
+from helpers import Singleton
 from network import BinanceNetworkClient
 
 
-class TradeRepo:
+class TradeRepo(metaclass=Singleton):
     def __init__(self):
         um_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)

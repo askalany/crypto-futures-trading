@@ -4,8 +4,10 @@ from typing import Any
 from binance.error import ClientError
 from binance.um_futures import UMFutures
 
+from helpers import Singleton
 
-class BinanceNetworkClient:
+
+class BinanceNetworkClient(metaclass=Singleton):
     def __init__(self, client: UMFutures):
         self.client = client
 
