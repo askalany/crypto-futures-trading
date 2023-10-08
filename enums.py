@@ -1,4 +1,4 @@
-from enum import auto, Enum
+from enum import Enum, auto
 
 
 class AutoName(Enum):
@@ -72,3 +72,17 @@ class TIF(AutoName):
 class AmountSpacing(Enum):
     LINEAR = auto()
     GEOMETRIC = auto()
+
+
+ALL_ENUMS = [
+    PriceMatch,
+    PriceMatchNone,
+    PriceMatchOpponent,
+    PriceMatchQueue,
+    TickerSymbol,
+    Side,
+    PositionSide,
+    Strategy,
+    OrderType,
+    TIF,
+]

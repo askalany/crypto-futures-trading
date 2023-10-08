@@ -153,38 +153,6 @@
         "documentation": {}
     },
     {
-        "label": "TIF",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
-        "label": "PositionSide",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
-        "label": "Strategy",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
-        "label": "TickerSymbol",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
         "label": "OrderType",
         "importPath": "enums",
         "description": "enums",
@@ -321,6 +289,14 @@
         "documentation": {}
     },
     {
+        "label": "ALL_ENUMS",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "TIF",
         "importPath": "enums",
         "description": "enums",
@@ -378,6 +354,14 @@
     },
     {
         "label": "Side",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
         "importPath": "enums",
         "description": "enums",
         "isExtraImport": true,
@@ -410,6 +394,14 @@
     },
     {
         "label": "batched_lists",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_inputs_from_file",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -481,6 +473,14 @@
         "documentation": {}
     },
     {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
         "label": "auto",
         "importPath": "enum",
         "description": "enum",
@@ -498,6 +498,14 @@
     },
     {
         "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "EnumType",
         "importPath": "enum",
         "description": "enum",
         "isExtraImport": true,
@@ -1246,7 +1254,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class TIF(AutoName):\n    GTC = auto()\n    IOC = auto()\n    FOK = auto()\n    GTX = auto()\n    GTD = auto()\nclass AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()",
+        "peekOfCode": "class TIF(AutoName):\n    GTC = auto()\n    IOC = auto()\n    FOK = auto()\n    GTX = auto()\n    GTD = auto()\nclass AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()\nALL_ENUMS = [",
         "detail": "enums",
         "documentation": {}
     },
@@ -1255,7 +1263,16 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()",
+        "peekOfCode": "class AmountSpacing(Enum):\n    LINEAR = auto()\n    GEOMETRIC = auto()\nALL_ENUMS = [\n    PriceMatch,\n    PriceMatchNone,\n    PriceMatchOpponent,\n    PriceMatchQueue,\n    TickerSymbol,\n    Side,",
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
+        "label": "ALL_ENUMS",
+        "kind": 5,
+        "importPath": "enums",
+        "description": "enums",
+        "peekOfCode": "ALL_ENUMS = [\n    PriceMatch,\n    PriceMatchNone,\n    PriceMatchOpponent,\n    PriceMatchQueue,\n    TickerSymbol,\n    Side,\n    PositionSide,\n    Strategy,\n    OrderType,",
         "detail": "enums",
         "documentation": {}
     },
@@ -1264,7 +1281,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"ACCOUNT_UPDATE\" in data:\n        print(f\"{data=}\")\ndef main() -> None:\n    delay_seconds = 20\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        print(f\"{data=}\")\ndef main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,",
         "detail": "main",
         "documentation": {}
     },
@@ -1273,7 +1290,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
+        "peekOfCode": "def main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,\n        position_side,\n        buy_orders_num,\n        sell_orders_num,\n        tif,",
         "detail": "main",
         "documentation": {}
     },
@@ -1741,7 +1758,52 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_max_buy_amount(symbol: TickerSymbol):\n    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(\n        symbol=symbol\n    )",
+        "peekOfCode": "def get_max_buy_amount(symbol: TickerSymbol):\n    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(\n        symbol=symbol\n    )\ndef get_enum_class_name(enum_class: EnumType) -> str:\n    start = \"'\"\n    end = \"'\"\n    enum_class_str = str(enum_class)\n    return enum_class_str[\n        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_enum_class_name",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_enum_class_name(enum_class: EnumType) -> str:\n    start = \"'\"\n    end = \"'\"\n    enum_class_str = str(enum_class)\n    return enum_class_str[\n        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)\n    ]\ndef check_file_inputs(\n    once: bool,\n    delay_seconds: float,",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "check_file_inputs",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def check_file_inputs(\n    once: bool,\n    delay_seconds: float,\n    symbol: Any,\n    strategy: Any,\n    position_side: Any,\n    buy_orders_num: int,\n    sell_orders_num: int,\n    tif: Any,\n) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_enum_type_from_member_name",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_enum_type_from_member_name(key_str: str):\n    split_string = key_str.split(\".\")\n    for i in ALL_ENUMS:\n        if split_string[0] == get_enum_class_name(i):\n            return i\ndef get_enum_member_from_name(name_str: str):\n    enum_type = get_enum_type_from_member_name(name_str)\n    if enum_type is not None:\n        for _, member in enum_type.__members__.items():\n            if name_str == f\"{member}\":",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_enum_member_from_name",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_enum_member_from_name(name_str: str):\n    enum_type = get_enum_type_from_member_name(name_str)\n    if enum_type is not None:\n        for _, member in enum_type.__members__.items():\n            if name_str == f\"{member}\":\n                return member\ndef get_inputs_from_file(\n    file_name: str = \"my_trading.json\",\n) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:\n    f = open(file_name, \"r\")",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_inputs_from_file",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_inputs_from_file(\n    file_name: str = \"my_trading.json\",\n) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:\n    f = open(file_name, \"r\")\n    read = f.read()\n    data = json.loads(read)\n    return check_file_inputs(\n        once=data[\"once\"],\n        delay_seconds=data[\"delay_seconds\"],\n        symbol=get_enum_member_from_name(data[\"symbol\"]),",
         "detail": "utils",
         "documentation": {}
     }

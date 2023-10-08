@@ -2,6 +2,7 @@ import concurrent.futures
 import json
 import logging
 import time
+from enum import Enum
 
 import typer
 from binance.lib.utils import config_logging
@@ -10,10 +11,9 @@ from rich import print
 from rich.logging import RichHandler
 
 from consts import STREAM_URL
-from enums import TIF, PositionSide, Strategy, TickerSymbol
 from repo import cancel_all_orders, close_listen_key, get_listen_key, keep_alive
 from trade import trade, work
-from utils import batched_lists, print_date_and_time
+from utils import batched_lists, get_inputs_from_file, print_date_and_time
 
 FORMAT = "%(message)s"
 
@@ -28,13 +28,21 @@ config_logging(logging, logging.ERROR)
 
 def message_handler(_, message) -> None:
     data = json.loads(message)
-    if "ACCOUNT_UPDATE" in data:
+    if "e" in data and data["e"] == "ACCOUNT_UPDATE":
         print(f"{data=}")
 
 
 def main() -> None:
-    delay_seconds = 20
-    once = False
+    (
+        once,
+        delay_seconds,
+        symbol,
+        strategy,
+        position_side,
+        buy_orders_num,
+        sell_orders_num,
+        tif,
+    ) = get_inputs_from_file()
     listen_key = get_listen_key()
     ws_client = UMFuturesWebsocketClient(
         on_message=message_handler, stream_url=STREAM_URL
@@ -43,19 +51,18 @@ def main() -> None:
         listen_key=listen_key,
         id=1,
     )
-    symbol = TickerSymbol.BTCUSDT
     try:
         while True:
             t0 = time.time()
             print_date_and_time()
             cancel_all_orders(symbol=symbol)
             orders = trade(
-                strategy=Strategy.FIXED_RANGE,
+                strategy=strategy,
                 symbol=symbol,
-                position_side=PositionSide.LONG,
-                buy_orders_num=100,
-                sell_orders_num=100,
-                tif=TIF.GTC,
+                position_side=position_side,
+                buy_orders_num=buy_orders_num,
+                sell_orders_num=sell_orders_num,
+                tif=tif,
             )
             print(f"{len(orders)=}")
             batched_orders = batched_lists(orders, 5)

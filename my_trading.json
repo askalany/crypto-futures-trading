@@ -1,0 +1,10 @@
+{
+  "once": false,
+  "delay_seconds": 20.0,
+  "symbol": "TickerSymbol.BTCUSDT",
+  "strategy": "Strategy.FIXED_RANGE",
+  "position_side": "PositionSide.LONG",
+  "buy_orders_num": 100,
+  "sell_orders_num": 100,
+  "tif": "TIF.GTC"
+}

@@ -1,4 +1,6 @@
 import datetime
+import json
+from enum import EnumType
 from itertools import islice
 from math import floor
 from typing import Any
@@ -7,6 +9,7 @@ import numpy as np
 from rich import print
 
 from enums import (
+    ALL_ENUMS,
     TIF,
     AmountSpacing,
     OrderType,
@@ -15,6 +18,7 @@ from enums import (
     PriceMatchNone,
     PriceMatchQueue,
     Side,
+    Strategy,
     TickerSymbol,
 )
 from repo import get_available_balance, get_leverage, get_mark_price
@@ -213,4 +217,76 @@ def get_grid_maxs_and_mins(
 def get_max_buy_amount(symbol: TickerSymbol):
     return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(
         symbol=symbol
+    )
+
+
+def get_enum_class_name(enum_class: EnumType) -> str:
+    start = "'"
+    end = "'"
+    enum_class_str = str(enum_class)
+    return enum_class_str[
+        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)
+    ]
+
+
+def check_file_inputs(
+    once: bool,
+    delay_seconds: float,
+    symbol: Any,
+    strategy: Any,
+    position_side: Any,
+    buy_orders_num: int,
+    sell_orders_num: int,
+    tif: Any,
+) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+    if not isinstance(symbol, TickerSymbol):
+        raise ValueError("incorrect input for symbol")
+    if not isinstance(strategy, Strategy):
+        raise ValueError("incorrect input for strategy")
+    if not isinstance(position_side, PositionSide):
+        raise ValueError("incorrect input for position_side")
+    if not isinstance(tif, TIF):
+        raise ValueError("incorrect input for tif")
+    return (
+        once,
+        delay_seconds,
+        symbol,
+        strategy,
+        position_side,
+        buy_orders_num,
+        sell_orders_num,
+        tif,
+    )
+
+
+def get_enum_type_from_member_name(key_str: str):
+    split_string = key_str.split(".")
+    for i in ALL_ENUMS:
+        if split_string[0] == get_enum_class_name(i):
+            return i
+
+
+def get_enum_member_from_name(name_str: str):
+    enum_type = get_enum_type_from_member_name(name_str)
+    if enum_type is not None:
+        for _, member in enum_type.__members__.items():
+            if name_str == f"{member}":
+                return member
+
+
+def get_inputs_from_file(
+    file_name: str = "my_trading.json",
+) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+    f = open(file_name, "r")
+    read = f.read()
+    data = json.loads(read)
+    return check_file_inputs(
+        once=data["once"],
+        delay_seconds=data["delay_seconds"],
+        symbol=get_enum_member_from_name(data["symbol"]),
+        strategy=get_enum_member_from_name(data["strategy"]),
+        position_side=get_enum_member_from_name(data["position_side"]),
+        buy_orders_num=data["buy_orders_num"],
+        sell_orders_num=data["sell_orders_num"],
+        tif=get_enum_member_from_name(data["tif"]),
     )
