@@ -20,6 +20,7 @@
         "geomspace",
         "maxs",
         "mult",
+        "renderable",
         "typer"
     ],
     "python.testing.pytestArgs": [

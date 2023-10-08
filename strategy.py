@@ -1,13 +1,11 @@
 from typing import Any
 
-from rich import print
-
-from enums import TIF, AmountSpacing, PositionSide, PriceMatchQueue, Side, TickerSymbol
-from utils import create_all_queue_price_match_orders, get_max_buy_amount
+from enums import TIF, AmountSpacing, PositionSide, Side, TickerSymbol
 from utils import (
+    create_all_queue_price_match_orders,
     create_multiple_orders,
-    create_order,
     get_grid_maxs_and_mins,
+    get_max_buy_amount,
     get_orders_quantities_and_prices,
 )
 
@@ -41,7 +39,6 @@ def trade_fixed_range(
         price_buy_max_mult=price_buy_max_mult,
         price_buy_min_mult=price_buy_min_mult,
     )
-    print(f"{price_buy_min=}, {price_buy_max=}, {price_sell_min=}, {price_sell_max=}")
     buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
         orders_num=buy_orders_num,
         high_price=price_buy_max,
@@ -73,7 +70,6 @@ def trade_fixed_range(
         time_in_force=tif,
     )
     orders = buy_orders + sell_orders
-    print(f"{len(orders)=}, {len(buy_orders)=}, {len(sell_orders)=}")
     return orders
 
 

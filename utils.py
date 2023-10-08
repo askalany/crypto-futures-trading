@@ -2,7 +2,6 @@ import datetime
 import json
 from enum import EnumType
 from itertools import islice
-from math import floor
 from typing import Any
 
 import numpy as np

@@ -1,15 +1,14 @@
 from enum import Enum
-import json
 from typing import Any
-from rich import print
+
 from enums import (
+    TIF,
     OrderType,
     PositionSide,
     PriceMatch,
     PriceMatchNone,
     Side,
     TickerSymbol,
-    TIF,
 )
 from network import (
     cancel_all_orders_request,
@@ -20,11 +19,11 @@ from network import (
     get_mark_price_request,
     get_open_orders_request,
     get_position_risk_request,
+    get_time_request,
     keep_alive_request,
     new_batch_order_request,
     new_order_request,
     new_price_match_order_request,
-    get_time_request,
 )
 
 

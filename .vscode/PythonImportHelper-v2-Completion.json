@@ -153,6 +153,14 @@
         "documentation": {}
     },
     {
+        "label": "TIF",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "OrderType",
         "importPath": "enums",
         "description": "enums",
@@ -209,14 +217,6 @@
         "documentation": {}
     },
     {
-        "label": "TIF",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
         "label": "AmountSpacing",
         "importPath": "enums",
         "description": "enums",
@@ -226,14 +226,6 @@
     },
     {
         "label": "PositionSide",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
-        "label": "PriceMatchQueue",
         "importPath": "enums",
         "description": "enums",
         "isExtraImport": true,
@@ -425,14 +417,6 @@
         "documentation": {}
     },
     {
-        "label": "get_max_buy_amount",
-        "importPath": "utils",
-        "description": "utils",
-        "isExtraImport": true,
-        "detail": "utils",
-        "documentation": {}
-    },
-    {
         "label": "create_multiple_orders",
         "importPath": "utils",
         "description": "utils",
@@ -441,7 +425,7 @@
         "documentation": {}
     },
     {
-        "label": "create_order",
+        "label": "get_grid_maxs_and_mins",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -449,7 +433,7 @@
         "documentation": {}
     },
     {
-        "label": "get_grid_maxs_and_mins",
+        "label": "get_max_buy_amount",
         "importPath": "utils",
         "description": "utils",
         "isExtraImport": true,
@@ -497,14 +481,6 @@
         "documentation": {}
     },
     {
-        "label": "Enum",
-        "importPath": "enum",
-        "description": "enum",
-        "isExtraImport": true,
-        "detail": "enum",
-        "documentation": {}
-    },
-    {
         "label": "EnumType",
         "importPath": "enum",
         "description": "enum",
@@ -518,14 +494,6 @@
         "isExtraImport": true,
         "importPath": "concurrent.futures",
         "description": "concurrent.futures",
-        "detail": "concurrent.futures",
-        "documentation": {}
-    },
-    {
-        "label": "ThreadPoolExecutor",
-        "importPath": "concurrent.futures",
-        "description": "concurrent.futures",
-        "isExtraImport": true,
         "detail": "concurrent.futures",
         "documentation": {}
     },
@@ -582,59 +550,19 @@
         "documentation": {}
     },
     {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
+        "label": "Live",
+        "importPath": "rich.live",
+        "description": "rich.live",
         "isExtraImport": true,
-        "detail": "rich",
+        "detail": "rich.live",
         "documentation": {}
     },
     {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
+        "label": "Live",
+        "importPath": "rich.live",
+        "description": "rich.live",
         "isExtraImport": true,
-        "detail": "rich",
-        "documentation": {}
-    },
-    {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
-        "isExtraImport": true,
-        "detail": "rich",
-        "documentation": {}
-    },
-    {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
-        "isExtraImport": true,
-        "detail": "rich",
-        "documentation": {}
-    },
-    {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
-        "isExtraImport": true,
-        "detail": "rich",
-        "documentation": {}
-    },
-    {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
-        "isExtraImport": true,
-        "detail": "rich",
-        "documentation": {}
-    },
-    {
-        "label": "print",
-        "importPath": "rich",
-        "description": "rich",
-        "isExtraImport": true,
-        "detail": "rich",
+        "detail": "rich.live",
         "documentation": {}
     },
     {
@@ -643,6 +571,22 @@
         "description": "rich.logging",
         "isExtraImport": true,
         "detail": "rich.logging",
+        "documentation": {}
+    },
+    {
+        "label": "Table",
+        "importPath": "rich.table",
+        "description": "rich.table",
+        "isExtraImport": true,
+        "detail": "rich.table",
+        "documentation": {}
+    },
+    {
+        "label": "Table",
+        "importPath": "rich.table",
+        "description": "rich.table",
+        "isExtraImport": true,
+        "detail": "rich.table",
         "documentation": {}
     },
     {
@@ -671,14 +615,6 @@
     },
     {
         "label": "keep_alive",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_time",
         "importPath": "repo",
         "description": "repo",
         "isExtraImport": true,
@@ -846,23 +782,6 @@
         "documentation": {}
     },
     {
-        "label": "numpy",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
-        "documentation": {}
-    },
-    {
-        "label": "rec",
-        "importPath": "numpy",
-        "description": "numpy",
-        "isExtraImport": true,
-        "detail": "numpy",
-        "documentation": {}
-    },
-    {
         "label": "HTTPAdapter",
         "importPath": "requests.adapters",
         "description": "requests.adapters",
@@ -935,6 +854,14 @@
         "documentation": {}
     },
     {
+        "label": "get_time_request",
+        "importPath": "network",
+        "description": "network",
+        "isExtraImport": true,
+        "detail": "network",
+        "documentation": {}
+    },
+    {
         "label": "keep_alive_request",
         "importPath": "network",
         "description": "network",
@@ -967,28 +894,12 @@
         "documentation": {}
     },
     {
-        "label": "get_time_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "itertools",
+        "label": "random",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "itertools",
-        "description": "itertools",
-        "detail": "itertools",
-        "documentation": {}
-    },
-    {
-        "label": "islice",
-        "importPath": "itertools",
-        "description": "itertools",
-        "isExtraImport": true,
-        "detail": "itertools",
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
         "documentation": {}
     },
     {
@@ -1017,11 +928,28 @@
         "documentation": {}
     },
     {
-        "label": "floor",
-        "importPath": "math",
-        "description": "math",
+        "label": "islice",
+        "importPath": "itertools",
+        "description": "itertools",
         "isExtraImport": true,
-        "detail": "math",
+        "detail": "itertools",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "print",
+        "importPath": "rich",
+        "description": "rich",
+        "isExtraImport": true,
+        "detail": "rich",
         "documentation": {}
     },
     {
@@ -1277,11 +1205,20 @@
         "documentation": {}
     },
     {
+        "label": "generate_table",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def generate_table(message: str) -> Table:\n    data = json.loads(message) if message else {}\n    \"\"\"Make a new table.\"\"\"\n    table = Table()\n    table.add_column(\"ID\")\n    table.add_column(\"Value\")\n    table.add_column(\"Status\")\n    mark_price = data[\"a\"][\"P\"][0][\"pa\"] if message else \"\"\n    entry_price = data[\"a\"][\"P\"][0][\"ep\"] if message else \"\"\n    unrealized = data[\"a\"][\"P\"][0][\"up\"] if message else \"\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "message_handler",
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        print(f\"{data=}\")\ndef main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,",
         "detail": "main",
         "documentation": {}
     },
@@ -1299,7 +1236,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FORMAT = \"%(message)s\"\nlogging.basicConfig(\n    level=logging.ERROR,\n    format=FORMAT,\n    datefmt=\"[%X]\",\n    handlers=[RichHandler(markup=True)],\n)\nconfig_logging(logging, logging.ERROR)\ndef message_handler(_, message) -> None:\n    data = json.loads(message)",
+        "peekOfCode": "FORMAT = \"%(message)s\"\nlogging.basicConfig(\n    level=logging.ERROR,\n    format=FORMAT,\n    datefmt=\"[%X]\",\n    handlers=[RichHandler(markup=True)],\n)\nconfig_logging(logging, logging.ERROR)\ndef generate_table(message: str) -> Table:\n    data = json.loads(message) if message else {}",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "live",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "live = Live(generate_table(\"\"), auto_refresh=False)\nlive.start()\ndef message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    (\n        once,\n        delay_seconds,",
         "detail": "main",
         "documentation": {}
     },
@@ -1583,20 +1529,11 @@
         "documentation": {}
     },
     {
-        "label": "m_2",
+        "label": "generate_table",
         "kind": 2,
         "importPath": "scratch",
         "description": "scratch",
-        "peekOfCode": "def m_2(n: int):\n    return pow(n,2)\ndef main():\n    thread_it = True\n    a: list[int] = list(range(1000))\n    b = [] if thread_it else [m_2(i) for i in a]\n    if thread_it:\n        with ThreadPoolExecutor() as executor:\n            b.extend([i for i in executor.map(m_2, a)])\n    print(f\"{b=}\")",
-        "detail": "scratch",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "scratch",
-        "description": "scratch",
-        "peekOfCode": "def main():\n    thread_it = True\n    a: list[int] = list(range(1000))\n    b = [] if thread_it else [m_2(i) for i in a]\n    if thread_it:\n        with ThreadPoolExecutor() as executor:\n            b.extend([i for i in executor.map(m_2, a)])\n    print(f\"{b=}\")\nif __name__ == \"__main__\":\n    t0 = time.time()",
+        "peekOfCode": "def generate_table() -> Table:\n    \"\"\"Make a new table.\"\"\"\n    table = Table()\n    table.add_column(\"ID\")\n    table.add_column(\"Value\")\n    table.add_column(\"Status\")\n    for row in range(random.randint(2, 6)):\n        value = random.random() * 100\n        table.add_row(\n            f\"{row}\", f\"{value:3.2f}\", \"[red]ERROR\" if value < 50 else \"[green]SUCCESS\"",
         "detail": "scratch",
         "documentation": {}
     },
@@ -1632,7 +1569,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    print(f\"{mark_price=}\")",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    entry_price = get_position_entry_price(symbol=symbol)",
         "detail": "trade",
         "documentation": {}
     },

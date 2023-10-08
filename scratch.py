@@ -1,29 +1,26 @@
-from concurrent.futures import ThreadPoolExecutor
-import itertools
+import random
 import time
 
-from rich import print
-
-from repo import get_time
-
-
-def m_2(n: int):
-    return pow(n,2)
+from rich.live import Live
+from rich.table import Table
 
 
-def main():
-    thread_it = True
-    a: list[int] = list(range(1000))
-    b = [] if thread_it else [m_2(i) for i in a]
-    if thread_it:
-        with ThreadPoolExecutor() as executor:
-            b.extend([i for i in executor.map(m_2, a)])
-    print(f"{b=}")
+def generate_table() -> Table:
+    """Make a new table."""
+    table = Table()
+    table.add_column("ID")
+    table.add_column("Value")
+    table.add_column("Status")
+
+    for row in range(random.randint(2, 6)):
+        value = random.random() * 100
+        table.add_row(
+            f"{row}", f"{value:3.2f}", "[red]ERROR" if value < 50 else "[green]SUCCESS"
+        )
+    return table
 
 
-if __name__ == "__main__":
-    t0 = time.time()
-    main()
-    t1 = time.time()
-    t_diff = t1 - t0
-    print(f"{t_diff=}")
+with Live(generate_table(), refresh_per_second=4, auto_refresh=False) as live:
+    for _ in range(40):
+        time.sleep(0.4)
+        live.update(renderable=generate_table(),refresh=True)
