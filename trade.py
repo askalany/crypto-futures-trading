@@ -1,16 +1,7 @@
 from typing import Any
 
 from enums import TIF, PositionSide, Strategy, TickerSymbol
-from repo import (
-    get_available_balance,
-    get_hedge_position_amount,
-    get_leverage,
-    get_mark_price,
-    get_position_entry_price,
-    get_position_unrealized_profit,
-    new_batch_order,
-    new_order,
-)
+from repo import get_available_balance, get_leverage, new_batch_order, new_order
 from strategy import trade_all_price_match_queue, trade_fixed_range
 
 
@@ -39,20 +30,16 @@ def trade(
     strategy: Strategy,
     symbol: TickerSymbol,
     position_side: PositionSide,
+    mark_price: float,
+    entry_price: float,
+    position_amount: float,
     buy_orders_num: int = 100,
     sell_orders_num: int = 100,
     tif: TIF = TIF.GTC,
 ) -> list[Any]:
-    mark_price = get_mark_price(symbol=symbol)
-    entry_price = get_position_entry_price(symbol=symbol)
-    position_amount = get_hedge_position_amount(symbol=symbol)
     orders = []
     if strategy is Strategy.FIXED_RANGE:
-        if entry_price > 0.0:
-            unrealized_profit = get_position_unrealized_profit(symbol=symbol)
-            center_price = entry_price
-        else:
-            center_price = mark_price
+        center_price = entry_price if entry_price > 0.0 else mark_price
         orders.extend(
             trade_fixed_range(
                 symbol=symbol,

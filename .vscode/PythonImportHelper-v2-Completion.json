@@ -401,14 +401,6 @@
         "documentation": {}
     },
     {
-        "label": "print_date_and_time",
-        "importPath": "utils",
-        "description": "utils",
-        "isExtraImport": true,
-        "detail": "utils",
-        "documentation": {}
-    },
-    {
         "label": "create_all_queue_price_match_orders",
         "importPath": "utils",
         "description": "utils",
@@ -606,30 +598,6 @@
         "documentation": {}
     },
     {
-        "label": "get_listen_key",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "keep_alive",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_available_balance",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
         "label": "get_hedge_position_amount",
         "importPath": "repo",
         "description": "repo",
@@ -638,7 +606,7 @@
         "documentation": {}
     },
     {
-        "label": "get_leverage",
+        "label": "get_listen_key",
         "importPath": "repo",
         "description": "repo",
         "isExtraImport": true,
@@ -662,7 +630,23 @@
         "documentation": {}
     },
     {
-        "label": "get_position_unrealized_profit",
+        "label": "keep_alive",
+        "importPath": "repo",
+        "description": "repo",
+        "isExtraImport": true,
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
+        "label": "get_available_balance",
+        "importPath": "repo",
+        "description": "repo",
+        "isExtraImport": true,
+        "detail": "repo",
+        "documentation": {}
+    },
+    {
+        "label": "get_leverage",
         "importPath": "repo",
         "description": "repo",
         "isExtraImport": true,
@@ -1209,7 +1193,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def generate_table(message: str) -> Table:\n    data = json.loads(message) if message else {}\n    \"\"\"Make a new table.\"\"\"\n    table = Table()\n    table.add_column(\"ID\")\n    table.add_column(\"Value\")\n    table.add_column(\"Status\")\n    mark_price = data[\"a\"][\"P\"][0][\"pa\"] if message else \"\"\n    entry_price = data[\"a\"][\"P\"][0][\"ep\"] if message else \"\"\n    unrealized = data[\"a\"][\"P\"][0][\"up\"] if message else \"\"",
+        "peekOfCode": "def generate_table(message: str) -> Table:\n    data = json.loads(message) if message else {}\n    \"\"\"Make a new table.\"\"\"\n    table = Table()\n    table.add_column(\"ID\")\n    table.add_column(\"Value\")\n    table.add_column(\"Status\")\n    mark_price = data[\"a\"][\"P\"][0][\"pa\"] if message else \"\"\n    entry_price = data[\"a\"][\"P\"][0][\"ep\"] if message else \"\"\n    break_even_price = data[\"a\"][\"P\"][0][\"bep\"] if message else \"\"",
         "detail": "main",
         "documentation": {}
     },
@@ -1569,7 +1553,7 @@
         "kind": 2,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,\n) -> list[Any]:\n    mark_price = get_mark_price(symbol=symbol)\n    entry_price = get_position_entry_price(symbol=symbol)",
+        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    mark_price: float,\n    entry_price: float,\n    position_amount: float,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
         "detail": "trade",
         "documentation": {}
     },

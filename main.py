@@ -11,9 +11,17 @@ from rich.logging import RichHandler
 from rich.table import Table
 
 from consts import STREAM_URL
-from repo import cancel_all_orders, close_listen_key, get_listen_key, keep_alive
+from repo import (
+    cancel_all_orders,
+    close_listen_key,
+    get_hedge_position_amount,
+    get_listen_key,
+    get_mark_price,
+    get_position_entry_price,
+    keep_alive,
+)
 from trade import trade, work
-from utils import batched_lists, get_inputs_from_file, print_date_and_time
+from utils import batched_lists, get_inputs_from_file
 
 FORMAT = "%(message)s"
 
@@ -33,14 +41,18 @@ def generate_table(message: str) -> Table:
     table.add_column("ID")
     table.add_column("Value")
     table.add_column("Status")
-    
+
     mark_price = data["a"]["P"][0]["pa"] if message else ""
     entry_price = data["a"]["P"][0]["ep"] if message else ""
+    break_even_price = data["a"]["P"][0]["bep"] if message else ""
+    accumulated_realized = data["a"]["P"][0]["cr"] if message else ""
     unrealized = data["a"]["P"][0]["up"] if message else ""
     position_amount = data["a"]["P"][0]["pa"] if message else ""
     wallet_balance = data["a"]["B"][0]["wb"] if message else ""
-    table.add_row("mark_price", f"{mark_price}")
+    table.add_row("mark_price", f"[green]{mark_price}")
     table.add_row("entry_price", f"{entry_price}")
+    table.add_row("break_even_price", f"{break_even_price}")
+    table.add_row("accumulated_realized", f"{accumulated_realized}")
     table.add_row("unrealized", f"{unrealized}")
     table.add_row("position_amount", f"{position_amount}")
     table.add_row("wallet_balance", f"{wallet_balance}")
@@ -78,13 +90,18 @@ def main() -> None:
     )
     try:
         while True:
-            t0 = time.time()
             # print_date_and_time()
             cancel_all_orders(symbol=symbol)
+            mark_price = get_mark_price(symbol=symbol)
+            entry_price = get_position_entry_price(symbol=symbol)
+            position_amount = get_hedge_position_amount(symbol=symbol)
             orders = trade(
                 strategy=strategy,
                 symbol=symbol,
                 position_side=position_side,
+                mark_price=mark_price,
+                entry_price=entry_price,
+                position_amount=position_amount,
                 buy_orders_num=buy_orders_num,
                 sell_orders_num=sell_orders_num,
                 tif=tif,
@@ -95,8 +112,6 @@ def main() -> None:
             if once:
                 break
             keep_alive(listen_key=listen_key)
-            t1 = time.time()
-            time_difference = t1 - t0
             time.sleep(delay_seconds)
     except Exception as e:
         logging.error(msg=e)
