@@ -1,4 +1,5 @@
 import concurrent.futures
+import json
 import logging
 import time
 
@@ -26,12 +27,14 @@ config_logging(logging, logging.ERROR)
 
 
 def message_handler(_, message) -> None:
-    print(message)
+    data = json.loads(message)
+    if "ACCOUNT_UPDATE" in data:
+        print(f"{data=}")
 
 
 def main() -> None:
     delay_seconds = 20
-    once = True
+    once = False
     listen_key = get_listen_key()
     ws_client = UMFuturesWebsocketClient(
         on_message=message_handler, stream_url=STREAM_URL

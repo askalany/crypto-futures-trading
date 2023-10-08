@@ -522,6 +522,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "logging",
         "kind": 6,
         "isExtraImport": true,
@@ -851,15 +860,6 @@
         "description": "requests.adapters",
         "isExtraImport": true,
         "detail": "requests.adapters",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -1264,7 +1264,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"ACCOUNT_UPDATE\" in data:\n        print(f\"{data=}\")\ndef main() -> None:\n    delay_seconds = 20\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL",
         "detail": "main",
         "documentation": {}
     },
@@ -1273,7 +1273,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
+        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = False\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
         "detail": "main",
         "documentation": {}
     },
@@ -1282,7 +1282,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FORMAT = \"%(message)s\"\nlogging.basicConfig(\n    level=logging.ERROR,\n    format=FORMAT,\n    datefmt=\"[%X]\",\n    handlers=[RichHandler(markup=True)],\n)\nconfig_logging(logging, logging.ERROR)\ndef message_handler(_, message) -> None:\n    print(message)",
+        "peekOfCode": "FORMAT = \"%(message)s\"\nlogging.basicConfig(\n    level=logging.ERROR,\n    format=FORMAT,\n    datefmt=\"[%X]\",\n    handlers=[RichHandler(markup=True)],\n)\nconfig_logging(logging, logging.ERROR)\ndef message_handler(_, message) -> None:\n    data = json.loads(message)",
         "detail": "main",
         "documentation": {}
     },
