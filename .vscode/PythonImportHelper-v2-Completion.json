@@ -9,6 +9,14 @@
         "documentation": {}
     },
     {
+        "label": "STREAM_URL",
+        "importPath": "consts",
+        "description": "consts",
+        "isExtraImport": true,
+        "detail": "consts",
+        "documentation": {}
+    },
+    {
         "label": "BASE_URL",
         "importPath": "consts",
         "description": "consts",
@@ -145,6 +153,14 @@
         "documentation": {}
     },
     {
+        "label": "TIF",
+        "importPath": "enums",
+        "description": "enums",
+        "isExtraImport": true,
+        "detail": "enums",
+        "documentation": {}
+    },
+    {
         "label": "PositionSide",
         "importPath": "enums",
         "description": "enums",
@@ -162,14 +178,6 @@
     },
     {
         "label": "TickerSymbol",
-        "importPath": "enums",
-        "description": "enums",
-        "isExtraImport": true,
-        "detail": "enums",
-        "documentation": {}
-    },
-    {
-        "label": "TIF",
         "importPath": "enums",
         "description": "enums",
         "isExtraImport": true,
@@ -1103,7 +1111,7 @@
         "kind": 5,
         "importPath": "consts",
         "description": "consts",
-        "peekOfCode": "KEY = \"1bd171c9e4c7831ace3c358d9c93ba3cc0304728d90a243830428a2c0dabfead\"\nSECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"",
+        "peekOfCode": "KEY = \"1bd171c9e4c7831ace3c358d9c93ba3cc0304728d90a243830428a2c0dabfead\"\nSECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"\nSTREAM_URL = \"wss://stream.binancefuture.com\"",
         "detail": "consts",
         "documentation": {}
     },
@@ -1112,7 +1120,7 @@
         "kind": 5,
         "importPath": "consts",
         "description": "consts",
-        "peekOfCode": "SECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"",
+        "peekOfCode": "SECRET = \"787a28958d7d9ce9e189527b2b4d8a4b608c8474d6447a23c3c88d9ff81c1269\"\nBASE_URL = \"https://testnet.binancefuture.com\"\nSTREAM_URL = \"wss://stream.binancefuture.com\"",
         "detail": "consts",
         "documentation": {}
     },
@@ -1121,7 +1129,16 @@
         "kind": 5,
         "importPath": "consts",
         "description": "consts",
-        "peekOfCode": "BASE_URL = \"https://testnet.binancefuture.com\"",
+        "peekOfCode": "BASE_URL = \"https://testnet.binancefuture.com\"\nSTREAM_URL = \"wss://stream.binancefuture.com\"",
+        "detail": "consts",
+        "documentation": {}
+    },
+    {
+        "label": "STREAM_URL",
+        "kind": 5,
+        "importPath": "consts",
+        "description": "consts",
+        "peekOfCode": "STREAM_URL = \"wss://stream.binancefuture.com\"",
         "detail": "consts",
         "documentation": {}
     },
@@ -1247,7 +1264,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    print(message)\ndef main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(",
         "detail": "main",
         "documentation": {}
     },
@@ -1256,7 +1273,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(on_message=message_handler)\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,\n    )\n    symbol = TickerSymbol.BTCUSDT",
+        "peekOfCode": "def main() -> None:\n    delay_seconds = 20\n    once = True\n    listen_key = get_listen_key()\n    ws_client = UMFuturesWebsocketClient(\n        on_message=message_handler, stream_url=STREAM_URL\n    )\n    ws_client.user_data(\n        listen_key=listen_key,\n        id=1,",
         "detail": "main",
         "documentation": {}
     },

@@ -8,7 +8,8 @@ from binance.websocket.um_futures.websocket_client import UMFuturesWebsocketClie
 from rich import print
 from rich.logging import RichHandler
 
-from enums import PositionSide, Strategy, TickerSymbol, TIF
+from consts import STREAM_URL
+from enums import TIF, PositionSide, Strategy, TickerSymbol
 from repo import cancel_all_orders, close_listen_key, get_listen_key, keep_alive
 from trade import trade, work
 from utils import batched_lists, print_date_and_time
@@ -32,7 +33,9 @@ def main() -> None:
     delay_seconds = 20
     once = True
     listen_key = get_listen_key()
-    ws_client = UMFuturesWebsocketClient(on_message=message_handler)
+    ws_client = UMFuturesWebsocketClient(
+        on_message=message_handler, stream_url=STREAM_URL
+    )
     ws_client.user_data(
         listen_key=listen_key,
         id=1,
