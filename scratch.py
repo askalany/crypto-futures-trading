@@ -23,4 +23,4 @@ def generate_table() -> Table:
 with Live(generate_table(), refresh_per_second=4, auto_refresh=False) as live:
     for _ in range(40):
         time.sleep(0.4)
-        live.update(renderable=generate_table(),refresh=True)
+        live.update(renderable=generate_table(), refresh=True)

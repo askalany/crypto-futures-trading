@@ -582,7 +582,7 @@
         "documentation": {}
     },
     {
-        "label": "cancel_all_orders",
+        "label": "TradeRepo",
         "importPath": "repo",
         "description": "repo",
         "isExtraImport": true,
@@ -590,7 +590,7 @@
         "documentation": {}
     },
     {
-        "label": "close_listen_key",
+        "label": "TradeRepo",
         "importPath": "repo",
         "description": "repo",
         "isExtraImport": true,
@@ -598,111 +598,7 @@
         "documentation": {}
     },
     {
-        "label": "get_hedge_position_amount",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_listen_key",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_mark_price",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_entry_price",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "keep_alive",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_available_balance",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_leverage",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "new_batch_order",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "new_order",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_available_balance",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_leverage",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_mark_price",
-        "importPath": "repo",
-        "description": "repo",
-        "isExtraImport": true,
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "trade",
-        "importPath": "trade",
-        "description": "trade",
-        "isExtraImport": true,
-        "detail": "trade",
-        "documentation": {}
-    },
-    {
-        "label": "work",
+        "label": "Trade",
         "importPath": "trade",
         "description": "trade",
         "isExtraImport": true,
@@ -766,6 +662,14 @@
         "documentation": {}
     },
     {
+        "label": "UMFutures",
+        "importPath": "binance.um_futures",
+        "description": "binance.um_futures",
+        "isExtraImport": true,
+        "detail": "binance.um_futures",
+        "documentation": {}
+    },
+    {
         "label": "HTTPAdapter",
         "importPath": "requests.adapters",
         "description": "requests.adapters",
@@ -774,103 +678,7 @@
         "documentation": {}
     },
     {
-        "label": "cancel_all_orders_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "close_listen_key_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_account_info_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_leverage_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_listen_key_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_mark_price_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_open_orders_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_risk_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_time_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "keep_alive_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_batch_order_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_order_request",
-        "importPath": "network",
-        "description": "network",
-        "isExtraImport": true,
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_price_match_order_request",
+        "label": "BinanceNetworkClient",
         "importPath": "network",
         "description": "network",
         "isExtraImport": true,
@@ -1202,7 +1010,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,",
+        "peekOfCode": "def message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    repo = TradeRepo()\n    (\n        once,\n        delay_seconds,\n        symbol,",
         "detail": "main",
         "documentation": {}
     },
@@ -1211,7 +1019,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def main() -> None:\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,\n        position_side,\n        buy_orders_num,\n        sell_orders_num,\n        tif,",
+        "peekOfCode": "def main() -> None:\n    repo = TradeRepo()\n    (\n        once,\n        delay_seconds,\n        symbol,\n        strategy,\n        position_side,\n        buy_orders_num,\n        sell_orders_num,",
         "detail": "main",
         "documentation": {}
     },
@@ -1229,286 +1037,25 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "live = Live(generate_table(\"\"), auto_refresh=False)\nlive.start()\ndef message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    (\n        once,\n        delay_seconds,",
+        "peekOfCode": "live = Live(generate_table(\"\"), auto_refresh=False)\nlive.start()\ndef message_handler(_, message) -> None:\n    data = json.loads(message)\n    if \"e\" in data and data[\"e\"] == \"ACCOUNT_UPDATE\":\n        live.update(renderable=generate_table(message=message), refresh=True)\ndef main() -> None:\n    repo = TradeRepo()\n    (\n        once,",
         "detail": "main",
         "documentation": {}
     },
     {
-        "label": "log_client_error",
-        "kind": 2,
+        "label": "BinanceNetworkClient",
+        "kind": 6,
         "importPath": "network",
         "description": "network",
-        "peekOfCode": "def log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 4000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)",
+        "peekOfCode": "class BinanceNetworkClient:\n    def __init__(self, client: UMFutures):\n        self.client = client\n    def log_client_error(self, error: ClientError) -> None:\n        logging.error(\n            f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\"\n        )\n    def cancel_all_orders_request(\n        self, symbol, receive_window: int = 4000\n    ) -> Any | dict[Any, Any]:",
         "detail": "network",
         "documentation": {}
     },
     {
-        "label": "cancel_all_orders_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def cancel_all_orders_request(\n    symbol, receive_window: int = 4000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_price_match_order_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def new_price_match_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    position_side: str,\n    order_type: str,\n    time_in_force: str,\n    price_match: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_order_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def new_order_request(\n    symbol: str,\n    side: str,\n    quantity: float,\n    position_side: str,\n    price: float,\n    order_type: str,\n    time_in_force: str,\n) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "new_batch_order_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def new_batch_order_request(params) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.new_batch_order(batchOrders=params)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_risk_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_position_risk_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.get_position_risk(symbol=symbol, recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_leverage_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_leverage_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = get_position_risk_request(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_account_info_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_account_info_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        # noinspection PyCallingNonCallable\n        response = client.account(recvWindow=6000)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_mark_price_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_mark_price_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.mark_price(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_listen_key_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_listen_key_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.new_listen_key()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef close_listen_key_request(listen_key: str) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "close_listen_key_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def close_listen_key_request(listen_key: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.close_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_open_orders_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_open_orders_request(symbol: str) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.get_open_orders(symbol=symbol)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef keep_alive_request(listen_key: str):\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "keep_alive_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def keep_alive_request(listen_key: str):\n    response = {}\n    try:\n        response = client.renew_listen_key(listenKey=listen_key)\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response\ndef get_time_request() -> Any | dict[Any, Any]:\n    response = {}",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_time_request",
-        "kind": 2,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "def get_time_request() -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.time()\n    except ClientError as error:\n        log_client_error(error)\n    finally:\n        return response",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "adapter",
-        "kind": 5,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\nclient = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 4000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "client",
-        "kind": 5,
-        "importPath": "network",
-        "description": "network",
-        "peekOfCode": "client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\nclient.session.mount(\"https://\", adapter)\ndef log_client_error(error: ClientError) -> None:\n    logging.error(f\"{error.status_code=}, {error.error_code=}, {error.error_message=}\")\ndef cancel_all_orders_request(\n    symbol, receive_window: int = 4000\n) -> Any | dict[Any, Any]:\n    response = {}\n    try:\n        response = client.cancel_open_orders(symbol=symbol, recvWindow=receive_window)",
-        "detail": "network",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_risk",
-        "kind": 2,
+        "label": "TradeRepo",
+        "kind": 6,
         "importPath": "repo",
         "description": "repo",
-        "peekOfCode": "def get_position_risk(\n    symbol: TickerSymbol,\n) -> tuple[\n    float,\n    float,\n    str,\n    str,\n    float,\n    int,\n    float,",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_hedge_position_amount",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_hedge_position_amount(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"])\ndef get_position_entry_price(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_entry_price",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_position_entry_price(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"entryPrice\"])\ndef get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_position_unrealized_profit",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_position_unrealized_profit(symbol: TickerSymbol) -> float:\n    return float(get_position_risk_request(symbol=symbol.name)[0][\"unRealizedProfit\"])\ndef get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_available_balance",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_available_balance() -> float:\n    return float(get_account_info_request()[\"availableBalance\"])\ndef get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_mark_price",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_mark_price(symbol: TickerSymbol) -> float:\n    return float(get_mark_price_request(symbol=symbol.name)[\"markPrice\"])\ndef new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "new_order",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def new_order(\n    symbol: TickerSymbol,\n    side: Side,\n    quantity: float,\n    position_side: PositionSide,\n    price: float = -1.0,\n    order_type: OrderType = OrderType.LIMIT,\n    time_in_force: TIF = TIF.GTC,\n    price_match: PriceMatch = PriceMatchNone.NONE,\n) -> Any | dict[Any, Any]:",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "new_batch_order",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def new_batch_order(orders: list) -> Any | dict[Any, Any]:\n    new_orders = []\n    for order in orders:\n        new_dict = {}\n        for key in order:\n            key_value = order[key]\n            if isinstance(key_value, Enum):\n                new_dict[key] = key_value.value\n            else:\n                new_dict[key] = str(key_value)",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_leverage",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_leverage(symbol: TickerSymbol) -> int:\n    return int(get_leverage_request(symbol=symbol.name)[0][\"leverage\"])\ndef cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "cancel_all_orders",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def cancel_all_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return cancel_all_orders_request(symbol=symbol.name)\ndef get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_listen_key",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_listen_key() -> str:\n    return get_listen_key_request()[\"listenKey\"]\ndef close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "close_listen_key",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def close_listen_key(listen_key: str) -> Any | dict[Any, Any]:\n    return close_listen_key_request(listen_key=listen_key)\ndef get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_open_orders",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_open_orders(symbol: TickerSymbol) -> Any | dict[Any, Any]:\n    return get_open_orders_request(symbol=symbol.name)\ndef keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "keep_alive",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def keep_alive(listen_key: str):\n    return keep_alive_request(listen_key=listen_key)\ndef get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
-        "detail": "repo",
-        "documentation": {}
-    },
-    {
-        "label": "get_time",
-        "kind": 2,
-        "importPath": "repo",
-        "description": "repo",
-        "peekOfCode": "def get_time() -> int:\n    return get_time_request()[\"serverTime\"]",
+        "peekOfCode": "class TradeRepo:\n    def __init__(self):\n        um_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)\n        adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)\n        um_client.session.mount(\"https://\", adapter)\n        self.client = BinanceNetworkClient(client=um_client)\n    def get_hedge_position_amount(self, symbol: TickerSymbol) -> float:\n        return float(\n            self.client.get_position_risk_request(symbol=symbol.name)[0][\"positionAmt\"]\n        )",
         "detail": "repo",
         "documentation": {}
     },
@@ -1535,25 +1082,16 @@
         "kind": 2,
         "importPath": "strategy",
         "description": "strategy",
-        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    sell_amount: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,\n) -> list[dict[str, Any]]:\n    buy_amount = get_max_buy_amount(symbol)\n    buy_order_amount = round(buy_amount / float(buy_orders_num), 4)",
+        "peekOfCode": "def trade_all_price_match_queue(\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    sell_amount: float,\n    leverage: int,\n    available_balance: float,\n    mark_price: float,\n    buy_orders_num: int = 4,\n    sell_orders_num: int = 4,\n    tif: TIF = TIF.GTC,",
         "detail": "strategy",
         "documentation": {}
     },
     {
-        "label": "work",
-        "kind": 2,
+        "label": "Trade",
+        "kind": 6,
         "importPath": "trade",
         "description": "trade",
-        "peekOfCode": "def work(order) -> Any | dict[Any, Any]:\n    if isinstance(order, list):\n        return new_batch_order(orders=order)\n    if \"priceMatch\" in order:\n        return new_order(\n            symbol=order[\"symbol\"],\n            side=order[\"side\"],\n            quantity=order[\"quantity\"],\n            position_side=order[\"positionSide\"],\n            price_match=order[\"priceMatch\"],",
-        "detail": "trade",
-        "documentation": {}
-    },
-    {
-        "label": "trade",
-        "kind": 2,
-        "importPath": "trade",
-        "description": "trade",
-        "peekOfCode": "def trade(\n    strategy: Strategy,\n    symbol: TickerSymbol,\n    position_side: PositionSide,\n    mark_price: float,\n    entry_price: float,\n    position_amount: float,\n    buy_orders_num: int = 100,\n    sell_orders_num: int = 100,\n    tif: TIF = TIF.GTC,",
+        "peekOfCode": "class Trade:\n    def __init__(self, repo: TradeRepo):\n        self.repo = repo\n    def work(self, order) -> Any | dict[Any, Any]:\n        if isinstance(order, list):\n            return self.repo.new_batch_order(orders=order)\n        if \"priceMatch\" in order:\n            return self.repo.new_order(\n                symbol=order[\"symbol\"],\n                side=order[\"side\"],",
         "detail": "trade",
         "documentation": {}
     },
@@ -1679,7 +1217,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_max_buy_amount(symbol: TickerSymbol):\n    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(\n        symbol=symbol\n    )\ndef get_enum_class_name(enum_class: EnumType) -> str:\n    start = \"'\"\n    end = \"'\"\n    enum_class_str = str(enum_class)\n    return enum_class_str[\n        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)",
+        "peekOfCode": "def get_max_buy_amount(leverage: int, available_balance: float, mark_price):\n    return (leverage * available_balance) / mark_price\ndef get_enum_class_name(enum_class: EnumType) -> str:\n    start = \"'\"\n    end = \"'\"\n    enum_class_str = str(enum_class)\n    return enum_class_str[\n        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)\n    ]\ndef check_file_inputs(",
         "detail": "utils",
         "documentation": {}
     },

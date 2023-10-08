@@ -76,11 +76,16 @@ def trade_all_price_match_queue(
     symbol: TickerSymbol,
     position_side: PositionSide,
     sell_amount: float,
+    leverage: int,
+    available_balance: float,
+    mark_price: float,
     buy_orders_num: int = 4,
     sell_orders_num: int = 4,
     tif: TIF = TIF.GTC,
 ) -> list[dict[str, Any]]:
-    buy_amount = get_max_buy_amount(symbol)
+    buy_amount = get_max_buy_amount(
+        leverage=leverage, available_balance=available_balance, mark_price=mark_price
+    )
     buy_order_amount = round(buy_amount / float(buy_orders_num), 4)
     sell_order_amount = round(sell_amount / float(sell_orders_num), 4)
     buy_orders = create_all_queue_price_match_orders(

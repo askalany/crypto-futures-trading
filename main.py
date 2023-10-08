@@ -11,16 +11,8 @@ from rich.logging import RichHandler
 from rich.table import Table
 
 from consts import STREAM_URL
-from repo import (
-    cancel_all_orders,
-    close_listen_key,
-    get_hedge_position_amount,
-    get_listen_key,
-    get_mark_price,
-    get_position_entry_price,
-    keep_alive,
-)
-from trade import trade, work
+from repo import TradeRepo
+from trade import Trade
 from utils import batched_lists, get_inputs_from_file
 
 FORMAT = "%(message)s"
@@ -70,6 +62,7 @@ def message_handler(_, message) -> None:
 
 
 def main() -> None:
+    repo = TradeRepo()
     (
         once,
         delay_seconds,
@@ -80,7 +73,7 @@ def main() -> None:
         sell_orders_num,
         tif,
     ) = get_inputs_from_file()
-    listen_key = get_listen_key()
+    listen_key = repo.get_listen_key()
     ws_client = UMFuturesWebsocketClient(
         on_message=message_handler, stream_url=STREAM_URL
     )
@@ -91,34 +84,37 @@ def main() -> None:
     try:
         while True:
             # print_date_and_time()
-            cancel_all_orders(symbol=symbol)
-            mark_price = get_mark_price(symbol=symbol)
-            entry_price = get_position_entry_price(symbol=symbol)
-            position_amount = get_hedge_position_amount(symbol=symbol)
-            orders = trade(
+            repo.cancel_all_orders(symbol=symbol)
+            mark_price = repo.get_mark_price(symbol=symbol)
+            entry_price = repo.get_position_entry_price(symbol=symbol)
+            position_amount = repo.get_hedge_position_amount(symbol=symbol)
+            trade = Trade(repo=repo)
+            orders = trade.trade(
                 strategy=strategy,
                 symbol=symbol,
                 position_side=position_side,
                 mark_price=mark_price,
                 entry_price=entry_price,
                 position_amount=position_amount,
+                leverage=repo.get_leverage(symbol=symbol),
+                available_balance=repo.get_available_balance(),
                 buy_orders_num=buy_orders_num,
                 sell_orders_num=sell_orders_num,
                 tif=tif,
             )
             batched_orders = batched_lists(orders, 5)
             with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:
-                executor.map(work, batched_orders, chunksize=5)
+                executor.map(trade.work, batched_orders, chunksize=5)
             if once:
                 break
-            keep_alive(listen_key=listen_key)
+            repo.keep_alive(listen_key=listen_key)
             time.sleep(delay_seconds)
     except Exception as e:
         logging.error(msg=e)
     finally:
         live.stop()
         ws_client.stop()
-        close_listen_key(listen_key=listen_key)
+        repo.close_listen_key(listen_key=listen_key)
 
 
 if __name__ == "__main__":

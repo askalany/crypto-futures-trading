@@ -20,7 +20,6 @@ from enums import (
     Strategy,
     TickerSymbol,
 )
-from repo import get_available_balance, get_leverage, get_mark_price
 
 
 def create_order(
@@ -208,10 +207,8 @@ def get_grid_maxs_and_mins(
     return price_sell_max, price_sell_min, price_buy_max, price_buy_min
 
 
-def get_max_buy_amount(symbol: TickerSymbol):
-    return (get_leverage(symbol=symbol) * get_available_balance()) / get_mark_price(
-        symbol=symbol
-    )
+def get_max_buy_amount(leverage: int, available_balance: float, mark_price):
+    return (leverage * available_balance) / mark_price
 
 
 def get_enum_class_name(enum_class: EnumType) -> str:
