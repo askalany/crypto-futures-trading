@@ -51,19 +51,17 @@ def create_order(
 def create_all_queue_price_match_orders(
     symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float
 ) -> list[Any]:
-    orders = []
-    for name, member in PriceMatchQueue.__members__.items():
-        if quantity > 0.0:
-            orders.append(
-                create_order(
-                    symbol=symbol,
-                    side=side,
-                    quantity=quantity,
-                    position_side=position_side,
-                    price_match=member,
-                )
-            )
-    return orders
+    return [
+        create_order(
+            symbol=symbol,
+            side=side,
+            quantity=quantity,
+            position_side=position_side,
+            price_match=member,
+        )
+        for name, member in PriceMatchQueue.__members__.items()
+        if quantity > 0.0
+    ]
 
 
 def create_multiple_orders(
@@ -113,9 +111,7 @@ def get_orders_quantities_and_prices(
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
         order_amount = amount / orders_num
-        quantity = (
-            order_amount if order_amount > order_quantity_min else order_quantity_min
-        )
+        quantity = max(order_amount, order_quantity_min)
         if order_amount < order_quantity_min:
             quantity = order_quantity_min
             orders_num = int(amount / order_quantity_min)
@@ -136,8 +132,7 @@ def print_date_and_time() -> None:
 
 def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
     scaled: list[float] = [1]
-    for i in range(0, num - 1):
-        scaled.append(scaled[-1] * volume_scale)
+    scaled.extend(scaled[-1] * volume_scale for _ in range(num - 1))
     sum_scaled: float = float(sum(scaled))
     return scaled, sum_scaled
 
@@ -186,11 +181,11 @@ def check_grid_maxs_and_mins(
     price_sell_max, price_sell_min, price_buy_max, price_buy_min
 ) -> None:
     if price_sell_min >= price_sell_max:
-        raise Exception("price_sell_min >= price_sell_max")
+        raise ValueError("price_sell_min >= price_sell_max")
     if price_buy_max >= price_sell_min:
-        raise Exception("price_buy_max >= price_sell_min")
+        raise ValueError("price_buy_max >= price_sell_min")
     if price_buy_min >= price_buy_max:
-        raise Exception("price_buy_min >= price_buy_max")
+        raise ValueError("price_buy_min >= price_buy_max")
 
 
 def get_grid_maxs_and_mins(

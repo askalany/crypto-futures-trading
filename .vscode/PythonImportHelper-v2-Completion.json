@@ -1092,7 +1092,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class AutoName(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()",
+        "peekOfCode": "class AutoName(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        # sourcery skip: instance-method-first-arg-name\n        return name\nclass PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        # sourcery skip: instance-method-first-arg-name\n        return name",
         "detail": "enums",
         "documentation": {}
     },
@@ -1101,7 +1101,7 @@
         "kind": 6,
         "importPath": "enums",
         "description": "enums",
-        "peekOfCode": "class PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()\n    OPPONENT_10 = auto()",
+        "peekOfCode": "class PriceMatch(Enum):\n    # noinspection PyMethodParameters\n    def _generate_next_value_(name, start, count, last_values):\n        # sourcery skip: instance-method-first-arg-name\n        return name\nclass PriceMatchNone(PriceMatch):\n    NONE = auto()\nclass PriceMatchOpponent(PriceMatch):\n    OPPONENT = auto()\n    OPPONENT_5 = auto()",
         "detail": "enums",
         "documentation": {}
     },
@@ -1587,7 +1587,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float\n) -> list[Any]:\n    orders = []\n    for name, member in PriceMatchQueue.__members__.items():\n        if quantity > 0.0:\n            orders.append(\n                create_order(\n                    symbol=symbol,\n                    side=side,",
+        "peekOfCode": "def create_all_queue_price_match_orders(\n    symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float\n) -> list[Any]:\n    return [\n        create_order(\n            symbol=symbol,\n            side=side,\n            quantity=quantity,\n            position_side=position_side,\n            price_match=member,",
         "detail": "utils",
         "documentation": {}
     },
@@ -1614,7 +1614,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def print_date_and_time() -> None:\n    print(f\"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\")\ndef get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))",
+        "peekOfCode": "def print_date_and_time() -> None:\n    print(f\"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\")\ndef get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    scaled.extend(scaled[-1] * volume_scale for _ in range(num - 1))\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(",
         "detail": "utils",
         "documentation": {}
     },
@@ -1623,7 +1623,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    for i in range(0, num - 1):\n        scaled.append(scaled[-1] * volume_scale)\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(\n    total_amount: float, final_scaled: list[float]",
+        "peekOfCode": "def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:\n    scaled: list[float] = [1]\n    scaled.extend(scaled[-1] * volume_scale for _ in range(num - 1))\n    sum_scaled: float = float(sum(scaled))\n    return scaled, sum_scaled\ndef get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:\n    return list(map(lambda x: x / sum_scaled, scaled))\ndef make_it_smaller(\n    total_amount: float, final_scaled: list[float]\n) -> Any | list[float]:",
         "detail": "utils",
         "documentation": {}
     },
@@ -1668,7 +1668,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def batched_lists(iterable, n) -> list[list[Any]]:\n    b = batched(iterable=iterable, n=n)\n    return [list(i) for i in b]\ndef check_grid_maxs_and_mins(\n    price_sell_max, price_sell_min, price_buy_max, price_buy_min\n) -> None:\n    if price_sell_min >= price_sell_max:\n        raise Exception(\"price_sell_min >= price_sell_max\")\n    if price_buy_max >= price_sell_min:\n        raise Exception(\"price_buy_max >= price_sell_min\")",
+        "peekOfCode": "def batched_lists(iterable, n) -> list[list[Any]]:\n    b = batched(iterable=iterable, n=n)\n    return [list(i) for i in b]\ndef check_grid_maxs_and_mins(\n    price_sell_max, price_sell_min, price_buy_max, price_buy_min\n) -> None:\n    if price_sell_min >= price_sell_max:\n        raise ValueError(\"price_sell_min >= price_sell_max\")\n    if price_buy_max >= price_sell_min:\n        raise ValueError(\"price_buy_max >= price_sell_min\")",
         "detail": "utils",
         "documentation": {}
     },
@@ -1677,7 +1677,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def check_grid_maxs_and_mins(\n    price_sell_max, price_sell_min, price_buy_max, price_buy_min\n) -> None:\n    if price_sell_min >= price_sell_max:\n        raise Exception(\"price_sell_min >= price_sell_max\")\n    if price_buy_max >= price_sell_min:\n        raise Exception(\"price_buy_max >= price_sell_min\")\n    if price_buy_min >= price_buy_max:\n        raise Exception(\"price_buy_min >= price_buy_max\")\ndef get_grid_maxs_and_mins(",
+        "peekOfCode": "def check_grid_maxs_and_mins(\n    price_sell_max, price_sell_min, price_buy_max, price_buy_min\n) -> None:\n    if price_sell_min >= price_sell_max:\n        raise ValueError(\"price_sell_min >= price_sell_max\")\n    if price_buy_max >= price_sell_min:\n        raise ValueError(\"price_buy_max >= price_sell_min\")\n    if price_buy_min >= price_buy_max:\n        raise ValueError(\"price_buy_min >= price_buy_max\")\ndef get_grid_maxs_and_mins(",
         "detail": "utils",
         "documentation": {}
     },

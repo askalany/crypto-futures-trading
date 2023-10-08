@@ -69,8 +69,7 @@ def trade_fixed_range(
         position_side=position_side,
         time_in_force=tif,
     )
-    orders = buy_orders + sell_orders
-    return orders
+    return buy_orders + sell_orders
 
 
 def trade_all_price_match_queue(
@@ -96,5 +95,4 @@ def trade_all_price_match_queue(
         position_side=position_side,
         quantity=min(sell_order_amount, 1000.0),
     )
-    orders = buy_orders + sell_orders
-    return orders
+    return buy_orders + sell_orders
