@@ -1794,7 +1794,7 @@
         "kind": 2,
         "importPath": "utils",
         "description": "utils",
-        "peekOfCode": "def get_enum_member_from_name(name_str: str):\n    enum_type = get_enum_type_from_member_name(name_str)\n    if enum_type is not None:\n        for _, member in enum_type.__members__.items():\n            if name_str == f\"{member}\":\n                return member\ndef get_inputs_from_file(\n    file_name: str = \"my_trading.json\",\n) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:\n    f = open(file_name, \"r\")",
+        "peekOfCode": "def get_enum_member_from_name(name_str: str):\n    enum_type = get_enum_type_from_member_name(name_str)\n    if enum_type is not None:\n        for _, member in enum_type.__members__.items():\n            if name_str == f\"{member}\":\n                return member\n        raise ValueError(f\"{name_str} is not a member of {enum_type.__name__}\")\ndef get_inputs_from_file(\n    file_name: str = \"my_trading.json\",\n) -> tuple[bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:",
         "detail": "utils",
         "documentation": {}
     },

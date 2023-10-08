@@ -272,6 +272,7 @@ def get_enum_member_from_name(name_str: str):
         for _, member in enum_type.__members__.items():
             if name_str == f"{member}":
                 return member
+        raise ValueError(f"{name_str} is not a member of {enum_type.__name__}")
 
 
 def get_inputs_from_file(
