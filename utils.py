@@ -207,7 +207,9 @@ def get_grid_maxs_and_mins(
     return price_sell_max, price_sell_min, price_buy_max, price_buy_min
 
 
-def get_max_buy_amount(leverage: int, available_balance: float, mark_price):
+def get_max_buy_amount(
+    leverage: int, available_balance: float, mark_price: float
+) -> float:
     return (leverage * available_balance) / mark_price
 
 
@@ -230,7 +232,7 @@ def check_file_inputs(
     buy_orders_num: int,
     sell_orders_num: int,
     tif: Any,
-)  -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+) -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
     if not isinstance(symbol, TickerSymbol):
         raise ValueError("incorrect input for symbol")
     if not isinstance(strategy, Strategy):
@@ -252,25 +254,26 @@ def check_file_inputs(
     )
 
 
-def get_enum_type_from_member_name(key_str: str):
+def get_enum_type_from_member_name(key_str: str) -> EnumType:
     split_string = key_str.split(".")
     for i in ALL_ENUMS:
         if split_string[0] == get_enum_class_name(i):
             return i
+    raise ValueError("Invalid enum")
 
 
-def get_enum_member_from_name(name_str: str):
+def get_enum_member_from_name(name_str: str) -> EnumType:
     enum_type = get_enum_type_from_member_name(name_str)
     if enum_type is not None:
         for _, member in enum_type.__members__.items():
             if name_str == f"{member}":
                 return member
-        raise ValueError(f"{name_str} is not a member of {enum_type.__name__}")
+    raise ValueError(f"{name_str} is not a member of {enum_type.__name__}")
 
 
 def get_inputs_from_file(
     file_name: str = "my_trading.json",
-) :
+) -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
     f = open(file_name, "r")
     read = f.read()
     data = json.loads(read)

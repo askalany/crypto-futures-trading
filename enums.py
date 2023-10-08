@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum, EnumType, auto
 
 
 class AutoName(Enum):
@@ -76,7 +76,7 @@ class AmountSpacing(Enum):
     GEOMETRIC = auto()
 
 
-ALL_ENUMS = [
+ALL_ENUMS: list[EnumType] = [
     PriceMatch,
     PriceMatchNone,
     PriceMatchOpponent,
