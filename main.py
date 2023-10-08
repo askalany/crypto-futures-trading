@@ -11,6 +11,7 @@ from rich.logging import RichHandler
 from rich.table import Table
 
 from consts import STREAM_URL
+from enums import TickerSymbol
 from repo import TradeRepo
 from trade import Trade
 from utils import batched_lists, get_inputs_from_file
@@ -34,7 +35,8 @@ def generate_table(message: str) -> Table:
     table.add_column("Value")
     table.add_column("Status")
 
-    mark_price = data["a"]["P"][0]["pa"] if message else ""
+    repo = TradeRepo()
+    mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT)
     entry_price = data["a"]["P"][0]["ep"] if message else ""
     break_even_price = data["a"]["P"][0]["bep"] if message else ""
     accumulated_realized = data["a"]["P"][0]["cr"] if message else ""
