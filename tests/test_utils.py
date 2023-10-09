@@ -1,3 +1,5 @@
+from typing import Any
+from _pytest.python_api import RaisesContext
 from enums import (
     TIF,
     OrderType,
@@ -8,6 +10,8 @@ from enums import (
     TickerSymbol,
 )
 from utils import create_order, get_scaled_amounts
+import pytest
+from utils import get_scaled_mults
 
 
 def order_value():
@@ -215,3 +219,61 @@ def test_scaled_amounts_sum():
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
     assert sum(result) == expected_sum
+
+
+@pytest.mark.parametrize(
+    "scaled, sum_scaled, expected_output",
+    [
+        ([1.0, 2.0, 3.0], 6.0, [1.0 / 6.0, 2.0 / 6.0, 3.0 / 6.0]),
+        ([0.5, 1.0, 1.5], 3.0, [0.5 / 3.0, 1.0 / 3.0, 1.5 / 3.0]),
+        ([0.0, 0.0, 0.0], 1.0, [0.0, 0.0, 0.0]),
+    ],
+    ids=["test_1", "test_2", "test_3"],
+)
+def test_get_scaled_mults_happy_path(
+    scaled: list[float], sum_scaled: float, expected_output: list[float]
+):
+    # Act
+    result = get_scaled_mults(scaled, sum_scaled)
+
+    # Assert
+    assert result == expected_output
+
+
+@pytest.mark.parametrize(
+    "scaled, sum_scaled, expected_output",
+    [
+        ([1.0, 2.0, 3.0], -1.0, pytest.raises(ValueError)),
+    ],
+    ids=["test_4"],
+)
+def test_get_scaled_mults_edge_cases(
+    scaled: list[float], sum_scaled: float, expected_output: RaisesContext[ValueError]
+):
+    # Act & Assert
+    with expected_output:
+        result = get_scaled_mults(scaled, sum_scaled)
+
+
+@pytest.mark.parametrize(
+    "scaled, sum_scaled, expected_output", [([], 1.0, [])], ids=["test_5"]
+)
+def test_get_scaled_mults_edge_cases_2(
+    scaled: Any, sum_scaled: float, expected_output: Any
+):
+    # Act & Assert
+    assert expected_output == get_scaled_mults(scaled, sum_scaled)
+
+
+@pytest.mark.parametrize(
+    "scaled, sum_scaled",
+    [
+        ([1.0, 2.0, 3.0], 0.0),
+        ([1.0, 2.0, 3.0], -1.0),
+    ],
+    ids=["test_6", "test_7"],
+)
+def test_get_scaled_mults_error_cases(scaled: list[float], sum_scaled: float):
+    # Act & Assert
+    with pytest.raises((ZeroDivisionError, ValueError)):
+        get_scaled_mults(scaled, sum_scaled)

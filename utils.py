@@ -149,7 +149,14 @@ def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
 
 
 def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:
-    return list(map(lambda x: x / sum_scaled, scaled))
+    if not scaled:
+        return []
+    if sum_scaled < 0.0:
+        raise ValueError("sum_scaled must be greater than 0.0")
+    if sum_scaled == 0.0:
+        raise ZeroDivisionError("sum_scaled must be greater than 0.0")
+    return [x / sum_scaled for x in scaled]
+
 
 
 def make_it_smaller(
