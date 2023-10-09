@@ -162,24 +162,20 @@ def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:
     return [x / sum_scaled for x in scaled]
 
 
-
-def make_it_smaller(total_amount: float, final_scaled: list[float]) -> Any | list[float]:
+def make_it_smaller(
+    total_amount: float, final_scaled: list[float]
+) -> Any | list[float]:
     while sum(final_scaled) > total_amount:
         final_scaled[-1] -= sum(final_scaled) - total_amount
     return final_scaled
 
 
-
-
-
 def get_scaled_amounts(
     total_amount: float, volume_scale: float, num: int
 ) -> list[float]:
-    scaled, sum_scaled = get_scaled(volume_scale=volume_scale, num=num)
-    scaled_mults = get_scaled_mults(scaled=scaled, sum_scaled=sum_scaled)
     return make_it_smaller(
-        total_amount=total_amount,
-        final_scaled=list(map(lambda x: x * total_amount, scaled_mults)),
+        total_amount,
+        [x * total_amount for x in get_scaled_mults(*get_scaled(volume_scale, num))],
     )
 
 
