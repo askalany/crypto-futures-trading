@@ -1,30 +1,24 @@
 import asyncio
 import time
 
+from binance.um_futures import UMFutures
 
-def say_after(delay, what):
-    if what == "hello":
-        raise ValueError(f"say_after can't say {what}")
-    time.sleep(delay)
-    print(what)
+from consts import BASE_URL, KEY, SECRET
+
+client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
 
 
-async def say_after_async(delay, what):
-    await asyncio.sleep(delay)
-    print(what)
+async def get_mark_price_async(symbol):
+    return client.mark_price(symbol=symbol)["markPrice"]
 
 
 async def main():
-    async_it = True
     t0 = time.perf_counter()
-    if async_it:
-        async with asyncio.TaskGroup() as tg:
-            task1 = tg.create_task(say_after_async(1, "hello"))
-            task2 = tg.create_task(say_after_async(1, "world"))
-        print(f"Both tasks have completed now: {task1.result()}, {task2.result()}")
-    else:
-        say_after(1, "hello")
-        say_after(1, "world")
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(get_mark_price_async(symbol="BTCUSDT"))
+        task2 = tg.create_task(get_mark_price_async(symbol="ETHUSDT"))
+    print(f"BTC Mark Price = {task1.result()}")
+    print(f"ETH Mark Price = {task2.result()}")
     t1 = time.perf_counter()
     t_diff = t1 - t0
     print(f"{t_diff} seconds")
