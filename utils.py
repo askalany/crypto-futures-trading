@@ -142,6 +142,10 @@ def print_date_and_time() -> None:
 
 
 def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
+    if volume_scale <= 0.0:
+        raise ValueError("volume_scale must be greater than 0.0")
+    if num <= 0:
+        raise ValueError("num must be greater than 0")
     scaled: list[float] = [1]
     scaled.extend(scaled[-1] * volume_scale for _ in range(num - 1))
     sum_scaled: float = float(sum(scaled))
