@@ -194,8 +194,10 @@ def batched_lists(iterable, n) -> list[list[Any]]:
 def check_grid_maxs_and_mins(
     price_sell_max, price_sell_min, price_buy_max, price_buy_min
 ) -> None:
-    if not (price_sell_min < price_sell_max < price_buy_min < price_buy_max):
-        raise ValueError("Invalid price ranges")
+    if not (price_buy_min < price_buy_max < price_sell_min < price_sell_max):
+        raise ValueError(
+            f"{price_sell_max=}, {price_sell_min=}, {price_buy_max=}, {price_buy_min=} Invalid price ranges"
+        )
 
 
 def get_grid_maxs_and_mins(
