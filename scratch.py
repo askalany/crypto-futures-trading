@@ -1,26 +1,16 @@
-import random
-import time
-
-from rich.live import Live
-from rich.table import Table
+import asyncio
+import datetime
 
 
-def generate_table() -> Table:
-    """Make a new table."""
-    table = Table()
-    table.add_column("ID")
-    table.add_column("Value")
-    table.add_column("Status")
-
-    for row in range(random.randint(2, 6)):
-        value = random.random() * 100
-        table.add_row(
-            f"{row}", f"{value:3.2f}", "[red]ERROR" if value < 50 else "[green]SUCCESS"
-        )
-    return table
+def display_date(loop: asyncio.AbstractEventLoop):
+    print(datetime.datetime.now())
+    loop.call_later(1, display_date, loop)
 
 
-with Live(generate_table(), refresh_per_second=4, auto_refresh=False) as live:
-    for _ in range(40):
-        time.sleep(0.4)
-        live.update(renderable=generate_table(), refresh=True)
+loop = asyncio.new_event_loop()
+loop.call_soon(display_date, loop)
+
+try:
+    loop.run_forever()
+finally:
+    loop.close()
