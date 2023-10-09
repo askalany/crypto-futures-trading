@@ -8,7 +8,6 @@ import numpy as np
 from rich import print
 
 from enums import (
-    ALL_ENUMS,
     TIF,
     AmountSpacing,
     OrderType,
@@ -19,6 +18,7 @@ from enums import (
     Side,
     Strategy,
     TickerSymbol,
+    get_enum_member_from_name,
 )
 
 
@@ -195,12 +195,8 @@ def batched_lists(iterable, n) -> list[list[Any]]:
 def check_grid_maxs_and_mins(
     price_sell_max, price_sell_min, price_buy_max, price_buy_min
 ) -> None:
-    if price_sell_min >= price_sell_max:
-        raise ValueError("price_sell_min >= price_sell_max")
-    if price_buy_max >= price_sell_min:
-        raise ValueError("price_buy_max >= price_sell_min")
-    if price_buy_min >= price_buy_max:
-        raise ValueError("price_buy_min >= price_buy_max")
+    if not (price_sell_min < price_sell_max < price_buy_min < price_buy_max):
+        raise ValueError("Invalid price ranges")
 
 
 def get_grid_maxs_and_mins(
@@ -270,23 +266,6 @@ def check_file_inputs(
         sell_orders_num,
         tif,
     )
-
-
-def get_enum_type_from_member_name(key_str: str) -> EnumType:
-    split_string = key_str.split(".")
-    for i in ALL_ENUMS:
-        if split_string[0] == get_enum_class_name(i):
-            return i
-    raise ValueError("Invalid enum")
-
-
-def get_enum_member_from_name(name_str: str) -> EnumType:
-    enum_type = get_enum_type_from_member_name(name_str)
-    if enum_type is not None:
-        for _, member in enum_type.__members__.items():
-            if name_str == f"{member}":
-                return member
-    raise ValueError(f"{name_str} is not a member of {enum_type.__name__}")
 
 
 def get_inputs_from_file(

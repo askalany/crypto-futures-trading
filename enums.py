@@ -1,5 +1,7 @@
 from enum import Enum, EnumType, auto
 
+from utils import get_enum_class_name
+
 
 class AutoName(Enum):
     # noinspection PyMethodParameters
@@ -88,3 +90,20 @@ ALL_ENUMS: list[EnumType] = [
     OrderType,
     TIF,
 ]
+
+
+def get_enum_type_from_member_name(key_str: str) -> EnumType:
+    split_string = key_str.split(".")
+    for i in ALL_ENUMS:
+        if split_string[0] == get_enum_class_name(i):
+            return i
+    raise ValueError("Invalid enum")
+
+
+def get_enum_member_from_name(name_str: str) -> EnumType:
+    enum_type = get_enum_type_from_member_name(name_str)
+    if enum_type is not None:
+        for _, member in enum_type.__members__.items():
+            if name_str == f"{member}":
+                return member
+    raise ValueError(f"{name_str} is not a member of {enum_type.__name__}")
