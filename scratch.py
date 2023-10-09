@@ -10,7 +10,13 @@ def display_date(loop: asyncio.AbstractEventLoop):
 loop = asyncio.new_event_loop()
 loop.call_soon(display_date, loop)
 
-try:
-    loop.run_forever()
-finally:
-    loop.close()
+
+def main():
+    try:
+        loop.run_forever()
+    finally:
+        loop.close()
+
+
+if __name__ == "__main__":
+    main()
