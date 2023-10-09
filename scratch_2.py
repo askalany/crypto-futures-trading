@@ -3,6 +3,7 @@ import time
 
 
 def say_after(delay, what):
+    a = list(range(1000))
     time.sleep(delay)
     print(what)
 
