@@ -115,14 +115,26 @@ def get_orders_quantities_and_prices(
             quantity = order_quantity_min
             orders_num = int(amount / order_quantity_min)
         amount_spacing_list = (
-            np.linspace(start=low_price, stop=high_price, num=orders_num)
+            get_linear_scale(
+                orders_num=orders_num, high_price=high_price, low_price=low_price
+            )
             if amount_spacing is AmountSpacing.LINEAR
-            else np.geomspace(start=low_price, stop=high_price, num=orders_num)
+            else get_geom_scale(
+                orders_num=orders_num, high_price=high_price, low_price=low_price
+            )
         )
         quantities_and_prices = [
             (round(i, 1), round(quantity, 3)) for i in amount_spacing_list
         ]
     return quantities_and_prices
+
+
+def get_geom_scale(orders_num: int, high_price: float, low_price: float):
+    return np.geomspace(start=low_price, stop=high_price, num=orders_num)
+
+
+def get_linear_scale(orders_num: int, high_price: float, low_price: float):
+    return np.linspace(start=low_price, stop=high_price, num=orders_num)
 
 
 def print_date_and_time() -> None:
