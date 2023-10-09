@@ -90,21 +90,13 @@ ALL_ENUMS: list[EnumType] = [
 ]
 
 
-def get_enum_class_name(enum_class: EnumType) -> str:
-    start = "'"
-    end = "'"
-    enum_class_str = str(enum_class)
-    return enum_class_str[
-        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)
-    ]
-
-
 def get_enum_type_from_member_name(key_str: str) -> EnumType:
-    split_string = key_str.split(".")
-    for i in ALL_ENUMS:
-        if split_string[0] == get_enum_class_name(i):
-            return i
+    enum_class_name = key_str.split(".")[0]
+    for enum_class in ALL_ENUMS:
+        if enum_class_name == enum_class.__name__:
+            return enum_class
     raise ValueError("Invalid enum")
+
 
 
 def get_enum_member_from_name(name_str: str) -> EnumType:
