@@ -159,16 +159,13 @@ def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:
 
 
 
-def make_it_smaller(
-    total_amount: float, final_scaled: list[float]
-) -> Any | list[float]:
-    sum_final_scaled = sum(final_scaled)
-    final_scaled[-1] -= sum_final_scaled - total_amount
-    if sum_final_scaled > total_amount:
-        final_scaled = make_it_smaller(
-            total_amount=total_amount, final_scaled=final_scaled
-        )
+def make_it_smaller(total_amount: float, final_scaled: list[float]) -> Any | list[float]:
+    while sum(final_scaled) > total_amount:
+        final_scaled[-1] -= sum(final_scaled) - total_amount
     return final_scaled
+
+
+
 
 
 def get_scaled_amounts(

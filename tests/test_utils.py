@@ -277,3 +277,4 @@ def test_get_scaled_mults_error_cases(scaled: list[float], sum_scaled: float):
     # Act & Assert
     with pytest.raises((ZeroDivisionError, ValueError)):
         get_scaled_mults(scaled, sum_scaled)
+
