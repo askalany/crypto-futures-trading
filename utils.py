@@ -1,6 +1,5 @@
 import datetime
 import json
-from enum import EnumType
 from itertools import islice
 from typing import Any
 
@@ -225,15 +224,6 @@ def get_max_buy_amount(
     if leverage <= 0 or available_balance < 0 or mark_price <= 0.0:
         raise ValueError("Invalid input values")
     return (leverage * available_balance) / mark_price
-
-
-def get_enum_class_name(enum_class: EnumType) -> str:
-    start = "'"
-    end = "'"
-    enum_class_str = str(enum_class)
-    return enum_class_str[
-        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)
-    ]
 
 
 def check_file_inputs(

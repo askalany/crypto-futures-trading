@@ -1,7 +1,5 @@
 from enum import Enum, EnumType, auto
 
-from utils import get_enum_class_name
-
 
 class AutoName(Enum):
     # noinspection PyMethodParameters
@@ -90,6 +88,15 @@ ALL_ENUMS: list[EnumType] = [
     OrderType,
     TIF,
 ]
+
+
+def get_enum_class_name(enum_class: EnumType) -> str:
+    start = "'"
+    end = "'"
+    enum_class_str = str(enum_class)
+    return enum_class_str[
+        enum_class_str.find(start) + len(start) : enum_class_str.rfind(end)
+    ]
 
 
 def get_enum_type_from_member_name(key_str: str) -> EnumType:
