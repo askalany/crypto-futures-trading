@@ -226,6 +226,8 @@ def get_grid_maxs_and_mins(
 def get_max_buy_amount(
     leverage: int, available_balance: float, mark_price: float
 ) -> float:
+    if leverage <= 0 or available_balance < 0 or mark_price <= 0.0:
+        raise ValueError("Invalid input values")
     return (leverage * available_balance) / mark_price
 
 

@@ -1,5 +1,8 @@
 from typing import Any
+
+import pytest
 from _pytest.python_api import RaisesContext
+
 from enums import (
     TIF,
     OrderType,
@@ -9,9 +12,7 @@ from enums import (
     Side,
     TickerSymbol,
 )
-from utils import create_order, get_scaled_amounts
-import pytest
-from utils import get_scaled_mults
+from utils import create_order, get_max_buy_amount, get_scaled_amounts, get_scaled_mults
 
 
 def order_value():
@@ -278,3 +279,47 @@ def test_get_scaled_mults_error_cases(scaled: list[float], sum_scaled: float):
     with pytest.raises((ZeroDivisionError, ValueError)):
         get_scaled_mults(scaled, sum_scaled)
 
+
+@pytest.mark.parametrize(
+    "leverage, available_balance, mark_price, expected_output",
+    [
+        (2, 100.0, 10.0, 20.0),
+        (1, 50.0, 5.0, 10.0),
+        (3, 200.0, 20.0, 30.0),
+    ],
+    ids=["test_1", "test_2", "test_3"],
+)
+def test_get_max_buy_amount_happy_path(
+    leverage, available_balance, mark_price, expected_output
+):
+    # Act
+    result = get_max_buy_amount(leverage, available_balance, mark_price)
+
+    # Assert
+    assert result == expected_output
+
+
+@pytest.mark.parametrize(
+    "leverage, available_balance, mark_price",
+    [
+        (0, 100.0, 10.0),
+        (2, -50.0, 5.0),
+        (3, 200.0, 0.0),
+    ],
+    ids=["test_4", "test_5", "test_6"],
+)
+def test_get_max_buy_amount_edge_cases(leverage, available_balance, mark_price):
+    # Act & Assert
+    with pytest.raises(ValueError):
+        get_max_buy_amount(leverage, available_balance, mark_price)
+
+
+def test_get_max_buy_amount_error_case():
+    # Arrange
+    leverage = 2
+    available_balance = 100.0
+    mark_price = 10.0
+
+    # Act & Assert
+    with pytest.raises(ValueError):
+        get_max_buy_amount(leverage, available_balance, -mark_price)
