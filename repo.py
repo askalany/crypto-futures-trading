@@ -51,6 +51,11 @@ class TradeRepo(metaclass=Singleton):
         return float(
             self.client.get_mark_price_request(symbol=symbol.name)["markPrice"]
         )
+        
+    def get_ticker_price(self, symbol: TickerSymbol) -> float:
+        return float(
+            self.client.get_ticker_price_request(symbol=symbol.name)["price"]
+        )
 
     def new_order(
         self,

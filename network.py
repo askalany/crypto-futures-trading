@@ -11,23 +11,22 @@ class BinanceNetworkClient(metaclass=Singleton):
     def __init__(self, client: UMFutures):
         self.client = client
 
-    def log_client_error(self, error: ClientError) -> None:
-        logging.error(
-            f"{error.status_code=}, {error.error_code=}, {error.error_message=}"
-        )
-
     def cancel_all_orders_request(
         self, symbol, receive_window: int = 4000
     ) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.cancel_open_orders(
                 symbol=symbol, recvWindow=receive_window
             )
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def new_price_match_order_request(
         self,
@@ -39,7 +38,6 @@ class BinanceNetworkClient(metaclass=Singleton):
         time_in_force: str,
         price_match: str,
     ) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.new_order(
                 symbol=symbol,
@@ -50,10 +48,15 @@ class BinanceNetworkClient(metaclass=Singleton):
                 timeInForce=time_in_force,
                 priceMatch=price_match,
             )
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def new_order_request(
         self,
@@ -65,7 +68,6 @@ class BinanceNetworkClient(metaclass=Singleton):
         order_type: str,
         time_in_force: str,
     ) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.new_order(
                 symbol=symbol,
@@ -77,111 +79,173 @@ class BinanceNetworkClient(metaclass=Singleton):
                 price=price,
                 recvWindow=6000,
             )
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def new_batch_order_request(self, params) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.new_batch_order(batchOrders=params)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_position_risk_request(self, symbol: str) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.get_position_risk(symbol=symbol, recvWindow=6000)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_leverage_request(self, symbol: str) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.get_position_risk_request(symbol=symbol)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_account_info_request(
         self,
     ) -> Any | dict[Any, Any]:
-        response = {}
         try:
             # noinspection PyCallingNonCallable
             response = self.client.account(recvWindow=6000)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_mark_price_request(self, symbol: str) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.mark_price(symbol=symbol)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
+            
+    def get_ticker_price_request(self, symbol: str) -> Any | dict[Any, Any]:
+        try:
+            response = self.client.ticker_price(symbol=symbol)
+            logging.info(response)
+            return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_listen_key_request(
         self,
     ) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.new_listen_key()
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def close_listen_key_request(self, listen_key: str) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.close_listen_key(listenKey=listen_key)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_open_orders_request(self, symbol: str) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.get_open_orders(symbol=symbol)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def keep_alive_request(self, listen_key: str):
-        response = {}
         try:
             response = self.client.renew_listen_key(listenKey=listen_key)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
 
     def get_time_request(self) -> Any | dict[Any, Any]:
-        response = {}
         try:
             response = self.client.time()
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            logging.info(response)
             return response
-    
-    def get_orders_request(self,symbol):
-        response = {}
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )
+
+    def get_orders_request(self, symbol):
         try:
-            response =  self.client.get_orders(symbol=symbol)
-        except ClientError as error:
-            self.log_client_error(error)
-        finally:
+            response = self.client.get_orders(symbol=symbol)
+            logging.info(response)
             return response
+        except ClientError as e:
+            logging.error(
+                "status=%s, code=%s, message=%s",
+                e.status_code,
+                e.error_code,
+                e.error_message,
+            )

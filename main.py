@@ -45,6 +45,7 @@ def generate_table(message: str) -> Table:
         elif i["side"] == "SELL":
             open_sell_orders_num += 1
     mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT)
+    last_price = repo.get_ticker_price(TickerSymbol.BTCUSDT)
     entry_price = data["a"]["P"][0]["ep"] if message else ""
     break_even_price = data["a"]["P"][0]["bep"] if message else ""
     accumulated_realized = data["a"]["P"][0]["cr"] if message else ""
@@ -52,6 +53,7 @@ def generate_table(message: str) -> Table:
     position_amount = data["a"]["P"][0]["pa"] if message else ""
     wallet_balance = data["a"]["B"][0]["wb"] if message else ""
     table.add_row("mark_price", f"[green]{mark_price}")
+    table.add_row("last_price", f"[green]{last_price}")
     table.add_row("entry_price", f"{entry_price}")
     table.add_row("break_even_price", f"{break_even_price}")
     table.add_row("accumulated_realized", f"{accumulated_realized}")
