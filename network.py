@@ -176,3 +176,12 @@ class BinanceNetworkClient(metaclass=Singleton):
             self.log_client_error(error)
         finally:
             return response
+    
+    def get_orders_request(self,symbol):
+        response = {}
+        try:
+            response =  self.client.get_orders(symbol=symbol)
+        except ClientError as error:
+            self.log_client_error(error)
+        finally:
+            return response

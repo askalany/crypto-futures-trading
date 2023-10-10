@@ -113,7 +113,7 @@ class TradeRepo(metaclass=Singleton):
         return self.client.close_listen_key_request(listen_key=listen_key)
 
     def get_open_orders(self, symbol: TickerSymbol) -> Any | dict[Any, Any]:
-        return self.client.get_open_orders_request(symbol=symbol.name)
+        return self.client.get_orders_request(symbol=symbol.name)
 
     def keep_alive(self, listen_key: str):
         return self.client.keep_alive_request(listen_key=listen_key)
