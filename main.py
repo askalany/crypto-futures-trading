@@ -56,7 +56,6 @@ def main() -> None:
     )
     try:
         while True:
-            # print_date_and_time()
             repo.cancel_all_orders(symbol=symbol_input)
             if strategy_input is Strategy.FIXED_RANGE:
                 strategy_1 = FixedRangeStrategy(

@@ -4,6 +4,7 @@ from rich.table import Table
 
 from data.enums import TickerSymbol
 from repository.repository import TradeRepo
+from utils.utils import get_date_and_time, print_date_and_time
 
 
 def generate_table(message: str) -> Table:
@@ -37,10 +38,8 @@ def generate_table(message: str) -> Table:
         if message
         else repo.get_hedge_position_amount(TickerSymbol.BTCUSDT)
     )
-    wallet_balance = (
-        data["a"]["B"][0]["wb"] if message else repo.get_balance()
-    )
-    table.add_row("mark_price", f"[green]{mark_price}")
+    wallet_balance = data["a"]["B"][0]["wb"] if message else repo.get_balance()
+    table.add_row("mark_price", f"[green]{mark_price}", get_date_and_time())
     table.add_row("last_price", f"[green]{last_price}")
     table.add_row("entry_price", f"{entry_price}")
     table.add_row("break_even_price", f"{break_even_price}")

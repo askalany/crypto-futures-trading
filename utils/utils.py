@@ -140,7 +140,10 @@ def get_linear_scale(orders_num: int, high_price: float, low_price: float):
 
 
 def print_date_and_time() -> None:
-    print(f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+    print(get_date_and_time())
+
+def get_date_and_time():
+    return f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
 
 
 def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
