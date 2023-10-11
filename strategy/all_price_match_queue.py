@@ -16,7 +16,6 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
         tif: TIF = TIF.GTC,
     ):
         super().__init__(
-            self,
             symbol=symbol,
             position_side=position_side,
             buy_orders_num=4,
