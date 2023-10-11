@@ -22,12 +22,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def new_price_match_order_request(
         self,
@@ -52,12 +47,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def new_order_request(
         self,
@@ -83,12 +73,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def new_batch_order_request(self, params) -> Any | dict[Any, Any]:
         try:
@@ -96,12 +81,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_position_risk_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
@@ -109,12 +89,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_leverage_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
@@ -122,12 +97,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_account_info_request(
         self,
@@ -138,12 +108,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_mark_price_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
@@ -151,12 +116,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_ticker_price_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
@@ -164,12 +124,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_listen_key_request(
         self,
@@ -179,12 +134,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def close_listen_key_request(self, listen_key: str) -> Any | dict[Any, Any]:
         try:
@@ -192,12 +142,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_open_orders_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
@@ -205,12 +150,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def keep_alive_request(self, listen_key: str):
         try:
@@ -218,12 +158,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_time_request(self) -> Any | dict[Any, Any]:
         try:
@@ -231,12 +166,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
 
     def get_orders_request(self, symbol):
         try:
@@ -244,9 +174,12 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
-            logging.error(
-                "status=%s, code=%s, message=%s",
-                e.status_code,
-                e.error_code,
-                e.error_message,
-            )
+            raise e
+
+    def get_balance_request(self):
+        try:
+            response = self.client.balance()
+            logging.info(response)
+            return response
+        except ClientError as e:
+            raise e

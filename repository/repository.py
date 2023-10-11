@@ -9,7 +9,13 @@ from requests.adapters import HTTPAdapter
 from base.consts import BASE_URL, KEY, SECRET, STREAM_URL
 from base.helpers import Singleton
 from data.enums import (
-    OrderType, PositionSide, PriceMatch, PriceMatchNone, Side, TickerSymbol, TIF,
+    OrderType,
+    PositionSide,
+    PriceMatch,
+    PriceMatchNone,
+    Side,
+    TickerSymbol,
+    TIF,
 )
 from network.network import BinanceNetworkClient
 
@@ -37,6 +43,21 @@ class TradeRepo(metaclass=Singleton):
                 "unRealizedProfit"
             ]
         )
+
+    def get_balance(
+        self,
+    ) -> float:
+        return self.client.get_account_info_request()["totalWalletBalance"]
+    
+    def get_cross_wallet_balance(
+        self,
+    ) -> float:
+        return self.client.get_balance_request()[0]["crossWalletBalance"]
+    
+    def get_cross_unrealized(
+        self,
+    ) -> float:
+        return self.client.get_account_info_request()["totalUnrealizedProfit"]
 
     def get_available_balance(
         self,
@@ -122,7 +143,7 @@ class TradeRepo(metaclass=Singleton):
     ) -> int:
         return self.client.get_time_request()["serverTime"]
 
-    def get_websocket_client(self,message_handler):
+    def get_websocket_client(self, message_handler):
         return UMFuturesWebsocketClient(
             on_message=message_handler, stream_url=STREAM_URL
         )

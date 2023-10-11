@@ -1,4 +1,4 @@
-from data.enums import AmountSpacing, PositionSide, Side, TickerSymbol, TIF
+from data.enums import TIF, AmountSpacing, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
 from utils.utils import (
     batched_lists,
@@ -37,9 +37,9 @@ class FixedRangeStrategy(TradeStrategy):
         center_price = entry_price if entry_price > 0.0 else mark_price
         leveraged_balance = leverage * available_balance
         amount_buy = leveraged_balance / center_price
-        price_sell_max_mult = 1.0 + 0.05
-        price_sell_min_mult = 1.0 + 0.0014
-        price_buy_max_mult = 1.0 - 0.0014
+        price_sell_max_mult = 1.0 + 0.2
+        price_sell_min_mult = 1.0 + 0.0008
+        price_buy_max_mult = 1.0 - 0.0008
         price_buy_min_mult = 1.0 - 0.2
         (
             price_sell_max,
@@ -69,7 +69,7 @@ class FixedRangeStrategy(TradeStrategy):
             time_in_force=self.tif,
         )
         sell_orders_quantities_and_prices = get_orders_quantities_and_prices(
-            orders_num=self.sell_orders_num,
+            orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
             high_price=price_sell_max,
             low_price=price_sell_min,
             amount=position_amount,

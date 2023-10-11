@@ -74,6 +74,7 @@ def main() -> None:
             if once_input:
                 break
             repo.keep_alive(listen_key=listen_key)
+            live.update(renderable=generate_table(message=""), refresh=True)
             time.sleep(delay_seconds_input)
     except Exception as e:
         logging.error(msg=e)
