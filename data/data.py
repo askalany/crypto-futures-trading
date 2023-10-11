@@ -1,5 +1,5 @@
+# pylint: disable=missing-docstring
 from dataclasses import dataclass
-
 from enums import (
     OrderType,
     PositionSide,
@@ -16,8 +16,8 @@ class Order:
     symbol: TickerSymbol
     side: Side
     quantity: float
-    positionSide: PositionSide
+    position_snide: PositionSide
     price: float
     type: OrderType = OrderType.LIMIT
-    timeInForce: TIF = TIF.GTC
-    priceMatch: PriceMatch = PriceMatchNone.NONE
+    time_in_force: TIF = TIF.GTC
+    price_match: PriceMatch = PriceMatchNone.NONE

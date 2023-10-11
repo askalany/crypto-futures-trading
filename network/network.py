@@ -1,10 +1,11 @@
+# pylint: disable=missing-docstring
 import logging
 from typing import Any
 
 from binance.error import ClientError
 from binance.um_futures import UMFutures
 
-from helpers import Singleton
+from base.helpers import Singleton
 
 
 class BinanceNetworkClient(metaclass=Singleton):
@@ -156,7 +157,7 @@ class BinanceNetworkClient(metaclass=Singleton):
                 e.error_code,
                 e.error_message,
             )
-            
+
     def get_ticker_price_request(self, symbol: str) -> Any | dict[Any, Any]:
         try:
             response = self.client.ticker_price(symbol=symbol)

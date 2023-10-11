@@ -1,6 +1,6 @@
 from pydoc import classname
 
-from helpers import Singleton
+from base.helpers import Singleton
 
 
 class TestClass(metaclass=Singleton):

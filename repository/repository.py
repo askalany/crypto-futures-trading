@@ -1,21 +1,17 @@
+# pylint: disable=missing-docstring
 from enum import Enum
 from typing import Any
 
 from binance.um_futures import UMFutures
+from binance.websocket.um_futures.websocket_client import UMFuturesWebsocketClient
 from requests.adapters import HTTPAdapter
 
-from consts import BASE_URL, KEY, SECRET
-from enums import (
-    TIF,
-    OrderType,
-    PositionSide,
-    PriceMatch,
-    PriceMatchNone,
-    Side,
-    TickerSymbol,
+from base.consts import BASE_URL, KEY, SECRET, STREAM_URL
+from base.helpers import Singleton
+from data.enums import (
+    OrderType, PositionSide, PriceMatch, PriceMatchNone, Side, TickerSymbol, TIF,
 )
-from helpers import Singleton
-from network import BinanceNetworkClient
+from network.network import BinanceNetworkClient
 
 
 class TradeRepo(metaclass=Singleton):
@@ -51,11 +47,9 @@ class TradeRepo(metaclass=Singleton):
         return float(
             self.client.get_mark_price_request(symbol=symbol.name)["markPrice"]
         )
-        
+
     def get_ticker_price(self, symbol: TickerSymbol) -> float:
-        return float(
-            self.client.get_ticker_price_request(symbol=symbol.name)["price"]
-        )
+        return float(self.client.get_ticker_price_request(symbol=symbol.name)["price"])
 
     def new_order(
         self,
@@ -127,3 +121,8 @@ class TradeRepo(metaclass=Singleton):
         self,
     ) -> int:
         return self.client.get_time_request()["serverTime"]
+
+    def get_websocket_client(self,message_handler):
+        return UMFuturesWebsocketClient(
+            on_message=message_handler, stream_url=STREAM_URL
+        )

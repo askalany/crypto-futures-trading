@@ -1,4 +1,4 @@
-import consts as consts
+import base.consts as consts
 
 
 def test_key():
