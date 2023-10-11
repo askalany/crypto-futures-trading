@@ -40,7 +40,7 @@ class FixedRangeStrategy(TradeStrategy):
         price_sell_max_mult = 1.0 + 0.2
         price_sell_min_mult = 1.0 + 0.0008
         price_buy_max_mult = 1.0 - 0.0008
-        price_buy_min_mult = 1.0 - 0.2
+        price_buy_min_mult = 1.0 - 0.5
         (
             price_sell_max,
             price_sell_min,
