@@ -1,6 +1,6 @@
 {
   "once": false,
-  "use_mark_price": true,
+  "use_mark_price": false,
   "delay_seconds": 900.0,
   "symbol": "TickerSymbol.BTCUSDT",
   "strategy": "Strategy.FIXED_RANGE",
