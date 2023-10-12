@@ -60,7 +60,6 @@ def main() -> None:
     )
     try:
         while True:
-            repo.cancel_all_orders(symbol=symbol_input)
             if strategy_input is Strategy.FIXED_RANGE:
                 strategy_1 = FixedRangeStrategy(
                     symbol=symbol_input,

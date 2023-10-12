@@ -48,12 +48,12 @@ class TradeRepo(metaclass=Singleton):
         self,
     ) -> float:
         return self.client.get_account_info_request()["totalWalletBalance"]
-    
+
     def get_cross_wallet_balance(
         self,
     ) -> float:
         return self.client.get_balance_request()[0]["crossWalletBalance"]
-    
+
     def get_cross_unrealized(
         self,
     ) -> float:
@@ -147,3 +147,8 @@ class TradeRepo(metaclass=Singleton):
         return UMFuturesWebsocketClient(
             on_message=message_handler, stream_url=STREAM_URL
         )
+
+    def get_liquidation_price(self, symbol: TickerSymbol):
+        return self.client.get_liquidation_price_request(symbol=symbol.name)[0][
+            "liquidationPrice"
+        ]

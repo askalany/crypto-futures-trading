@@ -36,13 +36,14 @@ def generate_table(message: str) -> Table:
         else repo.get_hedge_position_amount(TickerSymbol.BTCUSDT)
     )
     wallet_balance = data["a"]["B"][0]["wb"] if message else repo.get_balance()
+    liquidation_price = repo.get_liquidation_price(TickerSymbol.BTCUSDT)
     table.add_row("mark_price", f"[green]{mark_price}", get_date_and_time())
     table.add_row("last_price", f"[green]{last_price}")
     table.add_row("entry_price", f"{entry_price}")
     table.add_row("break_even_price", f"{break_even_price}")
     table.add_row("accumulated_realized", f"{accumulated_realized}")
-    table.add_row("unrealized", f"{unrealized}")
-    table.add_row("position_amount", f"{position_amount}")
+    table.add_row("unrealized", f"{unrealized}", "Liquidation Price")
+    table.add_row("position_amount", f"{position_amount}", f"{liquidation_price}")
     table.add_row(
         "wallet_balance",
         f"{wallet_balance}",
