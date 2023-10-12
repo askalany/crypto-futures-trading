@@ -47,6 +47,10 @@ def main() -> None:
         buy_orders_num_input,
         sell_orders_num_input,
         tif_input,
+        price_sell_max_mult,
+        price_sell_min_mult,
+        price_buy_max_mult,
+        price_buy_min_mult,
     ) = get_inputs_from_file()
     listen_key = repo.get_listen_key()
     ws_client = repo.get_websocket_client(message_handler=message_handler)
@@ -62,6 +66,10 @@ def main() -> None:
                     symbol=symbol_input,
                     position_side=position_side_input,
                     use_mark_price=use_mark_price_input,
+                    price_sell_max_mult=price_sell_max_mult,
+                    price_sell_min_mult=price_sell_min_mult,
+                    price_buy_max_mult=price_buy_max_mult,
+                    price_buy_min_mult=price_buy_min_mult,
                 )
                 strategy_1.run_loop()
             elif strategy_input is Strategy.PRICE_MATCH_QUEUE:

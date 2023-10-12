@@ -5,12 +5,14 @@ from itertools import islice
 from typing import Any
 
 import numpy as np
+
 # pylint: disable=redefined-builtin
 from rich import print
 
 from base.helpers import get_enum_member_from_name
 from data.enums import (
     ALL_ENUMS,
+    TIF,
     AmountSpacing,
     OrderType,
     PositionSide,
@@ -20,7 +22,6 @@ from data.enums import (
     Side,
     Strategy,
     TickerSymbol,
-    TIF,
 )
 
 
@@ -141,6 +142,7 @@ def get_linear_scale(orders_num: int, high_price: float, low_price: float):
 
 def print_date_and_time() -> None:
     print(get_date_and_time())
+
 
 def get_date_and_time():
     return f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
@@ -268,7 +270,21 @@ def check_file_inputs(
 
 def get_inputs_from_file(
     file_name: str = "my_trading.json",
-) -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF]:
+) -> tuple[
+    bool,
+    bool,
+    float,
+    TickerSymbol,
+    Strategy,
+    PositionSide,
+    int,
+    int,
+    TIF,
+    float,
+    float,
+    float,
+    float,
+]:
     f = open(file_name, "r")
     read = f.read()
     data = json.loads(read)
@@ -276,11 +292,15 @@ def get_inputs_from_file(
     use_mark_price_input = data["use_mark_price"]
     delay_seconds_input = data["delay_seconds"]
     symbol_input = get_enum_member_from_name(data["symbol"], ALL_ENUMS)
-    strategy_input = get_enum_member_from_name(data["strategy"],ALL_ENUMS)
-    position_side_input = get_enum_member_from_name(data["position_side"],ALL_ENUMS)
+    strategy_input = get_enum_member_from_name(data["strategy"], ALL_ENUMS)
+    position_side_input = get_enum_member_from_name(data["position_side"], ALL_ENUMS)
     buy_orders_num_input = data["buy_orders_num"]
     sell_orders_num_input = data["sell_orders_num"]
     tif_input = get_enum_member_from_name(data["tif"], ALL_ENUMS)
+    price_sell_max_mult: float = data["price_sell_max_mult"]
+    price_sell_min_mult: float = data["price_sell_min_mult"]
+    price_buy_max_mult: float = data["price_buy_max_mult"]
+    price_buy_min_mult: float = data["price_buy_min_mult"]
     if not isinstance(symbol_input, TickerSymbol):
         raise ValueError("incorrect input for symbol")
     if not isinstance(strategy_input, Strategy):
@@ -299,4 +319,8 @@ def get_inputs_from_file(
         buy_orders_num_input,
         sell_orders_num_input,
         tif_input,
+        price_sell_max_mult,
+        price_sell_min_mult,
+        price_buy_max_mult,
+        price_buy_min_mult,
     )

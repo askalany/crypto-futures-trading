@@ -7,5 +7,9 @@
   "position_side": "PositionSide.LONG",
   "buy_orders_num": 100,
   "sell_orders_num": 100,
-  "tif": "TIF.GTC"
+  "tif": "TIF.GTC",
+  "price_sell_max_mult": 1.2,
+  "price_sell_min_mult": 1.0008,
+  "price_buy_max_mult": 0.9992,
+  "price_buy_min_mult": 0.8
 }

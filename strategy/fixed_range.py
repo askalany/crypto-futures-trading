@@ -17,6 +17,10 @@ class FixedRangeStrategy(TradeStrategy):
         sell_orders_num: int = 100,
         use_mark_price: bool = False,
         tif: TIF = TIF.GTC,
+        price_sell_max_mult: float = 1.2,
+        price_sell_min_mult: float = 1.0008,
+        price_buy_max_mult: float = 0.9992,
+        price_buy_min_mult: float = 0.8,
     ):
         super().__init__(
             symbol=symbol,
@@ -25,6 +29,10 @@ class FixedRangeStrategy(TradeStrategy):
             sell_orders_num=sell_orders_num,
             use_mark_price=use_mark_price,
             tif=tif,
+            price_sell_max_mult=price_sell_max_mult,
+            price_sell_min_mult=price_sell_min_mult,
+            price_buy_max_mult=price_buy_max_mult,
+            price_buy_min_mult=price_buy_min_mult,
         )
 
     def run_loop(self):
@@ -37,10 +45,6 @@ class FixedRangeStrategy(TradeStrategy):
         center_price = entry_price if entry_price > 0.0 else mark_price
         leveraged_balance = leverage * available_balance
         amount_buy = leveraged_balance / center_price
-        price_sell_max_mult = 1.0 + 0.2
-        price_sell_min_mult = 1.0 + 0.0008
-        price_buy_max_mult = 1.0 - 0.0008
-        price_buy_min_mult = 1.0 - 0.5
         (
             price_sell_max,
             price_sell_min,
@@ -48,10 +52,10 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_min,
         ) = get_grid_maxs_and_mins(
             center_price=center_price,
-            price_sell_max_mult=price_sell_max_mult,
-            price_sell_min_mult=price_sell_min_mult,
-            price_buy_max_mult=price_buy_max_mult,
-            price_buy_min_mult=price_buy_min_mult,
+            price_sell_max_mult=self.price_sell_max_mult,
+            price_sell_min_mult=self.price_sell_min_mult,
+            price_buy_max_mult=self.price_buy_max_mult,
+            price_buy_min_mult=self.price_buy_min_mult,
         )
         buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
             orders_num=self.buy_orders_num,

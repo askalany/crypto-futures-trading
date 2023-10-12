@@ -1,7 +1,7 @@
 import concurrent.futures
 from typing import Any
 
-from data.enums import PositionSide, TickerSymbol, TIF
+from data.enums import TIF, PositionSide, TickerSymbol
 from repository.repository import TradeRepo
 
 
@@ -15,6 +15,10 @@ class TradeStrategy:
         sell_orders_num: int = 100,
         use_mark_price: bool = False,
         tif: TIF = TIF.GTC,
+        price_sell_max_mult: float = 1.2,
+        price_sell_min_mult: float = 1.0008,
+        price_buy_max_mult: float = 0.9992,
+        price_buy_min_mult: float = 0.8,
     ):
         self.symbol = symbol
         self.position_side = position_side
@@ -23,6 +27,10 @@ class TradeStrategy:
         self.sell_orders_num = sell_orders_num
         self.use_mark_price = use_mark_price
         self.tif = tif
+        self.price_sell_max_mult = price_sell_max_mult
+        self.price_sell_min_mult = price_sell_min_mult
+        self.price_buy_max_mult = price_buy_max_mult
+        self.price_buy_min_mult = price_buy_min_mult
 
     def work(self, order) -> Any | dict[Any, Any]:
         if isinstance(order, list):
