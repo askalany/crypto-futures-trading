@@ -64,6 +64,8 @@ def main() -> None:
                 strategy_1 = FixedRangeStrategy(
                     symbol=symbol_input,
                     position_side=position_side_input,
+                    buy_orders_num=buy_orders_num_input,
+                    sell_orders_num=sell_orders_num_input,
                     use_mark_price=use_mark_price_input,
                     price_sell_max_mult=price_sell_max_mult,
                     price_sell_min_mult=price_sell_min_mult,
