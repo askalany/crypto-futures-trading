@@ -1,53 +1,58 @@
 from abc import ABC, abstractmethod
 
 
-class Product(ABC):
+class Strategy(ABC):
     @abstractmethod
-    def operation(self) -> str:
+    def run(self):
         pass
 
 
-class Creator(ABC):
+class StrategyCreator(ABC):
     @abstractmethod
-    def factory_method(self) -> Product:
+    def create(self) -> Strategy:
         pass
 
-    def some_operation(self) -> str:
-        product = self.factory_method()
-        return f"Creator: The same creator's code has just worked with {product.operation()}"
+    def run(self):
+        self.create().run()
 
 
-class ConcreteProduct1(Product):
-    def operation(self) -> str:
-        return "{Result of the ConcreteProduct1}"
+class FRStrategy(Strategy):
+    def run(self):
+        pass
 
 
-class ConcreteProduct2(Product):
-    def operation(self) -> str:
-        return "{Result of the ConcreteProduct2}"
+class PMAQStrategy(Strategy):
+    def run(self):
+        pass
 
 
-class ConcreteCreator1(Creator):
-    def factory_method(self) -> Product:
-        return ConcreteProduct1()
+class FRStrategyCreator(StrategyCreator):
+    def create(self) -> Strategy:
+        return FRStrategy()
 
 
-class ConcreteCreator2(Creator):
-    def factory_method(self) -> Product:
-        return ConcreteProduct2()
+class PMAQStrategyCreator(StrategyCreator):
+    def create(self) -> Strategy:
+        return PMAQStrategy()
 
 
-def client_code(creator: Creator) -> None:
-    print(
-        f"Client: I'm not aware of the creator's class, but it still works.\n"
-        f"{creator.some_operation()}",
-        end="",
-    )
+class StrategyCreatorFactory:
+    def create_fr_strategy(self) -> StrategyCreator:
+        return FRStrategyCreator()
+
+    def create_pmaq_strategy(self) -> StrategyCreator:
+        return PMAQStrategyCreator()
+
+
+def main() -> None:
+    factory = StrategyCreatorFactory()
+    factory.create_fr_strategy().run()
+    factory.create_pmaq_strategy().run()
+    fr_trading_strategy_creator = FRStrategyCreator()
+    fr_trading_strategy_creator.run()
+    pmaq_trading_strategy_creator = PMAQStrategyCreator()
+    pmaq_trading_strategy_creator.run()
 
 
 if __name__ == "__main__":
-    print("App: Launched with the ConcreteCreator1.")
-    client_code(ConcreteCreator1())
-    print("\n")
-    print("App: Launched with the ConcreteCreator2.")
-    client_code(ConcreteCreator2())
+    main()

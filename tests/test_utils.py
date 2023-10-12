@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 from _pytest.python_api import RaisesContext
 
-from enums import (
+from data.enums import (
     TIF,
     OrderType,
     PositionSide,
@@ -12,7 +12,12 @@ from enums import (
     Side,
     TickerSymbol,
 )
-from utils import create_order, get_max_buy_amount, get_scaled_amounts, get_scaled_mults
+from utils.utils import (
+    create_order,
+    get_max_buy_amount,
+    get_scaled_amounts,
+    get_scaled_mults,
+)
 
 
 def order_value():

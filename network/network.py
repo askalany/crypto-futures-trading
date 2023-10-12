@@ -183,7 +183,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             return response
         except ClientError as e:
             raise e
-        
+
     def get_liquidation_price_request(self, symbol: str):
         try:
             response = self.client.get_position_risk(symbol=symbol)
