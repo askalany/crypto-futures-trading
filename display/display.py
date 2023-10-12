@@ -4,7 +4,7 @@ from rich.table import Table
 
 from data.enums import TickerSymbol
 from repository.repository import TradeRepo
-from utils.utils import get_date_and_time, print_date_and_time
+from utils.utils import get_date_and_time
 
 
 def generate_table(message: str) -> Table:
@@ -17,12 +17,9 @@ def generate_table(message: str) -> Table:
     repo = TradeRepo()
     open_buy_orders_num = 0
     open_sell_orders_num = 0
-    open_orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
-    for i in open_orders:
-        if i["side"] == "BUY":
-            open_buy_orders_num += 1
-        elif i["side"] == "SELL":
-            open_sell_orders_num += 1
+    orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
+    open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
+    open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
     mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT)
     last_price = repo.get_ticker_price(TickerSymbol.BTCUSDT)
     entry_price = (
@@ -46,7 +43,15 @@ def generate_table(message: str) -> Table:
     table.add_row("accumulated_realized", f"{accumulated_realized}")
     table.add_row("unrealized", f"{unrealized}")
     table.add_row("position_amount", f"{position_amount}")
-    table.add_row("wallet_balance", f"{wallet_balance}")
-    table.add_row("open_buy_orders_num", f"{open_buy_orders_num}")
+    table.add_row(
+        "wallet_balance",
+        f"{wallet_balance}",
+        f"{float(wallet_balance)-float(unrealized)}",
+    )
+    table.add_row(
+        "open_buy_orders_num",
+        f"{open_buy_orders_num}",
+        f"{float(wallet_balance)+float(unrealized)}",
+    )
     table.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
     return table
