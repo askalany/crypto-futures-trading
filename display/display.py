@@ -11,7 +11,7 @@ from utils.timeutils import get_date_and_time
 layout = Layout(name="root")
 layout.split(
     Layout(name="header", size=3),
-    Layout(name="main", ratio=1),
+    Layout(name="main", size=26),
     Layout(name="footer", size=2),
 )
 layout["main"].split_row(
