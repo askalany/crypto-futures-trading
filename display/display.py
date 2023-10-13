@@ -46,42 +46,48 @@ def create_table_1(data):
     orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
     open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
     open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-    mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT)
+    mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT))
     last_price = repo.get_ticker_price(TickerSymbol.BTCUSDT)
-    entry_price = (
+    entry_price = float(
         data["a"]["P"][0]["ep"]
         if data
         else repo.get_position_entry_price(TickerSymbol.BTCUSDT)
     )
-    break_even_price = data["a"]["P"][0]["bep"] if data else ""
-    accumulated_realized = data["a"]["P"][0]["cr"] if data else ""
-    unrealized = data["a"]["P"][0]["up"] if data else repo.get_cross_unrealized()
+    break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
+    accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
+    unrealized = float(data["a"]["P"][0]["up"] if data else repo.get_cross_unrealized())
     position_amount = (
         data["a"]["P"][0]["pa"]
         if data
         else repo.get_hedge_position_amount(TickerSymbol.BTCUSDT)
     )
-    wallet_balance = data["a"]["B"][0]["wb"] if data else repo.get_balance()
-    liquidation_price = repo.get_liquidation_price(TickerSymbol.BTCUSDT)
-    table.add_row("mark_price", f"[green]{mark_price}", get_date_and_time())
-    table.add_row("last_price", f"[green]{last_price}")
-    table.add_row("entry_price", f"{entry_price}")
-    table.add_row("break_even_price", f"{break_even_price}")
-    table.add_row("accumulated_realized", f"{accumulated_realized}")
-    table.add_row("unrealized", f"{unrealized}", "Liquidation Price")
-    table.add_row("position_amount", f"{position_amount}", f"{liquidation_price}")
-    table.add_row(
-        "wallet_balance",
-        f"{wallet_balance}",
-        f"{float(wallet_balance)-float(unrealized)}",
-    )
-    table.add_row(
-        "open_buy_orders_num",
-        f"{open_buy_orders_num}",
-        f"{float(wallet_balance)+float(unrealized)}",
-    )
+    wallet_balance = float(data["a"]["B"][0]["wb"] if data else repo.get_balance())
+    liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
+    balance_minus_unrealized = wallet_balance - unrealized
+    balance_plus_unrealized = round(wallet_balance + unrealized)
+    table.add_row("mark_price", format_money(mark_price))
+    table.add_row("last_price", format_money(last_price))
+    table.add_row("entry_price", format_money(entry_price))
+    table.add_row("break_even_price", format_money(break_even_price))
+    table.add_row("accumulated_realized", format_money(accumulated_realized))
+    table.add_row("unrealized", format_money(unrealized))
+    table.add_row("position_amount", f"{position_amount}")
+    table.add_row("Liquidation", format_money(liquidation_price))
+    table.add_row("wallet_balance", format_money(wallet_balance, "yellow"))
+    table.add_row("Balance - realized", format_money(balance_minus_unrealized))
+    table.add_row("Balance + realized", format_money(balance_plus_unrealized))
+    table.add_row("open_buy_orders_num", f"{open_buy_orders_num}")
     table.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
     return table
+
+
+def format_money(mark_price, color: None | str = None):
+    if color is None:
+        if mark_price > 0:
+            color = "green"
+        elif mark_price < 0:
+            color = "red"
+    return f"[{color}]{'{:,.2f}'.format(mark_price)}"
 
 
 def create_table_2(data):
