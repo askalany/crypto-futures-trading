@@ -1,5 +1,7 @@
 import json
 
+import rich.align
+from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
@@ -18,6 +20,10 @@ layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
     Layout(renderable=Panel("2"), name="right"),
 )
+layout["right"].split_row(
+    Layout(renderable=Panel("1"), name="left_1"),
+    Layout(renderable=Panel("2"), name="left_2"),
+)
 
 
 def generate_table(data) -> Layout:
@@ -27,8 +33,23 @@ def generate_table(data) -> Layout:
                 renderable=Panel(renderable=create_table_1(data), title="Account")
             )
         elif data["e"] in ["depthUpdate"]:
-            layout["right"].update(
-                renderable=Panel(renderable=create_table_2(data), title="Order Book")
+            layout["left_1"].update(
+                renderable=Align(
+                    Panel(
+                        renderable=create_book_side_table(data["b"], "green", "ltr"),
+                        title="Bids",
+                    ),
+                    align="right",
+                )
+            )
+            layout["left_2"].update(
+                renderable=Align(
+                    Panel(
+                        renderable=create_book_side_table(data["a"], "red", "rtl"),
+                        title="Asks",
+                    ),
+                    align="left",
+                )
             )
 
     return layout
@@ -90,10 +111,15 @@ def format_money(mark_price, color: None | str = None):
     return f"[{color}]{'{:,.2f}'.format(mark_price)}"
 
 
-def create_table_2(data):
+def create_book_side_table(data, color: str, direction: str):
     table = Table()
-    table.add_column("Price")
-    table.add_column("Quantity")
-    [table.add_row(f"[red]{i[0]}", f"[red]{i[1]}") for i in data["a"]]
-    [table.add_row(f"[green]{i[0]}", f"[green]{i[1]}") for i in data["b"]]
+
+    if direction == "ltr":
+        table.add_column("Quantity", justify="right")
+        table.add_column("Price", justify="right")
+        [table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}") for i in data]
+    else:
+        table.add_column("Price", justify="left")
+        table.add_column("Quantity", justify="left")
+        [table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}") for i in data]
     return table
