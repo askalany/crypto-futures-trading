@@ -5,6 +5,7 @@ from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
+from rich.text import Text
 
 from data.enums import TickerSymbol
 from repository.repository import TradeRepo
@@ -12,9 +13,9 @@ from utils.timeutils import get_date_and_time
 
 layout = Layout(name="root")
 layout.split(
-    Layout(name="header", size=3),
+    Layout(name="header", ratio=1),
     Layout(name="main", size=26),
-    Layout(name="footer", size=2),
+    Layout(name="footer", ratio=1),
 )
 layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
@@ -28,6 +29,7 @@ layout["right"].split_row(
 
 def generate_table(data) -> Layout:
     if "e" in data:
+        layout["footer"].update(Panel(renderable=Text(get_date_and_time())))
         if data["e"] in ["ACCOUNT_UPDATE"]:
             layout["left"].update(
                 renderable=Panel(renderable=create_table_1(data), title="Account")
@@ -59,7 +61,6 @@ def create_table_1(data):
     table = Table(expand=True)
     table.add_column("ID")
     table.add_column("Value")
-    table.add_column("Status")
 
     repo = TradeRepo()
     open_buy_orders_num = 0
