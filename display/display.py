@@ -8,32 +8,37 @@ from data.enums import TickerSymbol
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
-table_1 = Table()
-table_2 = Table()
-layout = Layout()
-layout.split_row(
+layout = Layout(name="root")
+layout.split(
+    Layout(name="header", size=3),
+    Layout(name="main", ratio=1),
+    Layout(name="footer", size=2),
+)
+layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
     Layout(renderable=Panel("2"), name="right"),
 )
 
 
 def generate_table(data) -> Layout:
-    renderable_1 = Panel(table_1)
-    renderable_2 = Panel(table_2)
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
-            layout["left"].update(renderable=create_table_1(data))
+            layout["left"].update(
+                renderable=Panel(renderable=create_table_1(data), title="Account")
+            )
         elif data["e"] in ["depthUpdate"]:
-            layout["right"].update(renderable=create_table_2(data))
+            layout["right"].update(
+                renderable=Panel(renderable=create_table_2(data), title="Order Book")
+            )
 
     return layout
 
 
 def create_table_1(data):
-    table_1 = Table()
-    table_1.add_column("ID")
-    table_1.add_column("Value")
-    table_1.add_column("Status")
+    table = Table(expand=True)
+    table.add_column("ID")
+    table.add_column("Value")
+    table.add_column("Status")
 
     repo = TradeRepo()
     open_buy_orders_num = 0
@@ -58,32 +63,31 @@ def create_table_1(data):
     )
     wallet_balance = data["a"]["B"][0]["wb"] if data else repo.get_balance()
     liquidation_price = repo.get_liquidation_price(TickerSymbol.BTCUSDT)
-    table_1.add_row("mark_price", f"[green]{mark_price}", get_date_and_time())
-    table_1.add_row("last_price", f"[green]{last_price}")
-    table_1.add_row("entry_price", f"{entry_price}")
-    table_1.add_row("break_even_price", f"{break_even_price}")
-    table_1.add_row("accumulated_realized", f"{accumulated_realized}")
-    table_1.add_row("unrealized", f"{unrealized}", "Liquidation Price")
-    table_1.add_row("position_amount", f"{position_amount}", f"{liquidation_price}")
-    table_1.add_row(
+    table.add_row("mark_price", f"[green]{mark_price}", get_date_and_time())
+    table.add_row("last_price", f"[green]{last_price}")
+    table.add_row("entry_price", f"{entry_price}")
+    table.add_row("break_even_price", f"{break_even_price}")
+    table.add_row("accumulated_realized", f"{accumulated_realized}")
+    table.add_row("unrealized", f"{unrealized}", "Liquidation Price")
+    table.add_row("position_amount", f"{position_amount}", f"{liquidation_price}")
+    table.add_row(
         "wallet_balance",
         f"{wallet_balance}",
         f"{float(wallet_balance)-float(unrealized)}",
     )
-    table_1.add_row(
+    table.add_row(
         "open_buy_orders_num",
         f"{open_buy_orders_num}",
         f"{float(wallet_balance)+float(unrealized)}",
     )
-    table_1.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
-    return table_1
+    table.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
+    return table
 
 
 def create_table_2(data):
-    table_2 = Table()
-    table_2.add_column("ID")
-    table_2.add_column("Value")
-    table_2.add_column("Status")
-    [table_2.add_row(f"[red]{i[0]}", f"[red]{i[1]}") for i in data["a"]]
-    [table_2.add_row(f"[green]{i[0]}", f"[green]{i[1]}") for i in data["b"]]
-    return table_2
+    table = Table()
+    table.add_column("Price")
+    table.add_column("Quantity")
+    [table.add_row(f"[red]{i[0]}", f"[red]{i[1]}") for i in data["a"]]
+    [table.add_row(f"[green]{i[0]}", f"[green]{i[1]}") for i in data["b"]]
+    return table
