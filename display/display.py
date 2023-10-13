@@ -10,21 +10,22 @@ from utils.timeutils import get_date_and_time
 
 table_1 = Table()
 table_2 = Table()
+layout = Layout()
+layout.split_row(
+    Layout(renderable=Panel("1"), name="left"),
+    Layout(renderable=Panel("2"), name="right"),
+)
 
 
 def generate_table(data) -> Layout:
-    layout = Layout()
     renderable_1 = Panel(table_1)
     renderable_2 = Panel(table_2)
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
-            renderable_1 = Panel(create_table_1(data))
+            layout["left"].update(renderable=create_table_1(data))
         elif data["e"] in ["depthUpdate"]:
-            renderable_2 = Panel(create_table_2(data))
-    layout.split_row(
-        Layout(renderable=renderable_1, name="left"),
-        Layout(renderable=renderable_2, name="right"),
-    )
+            layout["right"].update(renderable=create_table_2(data))
+
     return layout
 
 
