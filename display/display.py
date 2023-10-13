@@ -29,11 +29,11 @@ layout["right"].split_row(
 
 def generate_table(data) -> Layout:
     if "e" in data:
-        layout["footer"].update(Panel(renderable=Text(get_date_and_time())))
         if data["e"] in ["ACCOUNT_UPDATE"]:
             layout["left"].update(
                 renderable=Panel(renderable=create_table_1(data), title="Account")
             )
+            layout["footer"].update(Panel(renderable=Text(get_date_and_time())))
         elif data["e"] in ["depthUpdate"]:
             layout["left_1"].update(
                 renderable=Align(
@@ -53,7 +53,6 @@ def generate_table(data) -> Layout:
                     align="left",
                 )
             )
-
     return layout
 
 
