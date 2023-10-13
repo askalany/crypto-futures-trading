@@ -12,7 +12,7 @@ from rich.live import Live
 from rich.logging import RichHandler
 
 from data.enums import PositionSide, Strategy, TickerSymbol
-from display.display import generate_table
+from display.display import generate_table, layout
 from network.utils import RequestIssues
 from repository.repository import TradeRepo
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
@@ -29,17 +29,19 @@ logging.basicConfig(
 )
 config_logging(logging, logging.ERROR)
 
-live = Live(generate_table(data={}), auto_refresh=False)
-live.start()
+
 
 
 def on_message(_, message) -> None:
     data = json.loads(message)
     if "data" in message:
-        live.update(renderable=generate_table(data=data["data"]), refresh=True)
+        generate_table(data=data["data"])
+        #live.update(renderable=, refresh=True)
 
 
 def main() -> None:
+    live = Live(renderable=layout, refresh_per_second=60)
+    live.start()
     repo = TradeRepo()
     (
         once_input,

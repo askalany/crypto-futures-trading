@@ -8,14 +8,15 @@ from rich.table import Table
 from rich.text import Text
 
 from data.enums import TickerSymbol
+from display.renderables import Header
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
 layout = Layout(name="root")
 layout.split(
-    Layout(name="header", ratio=1),
+    Layout(name="header",renderable=Header(), ratio=1),
     Layout(name="main", size=26),
-    Layout(name="footer", ratio=1),
+    Layout(name="footer", size=4),
 )
 layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
@@ -25,15 +26,16 @@ layout["right"].split_row(
     Layout(renderable=Panel("1"), name="left_1"),
     Layout(renderable=Panel("2"), name="left_2"),
 )
+layout["footer"].update("Trading BTC/USDT")
 
 
-def generate_table(data) -> Layout:
+def generate_table(data):
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
             layout["left"].update(
                 renderable=Panel(renderable=create_table_1(data), title="Account")
             )
-            layout["footer"].update(Panel(renderable=Text(get_date_and_time())))
+            
         elif data["e"] in ["depthUpdate"]:
             layout["left_1"].update(
                 renderable=Align(
@@ -53,7 +55,7 @@ def generate_table(data) -> Layout:
                     align="left",
                 )
             )
-    return layout
+    
 
 
 def create_table_1(data):
