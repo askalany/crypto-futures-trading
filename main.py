@@ -35,27 +35,27 @@ live.start()
 
 def on_message(_, message) -> None:
     data = json.loads(message)
-    if "e" in data and data["e"] == "ACCOUNT_UPDATE":
+    if "e" in data and data["e"] in ["ACCOUNT_UPDATE", "depthUpdate"]:
         live.update(renderable=generate_table(message=message), refresh=True)
 
 
 def on_open(_):
-    print(f"on_open")
+    print("on_open")
 
 
 def on_close(_, close_status_code, close_msg):
-    print(f"on_close:")
+    print("on_close:")
 
 
 def on_error(_, err):
     print(f"on_error:{err=}")
 
 
-def on_ping(_,message):
+def on_ping(_, message):
     print(f"on_ping: {message=}")
 
 
-def on_pong(_,message):
+def on_pong(_, message):
     print(f"on_pong: {message=}")
 
 
@@ -79,11 +79,18 @@ def main() -> None:
     listen_key = repo.get_listen_key()
     ws_client = repo.get_websocket_client(
         message_handler=on_message,
-       
+        on_open=on_open,
+        on_close=on_close,
+        on_error=on_error,
+        on_ping=on_ping,
+        on_pong=on_pong,
+        is_combined=True,
     )
-    ws_client.user_data(
-        listen_key=listen_key,
-        id=1,
+    ws_client.subscribe(
+        stream=[
+            listen_key,
+            f"{TickerSymbol.BTCUSDT.name.lower()}@depth10@250ms",
+        ]
     )
     try:
         while True:

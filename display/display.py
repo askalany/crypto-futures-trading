@@ -1,5 +1,7 @@
 import json
 
+from rich.layout import Layout
+from rich.panel import Panel
 from rich.table import Table
 
 from data.enums import TickerSymbol
@@ -7,7 +9,7 @@ from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
 
-def generate_table(message: str) -> Table:
+def generate_table(message: str) -> Layout:
     data = json.loads(message) if message else {}
     table = Table()
     table.add_column("ID")
@@ -55,4 +57,9 @@ def generate_table(message: str) -> Table:
         f"{float(wallet_balance)+float(unrealized)}",
     )
     table.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
-    return table
+    layout = Layout()
+    layout.split_row(
+        Layout(renderable=Panel(table), name="left"),
+        Layout(renderable=Panel("2"), name="right"),
+    )
+    return layout

@@ -168,3 +168,4 @@ class TradeRepo(metaclass=Singleton):
         return self.client.get_liquidation_price_request(symbol=symbol.name)[0][
             "liquidationPrice"
         ]
+        
