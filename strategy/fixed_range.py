@@ -1,10 +1,9 @@
 from data.enums import TIF, AmountSpacing, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
-from utils.utils import (
-    batched_lists,
-    create_multiple_orders,
+from utils.listutils import batched_lists
+from utils.orderutils import create_multiple_orders, get_orders_quantities_and_prices
+from utils.mathutils import (
     get_grid_maxs_and_mins,
-    get_orders_quantities_and_prices,
 )
 
 

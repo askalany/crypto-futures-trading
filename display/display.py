@@ -4,7 +4,7 @@ from rich.table import Table
 
 from data.enums import TickerSymbol
 from repository.repository import TradeRepo
-from utils.utils import get_date_and_time
+from utils.timeutils import get_date_and_time
 
 
 def generate_table(message: str) -> Table:

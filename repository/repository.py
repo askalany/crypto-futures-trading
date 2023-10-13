@@ -9,13 +9,13 @@ from requests.adapters import HTTPAdapter
 from base.consts import BASE_URL, KEY, SECRET, STREAM_URL
 from base.helpers import Singleton
 from data.enums import (
+    TIF,
     OrderType,
     PositionSide,
     PriceMatch,
     PriceMatchNone,
     Side,
     TickerSymbol,
-    TIF,
 )
 from network.network import BinanceNetworkClient
 
@@ -143,9 +143,25 @@ class TradeRepo(metaclass=Singleton):
     ) -> int:
         return self.client.get_time_request()["serverTime"]
 
-    def get_websocket_client(self, message_handler):
+    def get_websocket_client(
+        self,
+        message_handler,
+        on_open=None,
+        on_close=None,
+        on_error=None,
+        on_ping=None,
+        on_pong=None,
+        is_combined: bool = False,
+    ):
         return UMFuturesWebsocketClient(
-            on_message=message_handler, stream_url=STREAM_URL
+            stream_url=STREAM_URL,
+            on_message=message_handler,
+            on_open=on_open,
+            on_close=on_close,
+            on_error=on_error,
+            on_ping=on_ping,
+            on_pong=on_pong,
+            is_combined=is_combined,
         )
 
     def get_liquidation_price(self, symbol: TickerSymbol):

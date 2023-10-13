@@ -1,29 +1,21 @@
 {
-    "python.analysis.typeCheckingMode": "basic",
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "python.formatting.provider": "none",
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./tests",
-        "-p",
-        "*_test.py"
-    ],
-    "python.testing.pytestEnabled": true,
-    "python.testing.unittestEnabled": false,
-    "cSpell.words": [
-        "binancefuture",
-        "BTCUSDT",
-        "consts",
-        "geomspace",
-        "maxs",
-        "mult",
-        "renderable",
-        "typer"
-    ],
-    "python.testing.pytestArgs": [
-        "tests"
-    ]
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.testing.unittestArgs": ["-v", "-s", "./tests", "-p", "*_test.py"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "cSpell.words": [
+    "binancefuture",
+    "BTCUSDT",
+    "consts",
+    "geomspace",
+    "maxs",
+    "mult",
+    "renderable",
+    "typer"
+  ],
+  "python.testing.pytestArgs": ["tests"],
+  "isort.args": ["--profile", "black"]
 }

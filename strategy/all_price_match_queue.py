@@ -2,8 +2,8 @@
 
 from data.enums import PositionSide, Side, TickerSymbol, TIF
 from strategy.TradeStrategy import TradeStrategy
-from utils.utils import (
-    create_all_queue_price_match_orders,
+from utils.orderutils import create_all_queue_price_match_orders
+from utils.mathutils import (
     get_max_buy_amount,
 )
 

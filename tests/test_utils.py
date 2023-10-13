@@ -12,12 +12,8 @@ from data.enums import (
     Side,
     TickerSymbol,
 )
-from utils.utils import (
-    create_order,
-    get_max_buy_amount,
-    get_scaled_amounts,
-    get_scaled_mults,
-)
+from utils.mathutils import get_max_buy_amount, get_scaled_amounts, get_scaled_mults
+from utils.orderutils import create_order
 
 
 def order_value():
