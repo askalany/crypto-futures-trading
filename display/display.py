@@ -14,13 +14,13 @@ from utils.timeutils import get_date_and_time
 
 layout = Layout(name="root")
 layout.split(
-    Layout(name="header",renderable=Header(), ratio=1),
+    Layout(name="header", renderable=Header(), ratio=1),
     Layout(name="main", size=26),
     Layout(name="footer", size=4),
 )
 layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
-    Layout(renderable=Panel("2"), name="right"),
+    Layout(renderable=Panel("2", expand=False), name="right"),
 )
 layout["right"].split_row(
     Layout(renderable=Panel("1"), name="left_1"),
@@ -35,13 +35,14 @@ def generate_table(data):
             layout["left"].update(
                 renderable=Panel(renderable=create_table_1(data), title="Account")
             )
-            
+
         elif data["e"] in ["depthUpdate"]:
             layout["left_1"].update(
                 renderable=Align(
                     Panel(
                         renderable=create_book_side_table(data["b"], "green", "ltr"),
                         title="Bids",
+                        expand=False,
                     ),
                     align="right",
                 )
@@ -51,11 +52,11 @@ def generate_table(data):
                     Panel(
                         renderable=create_book_side_table(data["a"], "red", "rtl"),
                         title="Asks",
+                        expand=False,
                     ),
                     align="left",
                 )
             )
-    
 
 
 def create_table_1(data):
