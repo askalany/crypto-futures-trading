@@ -4,16 +4,16 @@ from rich.panel import Panel
 from rich.table import Table
 
 from data.enums import TickerSymbol
-from display.renderables import Header
+from display.renderables import Footer, Header
 from repository.repository import TradeRepo
 
 
 def make_it():
     layout = Layout(name="root")
     layout.split(
-        Layout(name="header", renderable=Header(), ratio=1),
-        Layout(name="main", size=26),
-        Layout(name="footer", size=4, renderable="Trading BTC/USDT"),
+        Layout(name="header", renderable=Header(), size=4),
+        Layout(name="main", size=16),
+        Layout(name="footer", size=3, renderable=Footer()),
     )
     layout["main"].split_row(
         Layout(renderable=Panel("1"), name="left"),

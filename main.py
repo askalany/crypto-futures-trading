@@ -69,7 +69,7 @@ def main() -> None:
     ws_client.partial_book_depth(
         symbol=TickerSymbol.BTCUSDT.name,
         id=2,
-        level=20,
+        level=10,
         speed=100,
     )
     try:
