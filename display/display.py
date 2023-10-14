@@ -19,9 +19,13 @@ def make_it() -> Layout:
         Layout(renderable=Panel("1"), name="left"),
         Layout(renderable=Panel("2", expand=False), name="right"),
     )
+    layout["left"].split_row(
+        Layout(renderable=Panel("1"), name="left_left"),
+        Layout(renderable=Panel("2"), name="left_right"),
+    )
     layout["right"].split_row(
-        Layout(renderable=Panel("1"), name="left_1"),
-        Layout(renderable=Panel("2"), name="left_2"),
+        Layout(renderable=Panel("1"), name="right_left"),
+        Layout(renderable=Panel("2"), name="right_right"),
     )
 
     return layout
@@ -33,12 +37,20 @@ layout = make_it()
 def generate_table(data) -> None:
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
-            layout["left"].update(
-                renderable=Panel(renderable=create_table_1(data), title="Account")
+            display_data_1, display_data_2 = get_display_data(data)
+            layout["left_left"].update(
+                renderable=Panel(
+                    renderable=create_table_1(display_data=display_data_1),
+                )
+            )
+            layout["left_right"].update(
+                renderable=Panel(
+                    renderable=create_table_1(display_data=display_data_2),
+                )
             )
 
         elif data["e"] in ["depthUpdate"]:
-            layout["left_1"].update(
+            layout["right_left"].update(
                 renderable=Align(
                     Panel(
                         renderable=create_book_side_table(data["b"], "green", "ltr"),
@@ -48,7 +60,7 @@ def generate_table(data) -> None:
                     align="right",
                 )
             )
-            layout["left_2"].update(
+            layout["right_right"].update(
                 renderable=Align(
                     Panel(
                         renderable=create_book_side_table(data["a"], "red", "rtl"),
@@ -60,7 +72,15 @@ def generate_table(data) -> None:
             )
 
 
-def create_table_1(data) -> Table:
+def create_table_1(display_data) -> Table:
+    table = Table(expand=True)
+    table.add_column("ID")
+    table.add_column("Value")
+    {table.add_row(k, v) for k, v in display_data.items()}
+    return table
+
+
+def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
     open_buy_orders_num = 0
     open_sell_orders_num = 0
@@ -86,26 +106,25 @@ def create_table_1(data) -> Table:
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = round(wallet_balance + unrealized)
-    display_data = {
-        "mark_price": format_money(mark_price),
-        "last_price": format_money(last_price),
-        "entry_price": format_money(entry_price),
-        "break_even_price": format_money(break_even_price),
-        "accumulated_realized": format_money(accumulated_realized),
-        "unrealized": format_money(unrealized),
-        "position_amount": f"{position_amount}",
-        "liquidation_price": format_money(liquidation_price),
-        "wallet_balance": format_money(wallet_balance, "yellow"),
-        "balance_minus_unrealized-realized": format_money(balance_minus_unrealized),
-        "balance_plus_unrealized": format_money(balance_plus_unrealized),
-        "open_buy_orders_num": f"{open_buy_orders_num}",
-        "open_sell_orders_num": f"{open_sell_orders_num}",
-    }
-    table = Table(expand=True)
-    table.add_column("ID")
-    table.add_column("Value")
-    {table.add_row(k, v) for k, v in display_data.items()}
-    return table
+    return (
+        {
+            "mark_price": format_money(mark_price),
+            "last_price": format_money(last_price),
+            "entry_price": format_money(entry_price),
+            "break_even_price": format_money(break_even_price),
+            "accumulated_realized": format_money(accumulated_realized),
+            "unrealized": format_money(unrealized),
+            "position_amount": f"{position_amount}",
+            "liquidation_price": format_money(liquidation_price),
+            "wallet_balance": format_money(wallet_balance, "yellow"),
+            "balance_minus_unrealized-realized": format_money(balance_minus_unrealized),
+        },
+        {
+            "balance_plus_unrealized": format_money(balance_plus_unrealized),
+            "open_buy_orders_num": f"{open_buy_orders_num}",
+            "open_sell_orders_num": f"{open_sell_orders_num}",
+        },
+    )
 
 
 def format_money(mark_price, color: None | str = None) -> str:
