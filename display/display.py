@@ -138,21 +138,25 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
 
 
 def format_percentage(percentage: float) -> str:
+    formatted_percentage = f"{percentage:.2f}%"
     if percentage > 0.0:
-        return f"[green]{percentage:.2f}%"
+        return f"[green]{formatted_percentage}"
     elif percentage < 0.0:
-        return f"[red]{percentage:.2f}%"
+        return f"[red]{formatted_percentage}"
     else:
-        return f"{percentage:.2f}%"
+        return formatted_percentage
 
 
 def format_money(amount, color: None | str = None) -> str:
-    if color is None:
-        if amount > 0:
-            color = "green"
-        elif amount < 0:
-            color = "red"
-    return f"[{color or ''}]{'{:,.2f}'.format(amount)}"
+    formatted_amount = "{:,.2f}".format(amount)
+    if color:
+        return f"[{color}]{formatted_amount}"
+    if amount > 0:
+        return f"[green]{formatted_amount}"
+    elif amount < 0:
+        return f"[red]{formatted_amount}"
+    else:
+        return formatted_amount
 
 
 def create_book_side_table(data, color: str, direction: str) -> Table:
