@@ -8,7 +8,7 @@ from display.renderables import Footer, Header
 from repository.repository import TradeRepo
 
 
-def make_it():
+def make_it() -> Layout:
     layout = Layout(name="root")
     layout.split(
         Layout(name="header", renderable=Header(), size=4),
@@ -30,7 +30,7 @@ def make_it():
 layout = make_it()
 
 
-def generate_table(data):
+def generate_table(data) -> None:
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
             layout["left"].update(
@@ -60,7 +60,7 @@ def generate_table(data):
             )
 
 
-def create_table_1(data):
+def create_table_1(data) -> Table:
     table = Table(expand=True)
     table.add_column("ID")
     table.add_column("Value")
@@ -106,7 +106,7 @@ def create_table_1(data):
     return table
 
 
-def format_money(mark_price, color: None | str = None):
+def format_money(mark_price, color: None | str = None) -> str:
     if color is None:
         if mark_price > 0:
             color = "green"
@@ -115,7 +115,7 @@ def format_money(mark_price, color: None | str = None):
     return f"[{color}]{'{:,.2f}'.format(mark_price)}"
 
 
-def create_book_side_table(data, color: str, direction: str):
+def create_book_side_table(data, color: str, direction: str) -> Table:
     table = Table()
 
     if direction == "ltr":
