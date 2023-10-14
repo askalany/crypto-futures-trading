@@ -106,6 +106,8 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = round(wallet_balance + unrealized)
+    pnl_pct_mark = float((float(mark_price - entry_price) / entry_price) * 100.0)
+    pnl_pct_last = float((float(last_price - entry_price) / last_price) * 100.0)
     return (
         {
             "mark_price": format_money(mark_price),
@@ -123,17 +125,28 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
             "balance_plus_unrealized": format_money(balance_plus_unrealized),
             "open_buy_orders_num": f"{open_buy_orders_num}",
             "open_sell_orders_num": f"{open_sell_orders_num}",
+            "profit_loss_percentage": format_percentage(pnl_pct_mark),
+            "profit_loss_percentage_last": format_percentage(pnl_pct_last),
         },
     )
 
 
-def format_money(mark_price, color: None | str = None) -> str:
+def format_percentage(percentage: float):
+    if percentage > 0.0:
+        return f"[green]{percentage}%"
+    elif percentage < 0.0:
+        return f"[red]{percentage}%"
+    else:
+        return f"{percentage}%"
+
+
+def format_money(amount, color: None | str = None) -> str:
     if color is None:
-        if mark_price > 0:
+        if amount > 0:
             color = "green"
-        elif mark_price < 0:
+        elif amount < 0:
             color = "red"
-    return f"[{color}]{'{:,.2f}'.format(mark_price)}"
+    return f"[{color}]{'{:,.2f}'.format(amount)}"
 
 
 def create_book_side_table(data, color: str, direction: str) -> Table:
