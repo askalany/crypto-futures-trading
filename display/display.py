@@ -131,13 +131,13 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     )
 
 
-def format_percentage(percentage: float):
+def format_percentage(percentage: float) -> str:
     if percentage > 0.0:
-        return f"[green]{percentage}%"
+        return f"[green]{percentage:.2f}%"
     elif percentage < 0.0:
-        return f"[red]{percentage}%"
+        return f"[red]{percentage:.2f}%"
     else:
-        return f"{percentage}%"
+        return f"{percentage:.2f}%"
 
 
 def format_money(amount, color: None | str = None) -> str:

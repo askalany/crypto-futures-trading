@@ -1,12 +1,6 @@
 {
   "python.analysis.typeCheckingMode": "basic",
-  "python.testing.unittestArgs": [
-    "-v",
-    "-s",
-    "./tests",
-    "-p",
-    "*_test.py"
-  ],
+  "python.testing.unittestArgs": ["-v", "-s", "./tests", "-p", "*_test.py"],
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "cSpell.words": [
@@ -19,19 +13,14 @@
     "renderable",
     "typer"
   ],
-  "python.testing.pytestArgs": [
-    "tests"
-  ],
+  "python.testing.pytestArgs": ["tests"],
   "python.analysis.autoImportCompletions": true,
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
-    },
+    }
   },
-  "isort.args": [
-    "--profile",
-    "black"
-  ],
+  "isort.args": ["--profile", "black"]
 }
