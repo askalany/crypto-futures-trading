@@ -2,7 +2,6 @@ from enum import Enum
 from threading import Lock
 
 
-
 class ThreadSafeSingleton(type):
     _instances = {}
 
@@ -28,8 +27,5 @@ class Singleton(type):
 class AutoName(Enum):
     # noinspection PyMethodParameters
     def _generate_next_value_(name, start, count, last_values):
-        # pylint: disable=no-self-argument
         # sourcery skip: instance-method-first-arg-name
         return name
-
-

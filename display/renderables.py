@@ -1,8 +1,7 @@
+from datetime import datetime
+
 from rich.panel import Panel
 from rich.table import Table
-
-
-from datetime import datetime
 
 
 class Header:
@@ -18,7 +17,6 @@ class Header:
 
 
 class Left:
-
     def __init__(self, stuff):
         self.stuff = stuff
 
@@ -27,7 +25,6 @@ class Left:
 
 
 class Right:
-
     def __init__(self, stuff):
         self.stuff = stuff
 

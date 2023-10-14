@@ -15,7 +15,7 @@ def check_required_parameters(params):
 
 
 def check_enum_parameter(value, enum_class):
-    if value not in set(item.value for item in enum_class):
+    if value not in {item.value for item in enum_class}:
         raise ParameterValueError([value])
 
 

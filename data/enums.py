@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 from enum import Enum, EnumType, auto
 
 from base.helpers import AutoName
@@ -7,7 +6,6 @@ from base.helpers import AutoName
 class PriceMatch(Enum):
     # noinspection PyMethodParameters
     def _generate_next_value_(name, start, count, last_values):
-        # pylint: disable=no-self-argument
         # sourcery skip: instance-method-first-arg-name
         return name
 

@@ -1,11 +1,7 @@
-# pylint: disable=missing-docstring
-
-from data.enums import PositionSide, Side, TickerSymbol, TIF
+from data.enums import TIF, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
+from utils.mathutils import get_max_buy_amount
 from utils.orderutils import create_all_queue_price_match_orders
-from utils.mathutils import (
-    get_max_buy_amount,
-)
 
 
 class AllPriceMatchQueueStrategy(TradeStrategy):

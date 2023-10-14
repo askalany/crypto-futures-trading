@@ -1,34 +1,31 @@
-import json
-
-import rich.align
 from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
-from rich.text import Text
 
 from data.enums import TickerSymbol
 from display.renderables import Header
 from repository.repository import TradeRepo
-from utils.timeutils import get_date_and_time
+
 
 def make_it():
     layout = Layout(name="root")
     layout.split(
-    Layout(name="header", renderable=Header(), ratio=1),
-    Layout(name="main", size=26),
-    Layout(name="footer", size=4, renderable="Trading BTC/USDT"),
-)
+        Layout(name="header", renderable=Header(), ratio=1),
+        Layout(name="main", size=26),
+        Layout(name="footer", size=4, renderable="Trading BTC/USDT"),
+    )
     layout["main"].split_row(
-    Layout(renderable=Panel("1"), name="left"),
-    Layout(renderable=Panel("2", expand=False), name="right"),
-)
+        Layout(renderable=Panel("1"), name="left"),
+        Layout(renderable=Panel("2", expand=False), name="right"),
+    )
     layout["right"].split_row(
-    Layout(renderable=Panel("1"), name="left_1"),
-    Layout(renderable=Panel("2"), name="left_2"),
-)
-    
+        Layout(renderable=Panel("1"), name="left_1"),
+        Layout(renderable=Panel("2"), name="left_2"),
+    )
+
     return layout
+
 
 layout = make_it()
 

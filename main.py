@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 import contextlib
 import json
 import logging

@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 from enum import Enum
 from typing import Any
 
