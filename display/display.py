@@ -88,7 +88,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
     open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
     mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT))
-    last_price = repo.get_ticker_price(TickerSymbol.BTCUSDT)
+    last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
     entry_price = float(
         data["a"]["P"][0]["ep"]
         if data
@@ -97,7 +97,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
     accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
     unrealized = float(data["a"]["P"][0]["up"] if data else repo.get_cross_unrealized())
-    position_amount = (
+    position_amount = float(
         data["a"]["P"][0]["pa"]
         if data
         else repo.get_hedge_position_amount(TickerSymbol.BTCUSDT)
@@ -105,9 +105,13 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     wallet_balance = float(data["a"]["B"][0]["wb"] if data else repo.get_balance())
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
     balance_minus_unrealized = wallet_balance - unrealized
-    balance_plus_unrealized = round(wallet_balance + unrealized)
-    pnl_pct_mark = float((float(mark_price - entry_price) / entry_price) * 100.0)
-    pnl_pct_last = float((float(last_price - entry_price) / last_price) * 100.0)
+    balance_plus_unrealized = wallet_balance + unrealized
+    price_change_mark = mark_price - entry_price
+    pnl_mark = price_change_mark * position_amount
+    pnl_pct_mark = float(float(price_change_mark / entry_price) * 100.0)
+    price_change_last = last_price - entry_price
+    pnl_last = price_change_last * position_amount
+    pnl_pct_last = float(float(price_change_last / last_price) * 100.0)
     return (
         {
             "mark_price": format_money(mark_price),
@@ -125,6 +129,8 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
             "balance_plus_unrealized": format_money(balance_plus_unrealized),
             "open_buy_orders_num": f"{open_buy_orders_num}",
             "open_sell_orders_num": f"{open_sell_orders_num}",
+            "pnl_mark": format_money(pnl_mark),
+            "pnl_last": format_money(pnl_last),
             "profit_loss_percentage": format_percentage(pnl_pct_mark),
             "profit_loss_percentage_last": format_percentage(pnl_pct_last),
         },
@@ -146,7 +152,7 @@ def format_money(amount, color: None | str = None) -> str:
             color = "green"
         elif amount < 0:
             color = "red"
-    return f"[{color}]{'{:,.2f}'.format(amount)}"
+    return f"[{color or ''}]{'{:,.2f}'.format(amount)}"
 
 
 def create_book_side_table(data, color: str, direction: str) -> Table:
