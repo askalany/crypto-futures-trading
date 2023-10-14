@@ -61,10 +61,6 @@ def generate_table(data) -> None:
 
 
 def create_table_1(data) -> Table:
-    table = Table(expand=True)
-    table.add_column("ID")
-    table.add_column("Value")
-
     repo = TradeRepo()
     open_buy_orders_num = 0
     open_sell_orders_num = 0
@@ -90,19 +86,25 @@ def create_table_1(data) -> Table:
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = round(wallet_balance + unrealized)
-    table.add_row("mark_price", format_money(mark_price))
-    table.add_row("last_price", format_money(last_price))
-    table.add_row("entry_price", format_money(entry_price))
-    table.add_row("break_even_price", format_money(break_even_price))
-    table.add_row("accumulated_realized", format_money(accumulated_realized))
-    table.add_row("unrealized", format_money(unrealized))
-    table.add_row("position_amount", f"{position_amount}")
-    table.add_row("Liquidation", format_money(liquidation_price))
-    table.add_row("wallet_balance", format_money(wallet_balance, "yellow"))
-    table.add_row("Balance - realized", format_money(balance_minus_unrealized))
-    table.add_row("Balance + realized", format_money(balance_plus_unrealized))
-    table.add_row("open_buy_orders_num", f"{open_buy_orders_num}")
-    table.add_row("open_sell_orders_num", f"{open_sell_orders_num}")
+    display_data = {
+        "mark_price": format_money(mark_price),
+        "last_price": format_money(last_price),
+        "entry_price": format_money(entry_price),
+        "break_even_price": format_money(break_even_price),
+        "accumulated_realized": format_money(accumulated_realized),
+        "unrealized": format_money(unrealized),
+        "position_amount": f"{position_amount}",
+        "liquidation_price": format_money(liquidation_price),
+        "wallet_balance": format_money(wallet_balance, "yellow"),
+        "balance_minus_unrealized-realized": format_money(balance_minus_unrealized),
+        "balance_plus_unrealized": format_money(balance_plus_unrealized),
+        "open_buy_orders_num": f"{open_buy_orders_num}",
+        "open_sell_orders_num": f"{open_sell_orders_num}",
+    }
+    table = Table(expand=True)
+    table.add_column("ID")
+    table.add_column("Value")
+    {table.add_row(k, v) for k, v in display_data.items()}
     return table
 
 
