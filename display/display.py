@@ -12,21 +12,25 @@ from display.renderables import Header
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
-layout = Layout(name="root")
-layout.split(
+def make_it():
+    layout = Layout(name="root")
+    layout.split(
     Layout(name="header", renderable=Header(), ratio=1),
     Layout(name="main", size=26),
-    Layout(name="footer", size=4),
+    Layout(name="footer", size=4, renderable="Trading BTC/USDT"),
 )
-layout["main"].split_row(
+    layout["main"].split_row(
     Layout(renderable=Panel("1"), name="left"),
     Layout(renderable=Panel("2", expand=False), name="right"),
 )
-layout["right"].split_row(
+    layout["right"].split_row(
     Layout(renderable=Panel("1"), name="left_1"),
     Layout(renderable=Panel("2"), name="left_2"),
 )
-layout["footer"].update("Trading BTC/USDT")
+    
+    return layout
+
+layout = make_it()
 
 
 def generate_table(data):
