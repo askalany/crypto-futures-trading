@@ -167,7 +167,6 @@ class TradeRepo(metaclass=Singleton):
         return self.client.get_liquidation_price_request(symbol=symbol.name)[0][
             "liquidationPrice"
         ]
-        
-        
-    def get_depth(self,symbol: TickerSymbol, limit: int = 5):
-        return self.client.get_depth_request(symbol=symbol.name, limit= limit)
+
+    def get_depth(self, symbol: TickerSymbol, limit: int = 5):
+        return self.client.get_depth_request(symbol=symbol.name, limit=limit)

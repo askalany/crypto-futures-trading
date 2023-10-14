@@ -17,5 +17,9 @@
     "typer"
   ],
   "python.testing.pytestArgs": ["tests"],
-  "isort.args": ["--profile", "black"]
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "python.analysis.autoImportCompletions": true
 }

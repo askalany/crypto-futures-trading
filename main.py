@@ -3,7 +3,6 @@ import json
 import logging
 import time
 
-import binance.error
 import typer
 from binance.error import ClientError
 from binance.lib.utils import config_logging
@@ -12,7 +11,6 @@ from rich.logging import RichHandler
 
 from data.enums import PositionSide, Strategy, TickerSymbol
 from display.display import generate_table, layout
-from network.utils import RequestIssues
 from repository.repository import TradeRepo
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
 from strategy.fixed_range import FixedRangeStrategy
@@ -29,13 +27,11 @@ logging.basicConfig(
 config_logging(logging, logging.ERROR)
 
 
-
-
 def on_message(_, message) -> None:
     data = json.loads(message)
     if "data" in message:
         generate_table(data=data["data"])
-        #live.update(renderable=, refresh=True)
+        # live.update(renderable=, refresh=True)
 
 
 def main() -> None:

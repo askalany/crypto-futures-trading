@@ -190,8 +190,8 @@ class BinanceNetworkClient(metaclass=Singleton):
             return response
         except ClientError as e:
             raise e
-        
-    def get_depth_request(self,symbol: str, limit: int = 5):
+
+    def get_depth_request(self, symbol: str, limit: int = 5):
         try:
             response = self.client.depth(symbol=symbol, **{"limit": limit})
             logging.info(response)

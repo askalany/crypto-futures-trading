@@ -5,11 +5,13 @@
     }
   ],
   "settings": {
-    "workspace.searchEnabled": true,
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": false,
     "python.analysis.inlayHints.callArgumentNames": "partial",
     "python.analysis.inlayHints.pytestParameters": true,
     "python.analysis.typeCheckingMode": "off",
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
   }
 }
