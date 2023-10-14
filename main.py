@@ -39,7 +39,7 @@ def on_message(_, message) -> None:
 
 
 def main() -> None:
-    live = Live(renderable=layout, refresh_per_second=10)
+    live = Live(renderable=layout, refresh_per_second=10, screen=True)
     live.start()
     repo = TradeRepo()
     (
@@ -81,6 +81,7 @@ def main() -> None:
                     buy_orders_num=buy_orders_num_input,
                     sell_orders_num=sell_orders_num_input,
                     use_mark_price=use_mark_price_input,
+                    tif=tif_input,
                     price_sell_max_mult=price_sell_max_mult,
                     price_sell_min_mult=price_sell_min_mult,
                     price_buy_max_mult=price_buy_max_mult,
