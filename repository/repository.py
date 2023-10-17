@@ -170,3 +170,6 @@ class TradeRepo(metaclass=Singleton):
 
     def get_depth(self, symbol: TickerSymbol, limit: int = 5):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
+    
+    def get_position_risk(self, symbol: TickerSymbol):
+        return self.client.get_position_risk_request(symbol=symbol.name)[0]

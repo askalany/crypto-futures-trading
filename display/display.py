@@ -6,7 +6,9 @@ from rich.table import Table
 from data.enums import TickerSymbol
 from display.renderables import Footer, Header
 from repository.repository import TradeRepo
+from display.utils import f_money, f_pct
 
+footer = Footer()
 
 def make_it() -> Layout:
     layout = Layout(name="root")
@@ -114,49 +116,27 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     pnl_pct_last = float(float(price_change_last / last_price) * 100.0)
     return (
         {
-            "mark_price": format_money(mark_price),
-            "last_price": format_money(last_price),
-            "entry_price": format_money(entry_price),
-            "break_even_price": format_money(break_even_price),
-            "accumulated_realized": format_money(accumulated_realized),
-            "unrealized": format_money(unrealized),
+            "mark_price": f_money(mark_price),
+            "last_price": f_money(last_price),
+            "entry_price": f_money(entry_price),
+            "break_even_price": f_money(break_even_price),
+            "accumulated_realized": f_money(accumulated_realized),
+            "unrealized": f_money(unrealized),
             "position_amount": f"{position_amount}",
-            "liquidation_price": format_money(liquidation_price),
-            "wallet_balance": format_money(wallet_balance, "yellow"),
-            "balance_minus_unrealized-realized": format_money(balance_minus_unrealized),
+            "liquidation_price": f_money(liquidation_price),
+            "wallet_balance": f_money(wallet_balance, "yellow"),
+            "balance_minus_unrealized-realized": f_money(balance_minus_unrealized),
         },
         {
-            "balance_plus_unrealized": format_money(balance_plus_unrealized),
+            "balance_plus_unrealized": f_money(balance_plus_unrealized),
             "open_buy_orders_num": f"{open_buy_orders_num}",
             "open_sell_orders_num": f"{open_sell_orders_num}",
-            "pnl_mark": format_money(pnl_mark),
-            "pnl_last": format_money(pnl_last),
-            "profit_loss_percentage": format_percentage(pnl_pct_mark),
-            "profit_loss_percentage_last": format_percentage(pnl_pct_last),
+            "pnl_mark": f_money(pnl_mark),
+            "pnl_last": f_money(pnl_last),
+            "profit_loss_percentage": f_pct(pnl_pct_mark),
+            "profit_loss_percentage_last": f_pct(pnl_pct_last),
         },
     )
-
-
-def format_percentage(percentage: float) -> str:
-    formatted_percentage = f"{percentage:.2f}%"
-    if percentage > 0.0:
-        return f"[green]{formatted_percentage}"
-    elif percentage < 0.0:
-        return f"[red]{formatted_percentage}"
-    else:
-        return formatted_percentage
-
-
-def format_money(amount, color: None | str = None) -> str:
-    formatted_amount = "{:,.2f}".format(amount)
-    if color:
-        return f"[{color}]{formatted_amount}"
-    if amount > 0:
-        return f"[green]{formatted_amount}"
-    elif amount < 0:
-        return f"[red]{formatted_amount}"
-    else:
-        return formatted_amount
 
 
 def create_book_side_table(data, color: str, direction: str) -> Table:
