@@ -91,7 +91,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
     open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
     open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-    mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT))
+    mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice)
     last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
     entry_price = float(
         data["a"]["P"][0]["ep"]

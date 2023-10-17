@@ -17,7 +17,7 @@ from data.enums import (
     TickerSymbol,
 )
 from network.network import BinanceNetworkClient
-from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse
+from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse
 
 
 class TradeRepo(metaclass=Singleton):
@@ -64,10 +64,8 @@ class TradeRepo(metaclass=Singleton):
     ) -> float:
         return float(self.client.get_account_info_request()["availableBalance"])
 
-    def get_mark_price(self, symbol: TickerSymbol) -> float:
-        return float(
-            self.client.get_mark_price_request(symbol=symbol.name)["markPrice"]
-        )
+    def get_mark_price(self, symbol: TickerSymbol)  -> MarkPriceResponse:
+        return self.client.get_mark_price_request(symbol=symbol.name)
 
     def get_ticker_price(self, symbol: TickerSymbol) -> float:
         return float(self.client.get_ticker_price_request(symbol=symbol.name)["price"])

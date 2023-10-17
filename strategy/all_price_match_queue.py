@@ -21,7 +21,7 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
 
     def run_loop(self):
         self.repo.cancel_all_orders(symbol=self.symbol)
-        mark_price = self.repo.get_mark_price(symbol=self.symbol)
+        mark_price = float(self.repo.get_mark_price(symbol=self.symbol).markPrice)
         position_amount = self.repo.get_hedge_position_amount(symbol=self.symbol)
         leverage = self.repo.get_leverage(symbol=self.symbol)
         available_balance = self.repo.get_available_balance()
