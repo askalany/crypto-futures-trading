@@ -53,7 +53,7 @@ def main() -> None:
         price_buy_max_mult,
         price_buy_min_mult,
     ) = get_inputs_from_file()
-    listen_key = repo.get_listen_key()
+    listen_key = repo.get_listen_key().listenKey
     ws_client = repo.get_websocket_client(
         message_handler=on_message,
         is_combined=True,

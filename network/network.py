@@ -5,7 +5,7 @@ from binance.error import ClientError
 from binance.um_futures import UMFutures
 
 from base.helpers import Singleton
-from network.responses.responses import CancelAllOrdersResponse
+from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse
 
 
 class BinanceNetworkClient(metaclass=Singleton):
@@ -128,11 +128,11 @@ class BinanceNetworkClient(metaclass=Singleton):
 
     def get_listen_key_request(
         self,
-    ) -> Any | dict[Any, Any]:
+    )  -> ListenKeyResponse:
         try:
             response = self.client.new_listen_key()
             logging.info(response)
-            return response
+            return ListenKeyResponse(**response)
         except ClientError as e:
             raise e
 

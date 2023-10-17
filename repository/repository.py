@@ -17,7 +17,7 @@ from data.enums import (
     TickerSymbol,
 )
 from network.network import BinanceNetworkClient
-from network.responses.responses import CancelAllOrdersResponse
+from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse
 
 
 class TradeRepo(metaclass=Singleton):
@@ -126,8 +126,8 @@ class TradeRepo(metaclass=Singleton):
 
     def get_listen_key(
         self,
-    ) -> str:
-        return self.client.get_listen_key_request()["listenKey"]
+    )  -> ListenKeyResponse:
+        return self.client.get_listen_key_request()
 
     def close_listen_key(self, listen_key: str) -> Any | dict[Any, Any]:
         return self.client.close_listen_key_request(listen_key=listen_key)
