@@ -17,7 +17,7 @@ from data.enums import (
     TickerSymbol,
 )
 from network.network import BinanceNetworkClient
-from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse
+from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse, PositionInformationResponse
 
 
 class TradeRepo(metaclass=Singleton):
@@ -26,23 +26,6 @@ class TradeRepo(metaclass=Singleton):
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
-
-    def get_hedge_position_amount(self, symbol: TickerSymbol) -> float:
-        return float(
-            self.client.get_position_risk_request(symbol=symbol.name)[0]["positionAmt"]
-        )
-
-    def get_position_entry_price(self, symbol: TickerSymbol) -> float:
-        return float(
-            self.client.get_position_risk_request(symbol=symbol.name)[0]["entryPrice"]
-        )
-
-    def get_position_unrealized_profit(self, symbol: TickerSymbol) -> float:
-        return float(
-            self.client.get_position_risk_request(symbol=symbol.name)[0][
-                "unRealizedProfit"
-            ]
-        )
 
     def get_balance(
         self,
@@ -116,8 +99,6 @@ class TradeRepo(metaclass=Singleton):
             new_orders.append(new_dict)
         return self.client.new_batch_order_request(params=new_orders)
 
-    def get_leverage(self, symbol: TickerSymbol) -> int:
-        return int(self.client.get_leverage_request(symbol=symbol.name)[0]["leverage"])
 
     def cancel_all_orders(self, symbol: TickerSymbol)  -> CancelAllOrdersResponse:
         return self.client.cancel_all_orders_request(symbol=symbol.name)
@@ -170,5 +151,5 @@ class TradeRepo(metaclass=Singleton):
     def get_depth(self, symbol: TickerSymbol, limit: int = 5):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
     
-    def get_position_risk(self, symbol: TickerSymbol):
+    def get_position_risk(self, symbol: TickerSymbol) -> PositionInformationResponse:
         return self.client.get_position_risk_request(symbol=symbol.name)[0]

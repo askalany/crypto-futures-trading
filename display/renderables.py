@@ -42,8 +42,8 @@ class Footer(metaclass=Singleton):
     def __rich__(self) -> Panel:
         repo = TradeRepo()
         position_risk = repo.get_position_risk(TickerSymbol.BTCUSDT)
-        position_amount = float(position_risk["positionAmt"])
-        entry_price = float(position_risk["entryPrice"])
+        position_amount = float(position_risk.positionAmt)
+        entry_price = float(position_risk.entryPrice)
         mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice)
         last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
         pnl_mark = (mark_price - entry_price) * position_amount

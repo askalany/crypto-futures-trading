@@ -23,3 +23,30 @@ class MarkPriceResponse:
     nextFundingTime: float
     interestRate: str
     time: float
+    
+@dataclass(kw_only=True)
+class AdlQuantile:
+    LONG: int
+    SHORT: int
+    HEDGE: int
+
+@dataclass(kw_only=True)
+class PositionInformationResponse:
+    symbol: str
+    positionAmt: str
+    entryPrice: str
+    breakEvenPrice: str
+    markPrice: str
+    unRealizedProfit: str
+    liquidationPrice: str
+    leverage: str
+    maxNotionalValue: str
+    marginType: str
+    isolatedMargin: str
+    isAutoAddMargin: str
+    positionSide: str
+    notional: str
+    isolatedWallet: str
+    updateTime: float
+    isolated: bool
+    adlQuantile: AdlQuantile

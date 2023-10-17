@@ -5,7 +5,7 @@ from binance.error import ClientError
 from binance.um_futures import UMFutures
 
 from base.helpers import Singleton
-from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse
+from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse, PositionInformationResponse
 
 
 class BinanceNetworkClient(metaclass=Singleton):
@@ -83,19 +83,11 @@ class BinanceNetworkClient(metaclass=Singleton):
         except ClientError as e:
             raise e
 
-    def get_position_risk_request(self, symbol: str) -> Any | dict[Any, Any]:
+    def get_position_risk_request(self, symbol: str)  -> list[PositionInformationResponse]:
         try:
             response = self.client.get_position_risk(symbol=symbol, recvWindow=6000)
             logging.info(response)
-            return response
-        except ClientError as e:
-            raise e
-
-    def get_leverage_request(self, symbol: str) -> Any | dict[Any, Any]:
-        try:
-            response = self.get_position_risk_request(symbol=symbol)
-            logging.info(response)
-            return response
+            return [PositionInformationResponse(**i) for i in response]
         except ClientError as e:
             raise e
 

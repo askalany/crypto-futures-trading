@@ -96,7 +96,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     entry_price = float(
         data["a"]["P"][0]["ep"]
         if data
-        else repo.get_position_entry_price(TickerSymbol.BTCUSDT)
+        else float(repo.get_position_risk(TickerSymbol.BTCUSDT).entryPrice)
     )
     break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
     accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
@@ -104,7 +104,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     position_amount = float(
         data["a"]["P"][0]["pa"]
         if data
-        else repo.get_hedge_position_amount(TickerSymbol.BTCUSDT)
+        else float(repo.get_position_risk(TickerSymbol.BTCUSDT).positionAmt)
     )
     wallet_balance = float(data["a"]["B"][0]["wb"] if data else repo.get_balance())
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
