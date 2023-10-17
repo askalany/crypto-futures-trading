@@ -24,7 +24,7 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
         mark_price = float(self.repo.get_mark_price(symbol=self.symbol).markPrice)
         position_amount = float(self.repo.get_position_risk(symbol=self.symbol).positionAmt)
         leverage = int(self.repo.get_position_risk(symbol=self.symbol).leverage)
-        available_balance = self.repo.get_available_balance()
+        available_balance = float(self.repo.get_account_info().availableBalance)
         buy_amount = get_max_buy_amount(
             leverage=leverage,
             available_balance=available_balance,

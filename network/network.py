@@ -7,6 +7,7 @@ from dacite import from_dict
 
 from base.helpers import Singleton
 from network.responses.responses import (
+    AccountInfoResponse,
     CancelAllOrdersResponse,
     ListenKeyResponse,
     MarkPriceResponse,
@@ -104,12 +105,12 @@ class BinanceNetworkClient(metaclass=Singleton):
 
     def get_account_info_request(
         self,
-    ) -> Any | dict[Any, Any]:
+    )  -> AccountInfoResponse:
         try:
             # noinspection PyCallingNonCallable
             response = self.client.account(recvWindow=6000)
             logging.info(response)
-            return response
+            return from_dict(data_class=AccountInfoResponse, data=response)
         except ClientError as e:
             raise e
 

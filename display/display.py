@@ -5,11 +5,12 @@ from rich.table import Table
 
 from data.enums import TickerSymbol
 from display.renderables import Footer, Header
-from repository.repository import TradeRepo
 from display.utils import f_money, f_pct
+from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
 footer = Footer()
+
 
 def make_it() -> Layout:
     layout = Layout(name="root")
@@ -100,13 +101,21 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     )
     break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
     accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
-    unrealized = float(data["a"]["P"][0]["up"] if data else repo.get_cross_unrealized())
+    unrealized = float(
+        data["a"]["P"][0]["up"]
+        if data
+        else float(repo.get_account_info().totalCrossUnPnl)
+    )
     position_amount = float(
         data["a"]["P"][0]["pa"]
         if data
         else float(repo.get_position_risk(TickerSymbol.BTCUSDT).positionAmt)
     )
-    wallet_balance = float(data["a"]["B"][0]["wb"] if data else repo.get_balance())
+    wallet_balance = float(
+        data["a"]["B"][0]["wb"]
+        if data
+        else float(repo.get_account_info().totalWalletBalance)
+    )
     liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = wallet_balance + unrealized
@@ -117,27 +126,27 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     pnl_last = price_change_last * position_amount
     pnl_pct_last = float(float(price_change_last / last_price) * 100.0)
     display_data_1 = {
-            "mark_price": f_money(mark_price),
-            "last_price": f_money(last_price),
-            "entry_price": f_money(entry_price),
-            "break_even_price": f_money(break_even_price),
-            "accumulated_realized": f_money(accumulated_realized),
-            "unrealized": f_money(unrealized),
-            "position_amount": f"{position_amount}",
-            "liquidation_price": f_money(liquidation_price),
-            "wallet_balance": f_money(wallet_balance, "yellow"),
-            "balance_minus_unrealized-realized": f_money(balance_minus_unrealized),
-        }
-    
+        "mark_price": f_money(mark_price),
+        "last_price": f_money(last_price),
+        "entry_price": f_money(entry_price),
+        "break_even_price": f_money(break_even_price),
+        "accumulated_realized": f_money(accumulated_realized),
+        "unrealized": f_money(unrealized),
+        "position_amount": f"{position_amount}",
+        "liquidation_price": f_money(liquidation_price),
+        "wallet_balance": f_money(wallet_balance, "yellow"),
+        "balance_minus_unrealized-realized": f_money(balance_minus_unrealized),
+    }
+
     display_data_2 = {
-            "balance_plus_unrealized": f_money(balance_plus_unrealized),
-            "open_buy_orders_num": f"{open_buy_orders_num}",
-            "open_sell_orders_num": f"{open_sell_orders_num}",
-            "pnl_mark": f_money(pnl_mark),
-            "pnl_last": f_money(pnl_last),
-            "profit_loss_percentage": f_pct(pnl_pct_mark),
-            "profit_loss_percentage_last": f_pct(pnl_pct_last),
-        }
+        "balance_plus_unrealized": f_money(balance_plus_unrealized),
+        "open_buy_orders_num": f"{open_buy_orders_num}",
+        "open_sell_orders_num": f"{open_sell_orders_num}",
+        "pnl_mark": f_money(pnl_mark),
+        "pnl_last": f_money(pnl_last),
+        "profit_loss_percentage": f_pct(pnl_pct_mark),
+        "profit_loss_percentage_last": f_pct(pnl_pct_last),
+    }
     if "last_account_updated" in data:
         display_data_2["last_account_updated"] = data["last_account_updated"]
     return (

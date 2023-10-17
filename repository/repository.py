@@ -17,7 +17,13 @@ from data.enums import (
     TickerSymbol,
 )
 from network.network import BinanceNetworkClient
-from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse, PositionInformationResponse
+from network.responses.responses import (
+    AccountInfoResponse,
+    CancelAllOrdersResponse,
+    ListenKeyResponse,
+    MarkPriceResponse,
+    PositionInformationResponse,
+)
 
 
 class TradeRepo(metaclass=Singleton):
@@ -27,27 +33,17 @@ class TradeRepo(metaclass=Singleton):
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
 
-    def get_balance(
+    def get_account_info(
         self,
-    ) -> float:
-        return self.client.get_account_info_request()["totalWalletBalance"]
+    ) -> AccountInfoResponse:
+        return self.client.get_account_info_request()
 
     def get_cross_wallet_balance(
         self,
     ) -> float:
         return self.client.get_balance_request()[0]["crossWalletBalance"]
 
-    def get_cross_unrealized(
-        self,
-    ) -> float:
-        return self.client.get_account_info_request()["totalUnrealizedProfit"]
-
-    def get_available_balance(
-        self,
-    ) -> float:
-        return float(self.client.get_account_info_request()["availableBalance"])
-
-    def get_mark_price(self, symbol: TickerSymbol)  -> MarkPriceResponse:
+    def get_mark_price(self, symbol: TickerSymbol) -> MarkPriceResponse:
         return self.client.get_mark_price_request(symbol=symbol.name)
 
     def get_ticker_price(self, symbol: TickerSymbol) -> float:
@@ -99,13 +95,12 @@ class TradeRepo(metaclass=Singleton):
             new_orders.append(new_dict)
         return self.client.new_batch_order_request(params=new_orders)
 
-
-    def cancel_all_orders(self, symbol: TickerSymbol)  -> CancelAllOrdersResponse:
+    def cancel_all_orders(self, symbol: TickerSymbol) -> CancelAllOrdersResponse:
         return self.client.cancel_all_orders_request(symbol=symbol.name)
 
     def get_listen_key(
         self,
-    )  -> ListenKeyResponse:
+    ) -> ListenKeyResponse:
         return self.client.get_listen_key_request()
 
     def close_listen_key(self, listen_key: str) -> Any | dict[Any, Any]:
@@ -150,6 +145,6 @@ class TradeRepo(metaclass=Singleton):
 
     def get_depth(self, symbol: TickerSymbol, limit: int = 5):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
-    
+
     def get_position_risk(self, symbol: TickerSymbol) -> PositionInformationResponse:
         return self.client.get_position_risk_request(symbol=symbol.name)[0]

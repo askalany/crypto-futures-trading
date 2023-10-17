@@ -1,10 +1,8 @@
 from data.enums import TIF, AmountSpacing, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
 from utils.listutils import batched_lists
+from utils.mathutils import get_grid_maxs_and_mins
 from utils.orderutils import create_multiple_orders, get_orders_quantities_and_prices
-from utils.mathutils import (
-    get_grid_maxs_and_mins,
-)
 
 
 class FixedRangeStrategy(TradeStrategy):
@@ -38,9 +36,11 @@ class FixedRangeStrategy(TradeStrategy):
         self.repo.cancel_all_orders(symbol=self.symbol)
         mark_price = float(self.repo.get_mark_price(symbol=self.symbol).markPrice)
         entry_price = float(self.repo.get_position_risk(symbol=self.symbol).entryPrice)
-        position_amount = float(self.repo.get_position_risk(symbol=self.symbol).positionAmt)
+        position_amount = float(
+            self.repo.get_position_risk(symbol=self.symbol).positionAmt
+        )
         leverage = float(self.repo.get_position_risk(symbol=self.symbol).leverage)
-        available_balance = self.repo.get_available_balance()
+        available_balance = float(self.repo.get_account_info().availableBalance)
         entry_price = mark_price if self.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
         leveraged_balance = leverage * available_balance
