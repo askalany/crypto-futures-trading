@@ -5,6 +5,7 @@ from binance.error import ClientError
 from binance.um_futures import UMFutures
 
 from base.helpers import Singleton
+from network.responses.responses import CancelAllOrdersResponse
 
 
 class BinanceNetworkClient(metaclass=Singleton):
@@ -13,13 +14,13 @@ class BinanceNetworkClient(metaclass=Singleton):
 
     def cancel_all_orders_request(
         self, symbol, receive_window: int = 4000
-    ) -> Any | dict[Any, Any]:
+    )  -> CancelAllOrdersResponse:
         try:
             response = self.client.cancel_open_orders(
                 symbol=symbol, recvWindow=receive_window
             )
             logging.info(response)
-            return response
+            return CancelAllOrdersResponse(**response)
         except ClientError as e:
             raise e
 

@@ -22,5 +22,6 @@
       "source.organizeImports": true
     }
   },
-  "isort.args": ["--profile", "black"]
+  "isort.args": ["--profile", "black"],
+  "python.analysis.inlayHints.functionReturnTypes": true
 }

@@ -17,6 +17,7 @@ from data.enums import (
     TickerSymbol,
 )
 from network.network import BinanceNetworkClient
+from network.responses.responses import CancelAllOrdersResponse
 
 
 class TradeRepo(metaclass=Singleton):
@@ -120,7 +121,7 @@ class TradeRepo(metaclass=Singleton):
     def get_leverage(self, symbol: TickerSymbol) -> int:
         return int(self.client.get_leverage_request(symbol=symbol.name)[0]["leverage"])
 
-    def cancel_all_orders(self, symbol: TickerSymbol) -> Any | dict[Any, Any]:
+    def cancel_all_orders(self, symbol: TickerSymbol)  -> CancelAllOrdersResponse:
         return self.client.cancel_all_orders_request(symbol=symbol.name)
 
     def get_listen_key(
