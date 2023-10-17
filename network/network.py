@@ -188,14 +188,6 @@ class BinanceNetworkClient(metaclass=Singleton):
         except ClientError as e:
             raise e
 
-    def get_liquidation_price_request(self, symbol: str):
-        try:
-            response = self.client.get_position_risk(symbol=symbol)
-            logging.info(response)
-            return response
-        except ClientError as e:
-            raise e
-
     def get_depth_request(self, symbol: str, limit: int = 5):
         try:
             response = self.client.depth(symbol=symbol, **{"limit": limit})

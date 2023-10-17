@@ -138,11 +138,6 @@ class TradeRepo(metaclass=Singleton):
             is_combined=is_combined,
         )
 
-    def get_liquidation_price(self, symbol: TickerSymbol):
-        return self.client.get_liquidation_price_request(symbol=symbol.name)[0][
-            "liquidationPrice"
-        ]
-
     def get_depth(self, symbol: TickerSymbol, limit: int = 5):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
 

@@ -116,7 +116,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
         if data
         else float(repo.get_account_info().totalWalletBalance)
     )
-    liquidation_price = float(repo.get_liquidation_price(TickerSymbol.BTCUSDT))
+    liquidation_price = float(repo.get_position_risk(TickerSymbol.BTCUSDT).liquidationPrice)
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = wallet_balance + unrealized
     price_change_mark = mark_price - entry_price
