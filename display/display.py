@@ -7,6 +7,7 @@ from data.enums import TickerSymbol
 from display.renderables import Footer, Header
 from repository.repository import TradeRepo
 from display.utils import f_money, f_pct
+from utils.timeutils import get_date_and_time
 
 footer = Footer()
 
@@ -39,6 +40,7 @@ layout = make_it()
 def generate_table(data) -> None:
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
+            data["last_account_updated"] = get_date_and_time()
             display_data_1, display_data_2 = get_display_data(data)
             layout["left_left"].update(
                 renderable=Panel(
@@ -114,8 +116,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     price_change_last = last_price - entry_price
     pnl_last = price_change_last * position_amount
     pnl_pct_last = float(float(price_change_last / last_price) * 100.0)
-    return (
-        {
+    display_data_1 = {
             "mark_price": f_money(mark_price),
             "last_price": f_money(last_price),
             "entry_price": f_money(entry_price),
@@ -126,8 +127,9 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
             "liquidation_price": f_money(liquidation_price),
             "wallet_balance": f_money(wallet_balance, "yellow"),
             "balance_minus_unrealized-realized": f_money(balance_minus_unrealized),
-        },
-        {
+        }
+    
+    display_data_2 = {
             "balance_plus_unrealized": f_money(balance_plus_unrealized),
             "open_buy_orders_num": f"{open_buy_orders_num}",
             "open_sell_orders_num": f"{open_sell_orders_num}",
@@ -135,7 +137,12 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
             "pnl_last": f_money(pnl_last),
             "profit_loss_percentage": f_pct(pnl_pct_mark),
             "profit_loss_percentage_last": f_pct(pnl_pct_last),
-        },
+        }
+    if "last_account_updated" in data:
+        display_data_2["last_account_updated"] = data["last_account_updated"]
+    return (
+        display_data_1,
+        display_data_2,
     )
 
 

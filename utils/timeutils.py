@@ -9,7 +9,7 @@ def get_timestamp():
 
 
 def get_date_and_time():
-    return f"date and time = {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
+    return f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
 
 
 def print_date_and_time() -> None:
