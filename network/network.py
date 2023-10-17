@@ -3,9 +3,15 @@ from typing import Any
 
 from binance.error import ClientError
 from binance.um_futures import UMFutures
+from dacite import from_dict
 
 from base.helpers import Singleton
-from network.responses.responses import CancelAllOrdersResponse, ListenKeyResponse, MarkPriceResponse, PositionInformationResponse
+from network.responses.responses import (
+    CancelAllOrdersResponse,
+    ListenKeyResponse,
+    MarkPriceResponse,
+    PositionInformationResponse,
+)
 
 
 class BinanceNetworkClient(metaclass=Singleton):
@@ -14,13 +20,13 @@ class BinanceNetworkClient(metaclass=Singleton):
 
     def cancel_all_orders_request(
         self, symbol, receive_window: int = 4000
-    )  -> CancelAllOrdersResponse:
+    ) -> CancelAllOrdersResponse:
         try:
             response = self.client.cancel_open_orders(
                 symbol=symbol, recvWindow=receive_window
             )
             logging.info(response)
-            return CancelAllOrdersResponse(**response)
+            return from_dict(data_class=CancelAllOrdersResponse, data=response)
         except ClientError as e:
             raise e
 
@@ -83,11 +89,16 @@ class BinanceNetworkClient(metaclass=Singleton):
         except ClientError as e:
             raise e
 
-    def get_position_risk_request(self, symbol: str)  -> list[PositionInformationResponse]:
+    def get_position_risk_request(
+        self, symbol: str
+    ) -> list[PositionInformationResponse]:
         try:
             response = self.client.get_position_risk(symbol=symbol, recvWindow=6000)
             logging.info(response)
-            return [PositionInformationResponse(**i) for i in response]
+            return [
+                from_dict(data_class=PositionInformationResponse, data=i)
+                for i in response
+            ]
         except ClientError as e:
             raise e
 
@@ -102,11 +113,11 @@ class BinanceNetworkClient(metaclass=Singleton):
         except ClientError as e:
             raise e
 
-    def get_mark_price_request(self, symbol: str)  -> MarkPriceResponse:
+    def get_mark_price_request(self, symbol: str) -> MarkPriceResponse:
         try:
             response = self.client.mark_price(symbol=symbol)
             logging.info(response)
-            return MarkPriceResponse(**response)
+            return from_dict(data_class=MarkPriceResponse, data=response)
         except ClientError as e:
             raise e
 
@@ -120,11 +131,11 @@ class BinanceNetworkClient(metaclass=Singleton):
 
     def get_listen_key_request(
         self,
-    )  -> ListenKeyResponse:
+    ) -> ListenKeyResponse:
         try:
             response = self.client.new_listen_key()
             logging.info(response)
-            return ListenKeyResponse(**response)
+            return from_dict(data_class=ListenKeyResponse, data=response)
         except ClientError as e:
             raise e
 

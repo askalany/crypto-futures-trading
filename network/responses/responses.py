@@ -2,18 +2,18 @@
 from dataclasses import dataclass
 
 
-@dataclass(kw_only=True)
+@dataclass
 class CancelAllOrdersResponse:
     code: int
     msg: str
 
 
-@dataclass(kw_only=True)
+@dataclass
 class ListenKeyResponse:
     listenKey: str
 
 
-@dataclass(kw_only=True)
+@dataclass
 class MarkPriceResponse:
     symbol: str
     markPrice: str
@@ -23,14 +23,9 @@ class MarkPriceResponse:
     nextFundingTime: float
     interestRate: str
     time: float
-    
-@dataclass(kw_only=True)
-class AdlQuantile:
-    LONG: int
-    SHORT: int
-    HEDGE: int
 
-@dataclass(kw_only=True)
+
+@dataclass
 class PositionInformationResponse:
     symbol: str
     positionAmt: str
@@ -48,5 +43,3 @@ class PositionInformationResponse:
     notional: str
     isolatedWallet: str
     updateTime: float
-    isolated: bool
-    adlQuantile: AdlQuantile
