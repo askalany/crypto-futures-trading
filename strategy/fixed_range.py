@@ -34,16 +34,14 @@ class FixedRangeStrategy(TradeStrategy):
 
     def run_loop(self):
         self.repo.cancel_all_orders(symbol=self.symbol)
-        mark_price = float(self.repo.get_mark_price(symbol=self.symbol).markPrice)
-        entry_price = float(self.repo.get_position_risk(symbol=self.symbol).entryPrice)
-        position_amount = float(
-            self.repo.get_position_risk(symbol=self.symbol).positionAmt
-        )
-        leverage = float(self.repo.get_position_risk(symbol=self.symbol).leverage)
-        available_balance = float(self.repo.get_account_info().availableBalance)
+        mark_price = self.repo.get_mark_price(symbol=self.symbol).markPrice
+        position_risk = self.repo.get_position_risk(symbol=self.symbol)
+        account_info = self.repo.get_account_info()
+        entry_price = position_risk.entryPrice
+        position_amount = position_risk.positionAmt
         entry_price = mark_price if self.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
-        leveraged_balance = leverage * available_balance
+        leveraged_balance = position_risk.leverage * account_info.availableBalance
         amount_buy = leveraged_balance / center_price
         (
             price_sell_max,

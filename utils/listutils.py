@@ -1,8 +1,8 @@
 from itertools import islice
-from typing import Any
+from typing import Any, Generator
 
 
-def batched(iterable, n):
+def batched(iterable, n) -> Generator[tuple[Any, ...], Any, None]:
     if n < 1:
         raise ValueError("n must be at least one")
     it = iter(iterable)

@@ -1,29 +1,25 @@
 from typing import Any
 
-from base.error import (
-    ParameterRequiredError,
-    ParameterTypeError,
-    ParameterValueError,
-)
-from data.enums import PositionSide, Strategy, TickerSymbol, TIF
+from base.error import ParameterRequiredError, ParameterTypeError, ParameterValueError
+from data.enums import TIF, PositionSide, Strategy, TickerSymbol
 
 
-def check_required_parameter(value, name):
+def check_required_parameter(value, name) -> None:
     if not value and value != 0:
         raise ParameterRequiredError([name])
 
 
-def check_required_parameters(params):
+def check_required_parameters(params) -> None:
     for p in params:
         check_required_parameter(p[0], p[1])
 
 
-def check_enum_parameter(value, enum_class):
+def check_enum_parameter(value, enum_class) -> None:
     if value not in {item.value for item in enum_class}:
         raise ParameterValueError([value])
 
 
-def check_type_parameter(value, name, data_type):
+def check_type_parameter(value, name, data_type) -> None:
     if value is not None and not isinstance(value, data_type):
         raise ParameterTypeError([name, data_type])
 
@@ -42,7 +38,21 @@ def check_file_inputs(
     price_sell_min_mult: float,
     price_buy_max_mult: float,
     price_buy_min_mult: float,
-) -> tuple[bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF, float, float, float, float]:
+) -> tuple[
+    bool,
+    bool,
+    float,
+    TickerSymbol,
+    Strategy,
+    PositionSide,
+    int,
+    int,
+    TIF,
+    float,
+    float,
+    float,
+    float,
+]:
     if not isinstance(once, bool):
         raise ValueError("incorrect input for once")
     if not isinstance(use_mark_price, bool):
@@ -78,5 +88,5 @@ def check_file_inputs(
         price_sell_max_mult,
         price_sell_min_mult,
         price_buy_max_mult,
-        price_buy_min_mult
+        price_buy_min_mult,
     )

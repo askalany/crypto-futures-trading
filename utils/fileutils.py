@@ -1,14 +1,27 @@
 import json
 
-from data.enums import ALL_ENUMS, PositionSide, Strategy, TickerSymbol, TIF
+from base.validation import check_file_inputs
+from data.enums import ALL_ENUMS, TIF, PositionSide, Strategy, TickerSymbol
 from utils.enumutils import get_enum_member_from_name
-from validation import check_file_inputs
 
 
 def get_inputs_from_file(
-    file_name: str = "my_trading.json", ) -> tuple[
-    bool, bool, float, TickerSymbol, Strategy, PositionSide, int, int, TIF, float,
-    float, float, float]:
+    file_name: str = "my_trading.json",
+) -> tuple[
+    bool,
+    bool,
+    float,
+    TickerSymbol,
+    Strategy,
+    PositionSide,
+    int,
+    int,
+    TIF,
+    float,
+    float,
+    float,
+    float,
+]:
     with open(file=file_name, mode="r", encoding="utf-8-sig") as f:
         read = f.read()
         data = json.loads(read)
@@ -40,5 +53,5 @@ def get_inputs_from_file(
             price_sell_max_mult,
             price_sell_min_mult,
             price_buy_max_mult,
-            price_buy_min_mult
+            price_buy_min_mult,
         )

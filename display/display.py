@@ -4,9 +4,9 @@ from rich.panel import Panel
 from rich.table import Table
 
 from data.enums import TickerSymbol
-from renderables import Footer, Header
-from repository.repository import TradeRepo
+from display.renderables import Footer, Header
 from display.utils import f_money, f_pct
+from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
 
 
@@ -88,31 +88,23 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
     open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
     open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-    mark_price = float(repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice)
+    mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice
     last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
-    entry_price = float(
-        data["a"]["P"][0]["ep"]
-        if data
-        else float(repo.get_position_risk(TickerSymbol.BTCUSDT).entryPrice)
-    )
+    position_risk = repo.get_position_risk(TickerSymbol.BTCUSDT)
+    account_info = repo.get_account_info()
+    entry_price = float(data["a"]["P"][0]["ep"] if data else position_risk.entryPrice)
     break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
     accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
     unrealized = float(
-        data["a"]["P"][0]["up"]
-        if data
-        else float(repo.get_account_info().totalCrossUnPnl)
+        data["a"]["P"][0]["up"] if data else account_info.totalCrossUnPnl
     )
     position_amount = float(
-        data["a"]["P"][0]["pa"]
-        if data
-        else float(repo.get_position_risk(TickerSymbol.BTCUSDT).positionAmt)
+        data["a"]["P"][0]["pa"] if data else position_risk.positionAmt
     )
     wallet_balance = float(
-        data["a"]["B"][0]["wb"]
-        if data
-        else float(repo.get_account_info().totalWalletBalance)
+        data["a"]["B"][0]["wb"] if data else account_info.totalWalletBalance
     )
-    liquidation_price = float(repo.get_position_risk(TickerSymbol.BTCUSDT).liquidationPrice)
+    liquidation_price = position_risk.liquidationPrice
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = wallet_balance + unrealized
     price_change_mark = mark_price - entry_price

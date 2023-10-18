@@ -1,14 +1,18 @@
-from typing import Any
-
 import numpy as np
 
 
-def get_geom_scale(orders_num: int, high_price: float, low_price: float):
-    return np.geomspace(start=low_price, stop=high_price, num=orders_num)
+def get_geom_scale(orders_num: int, high_price: float, low_price: float) -> list[float]:
+    return np.geomspace(
+        start=low_price, stop=high_price, num=orders_num, dtype=np.float64
+    ).tolist()
 
 
-def get_linear_scale(orders_num: int, high_price: float, low_price: float):
-    return np.linspace(start=low_price, stop=high_price, num=orders_num)
+def get_linear_scale(
+    orders_num: int, high_price: float, low_price: float
+) -> list[float]:
+    return np.linspace(
+        start=low_price, stop=high_price, num=orders_num, dtype=np.float64
+    ).tolist()
 
 
 def get_scaled(volume_scale: float, num: int) -> tuple[list[float], float]:
@@ -32,9 +36,7 @@ def get_scaled_mults(scaled: list[float], sum_scaled: float) -> list[float]:
     return [x / sum_scaled for x in scaled]
 
 
-def make_it_smaller(
-    total_amount: float, final_scaled: list[float]
-) -> Any | list[float]:
+def make_it_smaller(total_amount: float, final_scaled: list[float]) -> list[float]:
     while sum(final_scaled) > total_amount:
         final_scaled[-1] -= sum(final_scaled) - total_amount
     return final_scaled

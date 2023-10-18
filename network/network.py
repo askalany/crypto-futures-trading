@@ -3,7 +3,6 @@ from typing import Any
 
 from binance.error import ClientError
 from binance.um_futures import UMFutures
-from dacite import from_dict
 
 from base.helpers import Singleton
 from network.responses.responses import (
@@ -27,7 +26,7 @@ class BinanceNetworkClient(metaclass=Singleton):
                 symbol=symbol, recvWindow=receive_window
             )
             logging.info(response)
-            return from_dict(data_class=CancelAllOrdersResponse, data=response)
+            return CancelAllOrdersResponse(**response)
         except ClientError as e:
             raise e
 
@@ -96,21 +95,18 @@ class BinanceNetworkClient(metaclass=Singleton):
         try:
             response = self.client.get_position_risk(symbol=symbol, recvWindow=6000)
             logging.info(response)
-            return [
-                from_dict(data_class=PositionInformationResponse, data=i)
-                for i in response
-            ]
+            return [PositionInformationResponse(**i) for i in response]
         except ClientError as e:
             raise e
 
     def get_account_info_request(
         self,
-    )  -> AccountInfoResponse:
+    ) -> AccountInfoResponse:
         try:
             # noinspection PyCallingNonCallable
             response = self.client.account(recvWindow=6000)
             logging.info(response)
-            return from_dict(data_class=AccountInfoResponse, data=response)
+            return AccountInfoResponse(**response)
         except ClientError as e:
             raise e
 
@@ -118,7 +114,7 @@ class BinanceNetworkClient(metaclass=Singleton):
         try:
             response = self.client.mark_price(symbol=symbol)
             logging.info(response)
-            return from_dict(data_class=MarkPriceResponse, data=response)
+            return MarkPriceResponse(**response)
         except ClientError as e:
             raise e
 
@@ -136,7 +132,7 @@ class BinanceNetworkClient(metaclass=Singleton):
         try:
             response = self.client.new_listen_key()
             logging.info(response)
-            return from_dict(data_class=ListenKeyResponse, data=response)
+            return ListenKeyResponse(**response)
         except ClientError as e:
             raise e
 
