@@ -4,35 +4,33 @@ from rich.panel import Panel
 from rich.table import Table
 
 from data.enums import TickerSymbol
-from display.renderables import Footer, Header
-from display.utils import f_money, f_pct
+from renderables import Footer, Header
 from repository.repository import TradeRepo
+from display.utils import f_money, f_pct
 from utils.timeutils import get_date_and_time
-
-footer = Footer()
 
 
 def make_it() -> Layout:
-    layout = Layout(name="root")
-    layout.split(
+    my_layout = Layout(name="root")
+    my_layout.split(
         Layout(name="header", renderable=Header(), size=4),
         Layout(name="main", size=16),
         Layout(name="footer", size=3, renderable=Footer()),
     )
-    layout["main"].split_row(
+    my_layout["main"].split_row(
         Layout(renderable=Panel("1"), name="left"),
         Layout(renderable=Panel("2", expand=False), name="right"),
     )
-    layout["left"].split_row(
+    my_layout["left"].split_row(
         Layout(renderable=Panel("1"), name="left_left"),
         Layout(renderable=Panel("2"), name="left_right"),
     )
-    layout["right"].split_row(
+    my_layout["right"].split_row(
         Layout(renderable=Panel("1"), name="right_left"),
         Layout(renderable=Panel("2"), name="right_right"),
     )
 
-    return layout
+    return my_layout
 
 
 layout = make_it()
@@ -87,8 +85,6 @@ def create_table_1(display_data) -> Table:
 
 def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
-    open_buy_orders_num = 0
-    open_sell_orders_num = 0
     orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
     open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
     open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
