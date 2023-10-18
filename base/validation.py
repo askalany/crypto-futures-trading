@@ -1,7 +1,11 @@
 from typing import Any
 
-from base.error import ParameterRequiredError, ParameterTypeError, ParameterValueError
-from data.enums import TIF, PositionSide, Strategy, TickerSymbol
+from base.error import (
+    ParameterRequiredError,
+    ParameterTypeError,
+    ParameterValueError,
+)
+from data.enums import PositionSide, Strategy, TickerSymbol, TIF
 
 
 def check_required_parameter(value, name):
