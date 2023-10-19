@@ -18,13 +18,13 @@ from utils.fileutils import get_inputs_from_file
 
 FORMAT = "%(message)s"
 
-logging.basicConfig(
-    level=logging.ERROR,
-    format=FORMAT,
-    datefmt="[%X]",
-    handlers=[RichHandler(markup=True)],
-)
-config_logging(logging, logging.ERROR)
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format=FORMAT,
+#     datefmt="[%X]",
+#     handlers=[RichHandler(markup=True)],
+# )
+# config_logging(logging, logging.INFO)
 
 
 def on_message(_, message) -> None:

@@ -4,7 +4,7 @@ from typing import Any
 from binance.error import ClientError
 from binance.um_futures import UMFutures
 
-from base.helpers import Singleton, ThreadSafeSingleton
+from base.helpers import Singleton
 from model import ChangeInitialLeverage
 from network.responses.responses import (
     AccountInfoResponse,
@@ -15,7 +15,7 @@ from network.responses.responses import (
 )
 
 
-class BinanceNetworkClient(metaclass=ThreadSafeSingleton):
+class BinanceNetworkClient(metaclass=Singleton):
     def __init__(self, client: UMFutures):
         self.client = client
 
@@ -208,8 +208,10 @@ class BinanceNetworkClient(metaclass=ThreadSafeSingleton):
         except ClientError as e:
             logging.error(e)
             raise e
-        
-    def change_initial_leverage_request(self, symbol: str, leverage: int) -> ChangeInitialLeverage:
+
+    def change_initial_leverage_request(
+        self, symbol: str, leverage: int
+    ) -> ChangeInitialLeverage:
         try:
             response = self.client.change_leverage(symbol=symbol, leverage=leverage)
             logging.info(response)

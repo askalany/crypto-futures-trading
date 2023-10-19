@@ -144,6 +144,8 @@ class TradeRepo(metaclass=Singleton):
 
     def get_position_risk(self, symbol: TickerSymbol) -> PositionInformationResponse:
         return self.client.get_position_risk_request(symbol=symbol.name)[0]
-    
-    def change_initial_leverage(self,symbol: TickerSymbol, leverage: int) -> ChangeInitialLeverage:
+
+    def change_initial_leverage(
+        self, symbol: TickerSymbol, leverage: int
+    ) -> ChangeInitialLeverage:
         return self.client.change_initial_leverage_request(symbol.name, leverage)

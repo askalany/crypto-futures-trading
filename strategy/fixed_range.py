@@ -2,7 +2,12 @@ from data.enums import AmountSpacing, PositionSide, Side, TickerSymbol, TimeInFo
 from strategy.TradeStrategy import TradeStrategy
 from utils.listutils import batched_lists
 from utils.mathutils import get_grid_maxs_and_mins
-from utils.orderutils import create_multiple_orders, get_orders_quantities_and_prices
+from utils.orderutils import (
+    create_multiple_orders,
+    get_buy_orders_quantities_and_prices,
+    get_sell_orders_quantities_and_prices,
+)
+
 
 class FixedRangeStrategy(TradeStrategy):
     def __int__(
@@ -39,8 +44,6 @@ class FixedRangeStrategy(TradeStrategy):
         position_amount = position_risk.positionAmt
         entry_price = mark_price if self.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
-        leveraged_balance = position_risk.leverage * min(account_info.availableBalance, position_risk.maxNotionalValue)
-        amount_buy = leveraged_balance / center_price
         (
             price_sell_max,
             price_sell_min,
@@ -53,12 +56,19 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=self.price_buy_max_mult,
             price_buy_min_mult=self.price_buy_min_mult,
         )
-        buy_orders_quantities_and_prices = get_orders_quantities_and_prices(
+        buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
             orders_num=self.buy_orders_num,
             high_price=price_buy_max,
             low_price=price_buy_min,
-            amount=amount_buy,
+            available_balance=account_info.availableBalance,
+            leverage=position_risk.leverage,
+            mark_price=mark_price,
+            max_notional_value=position_risk.maxNotionalValue,
+            notional=position_risk.notional,
+            side=PositionSide.LONG,
+            precision=3,
             order_quantity_min=0.001,
+            order_quantity_max=1000.0,
             amount_spacing=AmountSpacing.GEOMETRIC,
         )
         buy_orders = create_multiple_orders(
@@ -68,7 +78,7 @@ class FixedRangeStrategy(TradeStrategy):
             position_side=self.position_side,
             time_in_force=self.time_in_force,
         )
-        sell_orders_quantities_and_prices = get_orders_quantities_and_prices(
+        sell_orders_quantities_and_prices = get_sell_orders_quantities_and_prices(
             orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
             high_price=price_sell_max,
             low_price=price_sell_min,

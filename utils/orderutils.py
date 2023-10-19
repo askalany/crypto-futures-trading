@@ -1,7 +1,8 @@
 from typing import Any
 
+from numpy import append
+
 from data.enums import (
-    TimeInForce,
     AmountSpacing,
     OrderType,
     PositionSide,
@@ -10,6 +11,7 @@ from data.enums import (
     PriceMatchQueue,
     Side,
     TickerSymbol,
+    TimeInForce,
 )
 from utils.mathutils import get_geom_scale, get_linear_scale
 
@@ -91,14 +93,59 @@ def create_multiple_orders(
     return result
 
 
-def get_orders_quantities_and_prices(
+def get_buy_orders_quantities_and_prices(
+    orders_num: int,
+    high_price: float,
+    low_price: float,
+    available_balance: float,
+    leverage: int,
+    mark_price: float,
+    max_notional_value: float,
+    notional: float,
+    side: PositionSide,
+    precision: int,
+    order_quantity_min: float,
+    order_quantity_max: float,
+    amount_spacing: AmountSpacing = AmountSpacing.LINEAR,
+) -> list[tuple[float, float]]:
+    if orders_num == 0:
+        return []
+    amount_spacing_list = (
+        get_linear_scale(
+            orders_num=orders_num, high_price=high_price, low_price=low_price
+        )
+        if amount_spacing is AmountSpacing.LINEAR
+        else get_geom_scale(
+            orders_num=orders_num, high_price=high_price, low_price=low_price
+        )
+    )
+    order_dollar_amount = available_balance / orders_num
+    quantities_and_prices = []
+    for i in amount_spacing_list:
+        order_price = round(i, 1)
+        max_quantity = max_open_quantity(
+            leverage=leverage,
+            available_balance=order_dollar_amount,
+            order_price=order_price,
+            mark_price=mark_price,
+            max_notional_value=max_notional_value,
+            notional=notional,
+            side=side,
+            precision=precision,
+        )
+        order_quantity = min(max(max_quantity, order_quantity_min), order_quantity_max)
+        quantities_and_prices.append((order_price, order_quantity))
+    return quantities_and_prices
+
+
+def get_sell_orders_quantities_and_prices(
     orders_num: int,
     high_price: float,
     low_price: float,
     amount: float,
     order_quantity_min: float = -1.0,
     amount_spacing: AmountSpacing = AmountSpacing.LINEAR,
-) -> list[Any]:
+) -> list[tuple[float, float]]:
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
         order_amount = amount / orders_num
@@ -119,3 +166,29 @@ def get_orders_quantities_and_prices(
             (round(i, 1), round(quantity, 3)) for i in amount_spacing_list
         ]
     return quantities_and_prices
+
+
+def max_open_quantity(
+    leverage: int,
+    available_balance: float,
+    order_price: float,
+    mark_price: float,
+    max_notional_value: float,
+    notional: float,
+    side: PositionSide,
+    precision: int,
+) -> float:
+    sign = 1.0 if side == PositionSide.LONG else -1.0
+    leveraged_balance = float(leverage) * available_balance
+    leveraged_order_mark_diff = sign * leverage * (order_price - mark_price)
+    c = 0.0
+    if order_price < mark_price:
+        c = min(order_price, mark_price)
+    else:
+        c = max(order_price, mark_price)
+    leveraged_gap = c + max(leveraged_order_mark_diff, 0)
+    remaining_notional = max_notional_value - notional
+    return round(
+        min(leveraged_balance / leveraged_gap, remaining_notional / order_price),
+        precision,
+    )

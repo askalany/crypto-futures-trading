@@ -1,9 +1,8 @@
-from pydoc import classname
 
-from base.helpers import Singleton, ThreadSafeSingleton
+from base.helpers import Singleton
 
 
-class TestClass(metaclass=ThreadSafeSingleton):
+class TestClass(metaclass=Singleton):
     x = 0
 
 
