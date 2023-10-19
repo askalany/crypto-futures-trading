@@ -2,13 +2,14 @@ from enum import auto, Enum, EnumType, StrEnum
 
 from base.helpers import AutoName
 
+
 # noinspection PyUnusedName,PyUnusedClass
 class SymbolType(AutoName):
     FUTURE = auto()
 
 
 # noinspection PyUnusedName,PyUnusedClass
-class ContractType(AutoName):#contractType
+class ContractType(AutoName):  # contractType
     PERPETUAL = auto()
     CURRENT_MONTH = auto()
     NEXT_MONTH = auto()
@@ -16,14 +17,10 @@ class ContractType(AutoName):#contractType
     NEXT_QUARTER = auto()
     PERPETUAL_DELIVERING = auto()
 
+
 # noinspection PyUnusedName,PyUnusedClass
-class PriceMatch(Enum):#type
-    def _generate_next_value_(
-        name,
-        start,
-        count,
-        last_values
-    ):
+class PriceMatch(Enum):  # type
+    def _generate_next_value_(name, start, count, last_values):
         # sourcery skip: instance-method-first-arg-name
         return name
 
@@ -86,11 +83,8 @@ class TimeInForce(AutoName):
     GTD = auto()
 
 
-
-
-
 # noinspection PyUnusedName,PyUnusedClass
-class ContractStatus(AutoName):#(contractStatus，status)
+class ContractStatus(AutoName):  # (contractStatus，status)
     PENDING_TRADING = auto()
     TRADING = auto()
     PRE_DELIVERING = auto()
@@ -174,6 +168,15 @@ class AmountSpacing(Enum):
     GEOMETRIC = auto()
 
 
-ALL_ENUMS: list[EnumType] = [PriceMatch, PriceMatchNone, PriceMatchOpponent,
-                             PriceMatchQueue, TickerSymbol, Side, PositionSide,
-                             Strategy, OrderType, TimeInForce, ]
+ALL_ENUMS: list[EnumType] = [
+    PriceMatch,
+    PriceMatchNone,
+    PriceMatchOpponent,
+    PriceMatchQueue,
+    TickerSymbol,
+    Side,
+    PositionSide,
+    Strategy,
+    OrderType,
+    TimeInForce,
+]
