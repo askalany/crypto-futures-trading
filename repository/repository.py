@@ -8,7 +8,7 @@ from requests.adapters import HTTPAdapter
 from base.consts import BASE_URL, KEY, SECRET, STREAM_URL
 from base.helpers import Singleton
 from data.enums import (
-    TIF,
+    TimeInForce,
     OrderType,
     PositionSide,
     PriceMatch,
@@ -57,7 +57,7 @@ class TradeRepo(metaclass=Singleton):
         position_side: PositionSide,
         price: float = -1.0,
         order_type: OrderType = OrderType.LIMIT,
-        time_in_force: TIF = TIF.GTC,
+        time_in_force: TimeInForce = TimeInForce.GTC,
         price_match: PriceMatch = PriceMatchNone.NONE,
     ) -> Any | dict[Any, Any]:
         return (

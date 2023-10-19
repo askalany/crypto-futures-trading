@@ -1,7 +1,7 @@
 import json
 
 from base.validation import check_file_inputs
-from data.enums import ALL_ENUMS, TIF, PositionSide, Strategy, TickerSymbol
+from data.enums import ALL_ENUMS, TimeInForce, PositionSide, Strategy, TickerSymbol
 from utils.enumutils import get_enum_member_from_name
 
 
@@ -16,7 +16,7 @@ def get_inputs_from_file(
     PositionSide,
     int,
     int,
-    TIF,
+    TimeInForce,
     float,
     float,
     float,

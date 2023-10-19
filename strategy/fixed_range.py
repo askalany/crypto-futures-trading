@@ -1,4 +1,4 @@
-from data.enums import TIF, AmountSpacing, PositionSide, Side, TickerSymbol
+from data.enums import TimeInForce, AmountSpacing, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
 from utils.listutils import batched_lists
 from utils.mathutils import get_grid_maxs_and_mins
@@ -13,7 +13,7 @@ class FixedRangeStrategy(TradeStrategy):
         buy_orders_num: int = 100,
         sell_orders_num: int = 100,
         use_mark_price: bool = False,
-        tif: TIF = TIF.GTC,
+        tif: TimeInForce = TimeInForce.GTC,
         price_sell_max_mult: float = 1.2,
         price_sell_min_mult: float = 1.0008,
         price_buy_max_mult: float = 0.9992,

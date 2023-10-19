@@ -4,7 +4,7 @@ import pytest
 from _pytest.python_api import RaisesContext
 
 from data.enums import (
-    TIF,
+    TimeInForce,
     OrderType,
     PositionSide,
     PriceMatchNone,
@@ -23,7 +23,7 @@ def order_value():
     price = 1.0
     position_side = PositionSide.LONG
     order_type = OrderType.LIMIT
-    time_in_force = TIF.GTC
+    time_in_force = TimeInForce.GTC
     price_match = PriceMatchNone.NONE
     return (
         symbol,

@@ -1,7 +1,7 @@
 from typing import Any
 
 from base.error import ParameterRequiredError, ParameterTypeError, ParameterValueError
-from data.enums import TIF, PositionSide, Strategy, TickerSymbol
+from data.enums import TimeInForce, PositionSide, Strategy, TickerSymbol
 
 
 def check_required_parameter(value, name) -> None:
@@ -47,7 +47,7 @@ def check_file_inputs(
     PositionSide,
     int,
     int,
-    TIF,
+    TimeInForce,
     float,
     float,
     float,
@@ -65,7 +65,7 @@ def check_file_inputs(
         raise ValueError("incorrect input for strategy")
     if not isinstance(position_side, PositionSide):
         raise ValueError("incorrect input for position_side")
-    if not isinstance(tif, TIF):
+    if not isinstance(tif, TimeInForce):
         raise ValueError("incorrect input for tif")
     if not isinstance(price_sell_max_mult, float):
         raise ValueError("incorrect input for price_sell_max_mult")

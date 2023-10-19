@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from enums import (
-    TIF,
+    TimeInForce,
     OrderType,
     PositionSide,
     PriceMatch,
@@ -19,5 +19,5 @@ class Order:
     position_snide: PositionSide
     price: float
     type: OrderType = OrderType.LIMIT
-    time_in_force: TIF = TIF.GTC
+    time_in_force: TimeInForce = TimeInForce.GTC
     price_match: PriceMatch = PriceMatchNone.NONE

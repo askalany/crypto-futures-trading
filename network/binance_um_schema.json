@@ -1,4 +1,17 @@
 {
+  "AccountBalances": [
+    {
+      "accountAlias": "SgsR",
+      "asset": "USDT",
+      "balance": "122607.35137903",
+      "crossWalletBalance": "23.72469206",
+      "crossUnPnl": "0.00000000",
+      "availableBalance": "23.72469206",
+      "maxWithdrawAmount": "23.72469206",
+      "marginAvailable": true,
+      "updateTime": 1617939110373
+    }
+  ],
   "AccountInformation": {
     "feeTier": 0,
     "canTrade": true,
@@ -73,55 +86,34 @@
       }
     ]
   },
-  "AccountBalances": [
+  "AllOrders": [
     {
-      "accountAlias": "SgsR",
-      "asset": "USDT",
-      "balance": "122607.35137903",
-      "crossWalletBalance": "23.72469206",
-      "crossUnPnl": "0.00000000",
-      "availableBalance": "23.72469206",
-      "maxWithdrawAmount": "23.72469206",
-      "marginAvailable": true,
-      "updateTime": 1617939110373
-    }
-  ],
-  "PositionInformation": [
-    {
-      "symbol": "BTCUSDT",
-      "positionAmt": "0.001",
-      "entryPrice": "22185.2",
-      "breakEvenPrice": "0.0",
-      "markPrice": "21123.05052574",
-      "unRealizedProfit": "-1.06214947",
-      "liquidationPrice": "19731.45529116",
-      "leverage": "4",
-      "maxNotionalValue": "100000000",
-      "marginType": "cross",
-      "isolatedMargin": "0.00000000",
-      "isAutoAddMargin": "false",
-      "positionSide": "LONG",
-      "notional": "21.12305052",
-      "isolatedWallet": "0",
-      "updateTime": 1655217461579
-    },
-    {
-      "symbol": "BTCUSDT",
-      "positionAmt": "0.000",
-      "entryPrice": "0.0",
-      "breakEvenPrice": "0.0",
-      "markPrice": "21123.05052574",
-      "unRealizedProfit": "0.00000000",
-      "liquidationPrice": "0",
-      "leverage": "4",
-      "maxNotionalValue": "100000000",
-      "marginType": "cross",
-      "isolatedMargin": "0.00000000",
-      "isAutoAddMargin": "false",
+      "avgPrice": "0.00000",
+      "clientOrderId": "abc",
+      "cumQuote": "0",
+      "executedQty": "0",
+      "orderId": 1917641,
+      "origQty": "0.40",
+      "origType": "TRAILING_STOP_MARKET",
+      "price": "0",
+      "reduceOnly": false,
+      "side": "BUY",
       "positionSide": "SHORT",
-      "notional": "0",
-      "isolatedWallet": "0",
-      "updateTime": 0
+      "status": "NEW",
+      "stopPrice": "9300",
+      "closePosition": false,
+      "symbol": "BTCUSDT",
+      "time": 1579276756075,
+      "timeInForce": "GTC",
+      "type": "TRAILING_STOP_MARKET",
+      "activatePrice": "9020",
+      "priceRate": "0.3",
+      "updateTime": 1579276756075,
+      "workingType": "CONTRACT_PRICE",
+      "priceProtect": false,
+      "priceMatch": "NONE",
+      "selfTradePreventionMode": "NONE",
+      "goodTillDate": 0
     }
   ],
   "BalanceAndPositionUpdate": {
@@ -181,27 +173,17 @@
       ]
     }
   },
-  "PartialBookDepth": {
-    "e": "depthUpdate",
-    "E": 1571889248277,
-    "T": 1571889248276,
-    "U": 390497796,
-    "u": 390497878,
-    "pu": 390497794,
-    "b": [
-      ["7403.89", "0.002"],
-      ["7403.90", "3.906"],
-      ["7404.00", "1.428"],
-      ["7404.85", "5.239"],
-      ["7405.43", "2.562"]
-    ],
-    "a": [
-      ["7405.96", "3.340"],
-      ["7406.63", "4.525"],
-      ["7407.08", "2.475"],
-      ["7407.15", "4.800"],
-      ["7407.20", "0.175"]
-    ]
+  "CancelAllOpenOrders": {
+    "code": 200,
+    "msg": "The operation of cancel all open order is done."
+  },
+  "ChangeInitialLeverage": {
+    "leverage": 21,
+    "maxNotionalValue": "1000000",
+    "symbol": "BTCUSDT"
+  },
+  "CheckServerTime": {
+    "serverTime": 1499827319559
   },
   "CurrentAllOpenOrders": [
     {
@@ -233,169 +215,6 @@
       "goodTillDate": 0
     }
   ],
-  "NewOrder": {
-    "clientOrderId": "testOrder",
-    "cumQty": "0",
-    "cumQuote": "0",
-    "executedQty": "0",
-    "orderId": 22542179,
-    "avgPrice": "0.00000",
-    "origQty": "10",
-    "price": "0",
-    "reduceOnly": false,
-    "side": "BUY",
-    "positionSide": "SHORT",
-    "status": "NEW",
-    "stopPrice": "9300",
-    "closePosition": false,
-    "symbol": "BTCUSDT",
-    "timeInForce": "GTD",
-    "type": "TRAILING_STOP_MARKET",
-    "origType": "TRAILING_STOP_MARKET",
-    "activatePrice": "9020",
-    "priceRate": "0.3",
-    "updateTime": 1566818724722,
-    "workingType": "CONTRACT_PRICE",
-    "priceProtect": false,
-    "priceMatch": "NONE",
-    "selfTradePreventionMode": "NONE",
-    "goodTillDate": 1693207680000
-  },
-  "PlaceMultipleOrders": [
-    {
-      "clientOrderId": "testOrder",
-      "cumQty": "0",
-      "cumQuote": "0",
-      "executedQty": "0",
-      "orderId": 22542179,
-      "avgPrice": "0.00000",
-      "origQty": "10",
-      "price": "0",
-      "reduceOnly": false,
-      "side": "BUY",
-      "positionSide": "SHORT",
-      "status": "NEW",
-      "stopPrice": "9300",
-      "symbol": "BTCUSDT",
-      "timeInForce": "GTC",
-      "type": "TRAILING_STOP_MARKET",
-      "origType": "TRAILING_STOP_MARKET",
-      "activatePrice": "9020",
-      "priceRate": "0.3",
-      "updateTime": 1566818724722,
-      "workingType": "CONTRACT_PRICE",
-      "priceProtect": false,
-      "priceMatch": "NONE",
-      "selfTradePreventionMode": "NONE",
-      "goodTillDate": 0
-    },
-    {
-      "code": -2022,
-      "msg": "ReduceOnly Order is rejected."
-    }
-  ],
-  "ChangeInitialLeverage": {
-    "leverage": 21,
-    "maxNotionalValue": "1000000",
-    "symbol": "BTCUSDT"
-  },
-  "UserCommissionRate": {
-    "symbol": "BTCUSDT",
-    "makerCommissionRate": "0.0002",
-    "takerCommissionRate": "0.0004"
-  },
-  "CancelAllOpenOrders": {
-    "code": 200,
-    "msg": "The operation of cancel all open order is done."
-  },
-  "QueryCurrentOpenOrder": {
-    "avgPrice": "0.00000",
-    "clientOrderId": "abc",
-    "cumQuote": "0",
-    "executedQty": "0",
-    "orderId": 1917641,
-    "origQty": "0.40",
-    "origType": "TRAILING_STOP_MARKET",
-    "price": "0",
-    "reduceOnly": false,
-    "side": "BUY",
-    "positionSide": "SHORT",
-    "status": "NEW",
-    "stopPrice": "9300",
-    "closePosition": false,
-    "symbol": "BTCUSDT",
-    "time": 1579276756075,
-    "timeInForce": "GTC",
-    "type": "TRAILING_STOP_MARKET",
-    "activatePrice": "9020",
-    "priceRate": "0.3",
-    "updateTime": 1579276756075,
-    "workingType": "CONTRACT_PRICE",
-    "priceProtect": false,
-    "priceMatch": "NONE",
-    "selfTradePreventionMode": "NONE",
-    "goodTillDate": 0
-  },
-  "AllOrders": [
-    {
-      "avgPrice": "0.00000",
-      "clientOrderId": "abc",
-      "cumQuote": "0",
-      "executedQty": "0",
-      "orderId": 1917641,
-      "origQty": "0.40",
-      "origType": "TRAILING_STOP_MARKET",
-      "price": "0",
-      "reduceOnly": false,
-      "side": "BUY",
-      "positionSide": "SHORT",
-      "status": "NEW",
-      "stopPrice": "9300",
-      "closePosition": false,
-      "symbol": "BTCUSDT",
-      "time": 1579276756075,
-      "timeInForce": "GTC",
-      "type": "TRAILING_STOP_MARKET",
-      "activatePrice": "9020",
-      "priceRate": "0.3",
-      "updateTime": 1579276756075,
-      "workingType": "CONTRACT_PRICE",
-      "priceProtect": false,
-      "priceMatch": "NONE",
-      "selfTradePreventionMode": "NONE",
-      "goodTillDate": 0
-    }
-  ],
-  "NotionalAndLeverageBrackets": [
-    {
-      "symbol": "ETHUSDT",
-      "notionalCoef": 1.5,
-      "brackets": [
-        {
-          "bracket": 1,
-          "initialLeverage": 75,
-          "notionalCap": 10000,
-          "notionalFloor": 0,
-          "maintMarginRatio": 0.0065,
-          "cum": 0
-        }
-      ]
-    }
-  ],
-  "SymbolNotionalAndLeverageBrackets": {
-    "symbol": "ETHUSDT",
-    "notionalCoef": 1.5,
-    "brackets": [
-      {
-        "bracket": 1,
-        "initialLeverage": 75,
-        "notionalCap": 10000,
-        "notionalFloor": 0,
-        "maintMarginRatio": 0.0065,
-        "cum": 0
-      }
-    ]
-  },
   "ExchangeInformation": {
     "exchangeFilters": [],
     "rateLimits": [
@@ -448,7 +267,9 @@
         "baseAssetPrecision": 8,
         "quotePrecision": 8,
         "underlyingType": "COIN",
-        "underlyingSubType": ["STORAGE"],
+        "underlyingSubType": [
+          "STORAGE"
+        ],
         "settlePlan": 0,
         "triggerProtect": "0.15",
         "filters": [
@@ -498,19 +319,268 @@
           "TAKE_PROFIT_MARKET",
           "TRAILING_STOP_MARKET"
         ],
-        "timeInForce": ["GTC", "IOC", "FOK", "GTX"],
+        "timeInForce": [
+          "GTC",
+          "IOC",
+          "FOK",
+          "GTX"
+        ],
         "liquidationFee": "0.010000",
         "marketTakeBound": "0.30"
       }
     ],
     "timezone": "UTC"
   },
+  "NewOrder": {
+    "clientOrderId": "testOrder",
+    "cumQty": "0",
+    "cumQuote": "0",
+    "executedQty": "0",
+    "orderId": 22542179,
+    "avgPrice": "0.00000",
+    "origQty": "10",
+    "price": "0",
+    "reduceOnly": false,
+    "side": "BUY",
+    "positionSide": "SHORT",
+    "status": "NEW",
+    "stopPrice": "9300",
+    "closePosition": false,
+    "symbol": "BTCUSDT",
+    "timeInForce": "GTD",
+    "type": "TRAILING_STOP_MARKET",
+    "origType": "TRAILING_STOP_MARKET",
+    "activatePrice": "9020",
+    "priceRate": "0.3",
+    "updateTime": 1566818724722,
+    "workingType": "CONTRACT_PRICE",
+    "priceProtect": false,
+    "priceMatch": "NONE",
+    "selfTradePreventionMode": "NONE",
+    "goodTillDate": 1693207680000
+  },
+  "RecentTradesList": [
+    {
+      "id": 28457,
+      "price": "4.00000100",
+      "qty": "12.00000000",
+      "quoteQty": "48.00",
+      "time": 1499865549590,
+      "isBuyerMaker": true
+    }
+  ],
+  "OldTradesLookup": [
+    {
+      "id": 28457,
+      "price": "4.00000100",
+      "qty": "12.00000000",
+      "quoteQty": "8000.00",
+      "time": 1499865549590,
+      "isBuyerMaker": true
+    }
+  ],
+  "NotionalAndLeverageBrackets": [
+    {
+      "symbol": "ETHUSDT",
+      "notionalCoef": 1.5,
+      "brackets": [
+        {
+          "bracket": 1,
+          "initialLeverage": 75,
+          "notionalCap": 10000,
+          "notionalFloor": 0,
+          "maintMarginRatio": 0.0065,
+          "cum": 0
+        }
+      ]
+    }
+  ],
   "OrderBook": {
     "lastUpdateId": 1027024,
     "E": 1589436922972,
     "T": 1589436922959,
-    "bids": [["4.00000000", "431.00000000"]],
-    "asks": [["4.00000200", "12.00000000"]]
+    "bids": [
+      [
+        "4.00000000",
+        "431.00000000"
+      ]
+    ],
+    "asks": [
+      [
+        "4.00000200",
+        "12.00000000"
+      ]
+    ]
+  },
+  "PartialBookDepth": {
+    "e": "depthUpdate",
+    "E": 1571889248277,
+    "T": 1571889248276,
+    "U": 390497796,
+    "u": 390497878,
+    "pu": 390497794,
+    "b": [
+      [
+        "7403.89",
+        "0.002"
+      ],
+      [
+        "7403.90",
+        "3.906"
+      ],
+      [
+        "7404.00",
+        "1.428"
+      ],
+      [
+        "7404.85",
+        "5.239"
+      ],
+      [
+        "7405.43",
+        "2.562"
+      ]
+    ],
+    "a": [
+      [
+        "7405.96",
+        "3.340"
+      ],
+      [
+        "7406.63",
+        "4.525"
+      ],
+      [
+        "7407.08",
+        "2.475"
+      ],
+      [
+        "7407.15",
+        "4.800"
+      ],
+      [
+        "7407.20",
+        "0.175"
+      ]
+    ]
+  },
+  "PlaceMultipleOrders": [
+    {
+      "clientOrderId": "testOrder",
+      "cumQty": "0",
+      "cumQuote": "0",
+      "executedQty": "0",
+      "orderId": 22542179,
+      "avgPrice": "0.00000",
+      "origQty": "10",
+      "price": "0",
+      "reduceOnly": false,
+      "side": "BUY",
+      "positionSide": "SHORT",
+      "status": "NEW",
+      "stopPrice": "9300",
+      "symbol": "BTCUSDT",
+      "timeInForce": "GTC",
+      "type": "TRAILING_STOP_MARKET",
+      "origType": "TRAILING_STOP_MARKET",
+      "activatePrice": "9020",
+      "priceRate": "0.3",
+      "updateTime": 1566818724722,
+      "workingType": "CONTRACT_PRICE",
+      "priceProtect": false,
+      "priceMatch": "NONE",
+      "selfTradePreventionMode": "NONE",
+      "goodTillDate": 0
+    },
+    {
+      "code": -2022,
+      "msg": "ReduceOnly Order is rejected."
+    }
+  ],
+  "PositionInformation": [
+    {
+      "symbol": "BTCUSDT",
+      "positionAmt": "0.001",
+      "entryPrice": "22185.2",
+      "breakEvenPrice": "0.0",
+      "markPrice": "21123.05052574",
+      "unRealizedProfit": "-1.06214947",
+      "liquidationPrice": "19731.45529116",
+      "leverage": "4",
+      "maxNotionalValue": "100000000",
+      "marginType": "cross",
+      "isolatedMargin": "0.00000000",
+      "isAutoAddMargin": "false",
+      "positionSide": "LONG",
+      "notional": "21.12305052",
+      "isolatedWallet": "0",
+      "updateTime": 1655217461579
+    },
+    {
+      "symbol": "BTCUSDT",
+      "positionAmt": "0.000",
+      "entryPrice": "0.0",
+      "breakEvenPrice": "0.0",
+      "markPrice": "21123.05052574",
+      "unRealizedProfit": "0.00000000",
+      "liquidationPrice": "0",
+      "leverage": "4",
+      "maxNotionalValue": "100000000",
+      "marginType": "cross",
+      "isolatedMargin": "0.00000000",
+      "isAutoAddMargin": "false",
+      "positionSide": "SHORT",
+      "notional": "0",
+      "isolatedWallet": "0",
+      "updateTime": 0
+    }
+  ],
+  "QueryCurrentOpenOrder": {
+    "avgPrice": "0.00000",
+    "clientOrderId": "abc",
+    "cumQuote": "0",
+    "executedQty": "0",
+    "orderId": 1917641,
+    "origQty": "0.40",
+    "origType": "TRAILING_STOP_MARKET",
+    "price": "0",
+    "reduceOnly": false,
+    "side": "BUY",
+    "positionSide": "SHORT",
+    "status": "NEW",
+    "stopPrice": "9300",
+    "closePosition": false,
+    "symbol": "BTCUSDT",
+    "time": 1579276756075,
+    "timeInForce": "GTC",
+    "type": "TRAILING_STOP_MARKET",
+    "activatePrice": "9020",
+    "priceRate": "0.3",
+    "updateTime": 1579276756075,
+    "workingType": "CONTRACT_PRICE",
+    "priceProtect": false,
+    "priceMatch": "NONE",
+    "selfTradePreventionMode": "NONE",
+    "goodTillDate": 0
+  },
+  "SymbolNotionalAndLeverageBrackets": {
+    "symbol": "ETHUSDT",
+    "notionalCoef": 1.5,
+    "brackets": [
+      {
+        "bracket": 1,
+        "initialLeverage": 75,
+        "notionalCap": 10000,
+        "notionalFloor": 0,
+        "maintMarginRatio": 0.0065,
+        "cum": 0
+      }
+    ]
+  },
+  "SymbolPriceTickerItem": {
+    "symbol": "BTCUSDT",
+    "price": "6000.01",
+    "time": 1589437530011
   },
   "SymbolPriceTickerList": [
     {
@@ -519,9 +589,10 @@
       "time": 1589437530011
     }
   ],
-  "SymbolPriceTickerItem": {
+  "TestConnectivity": {},
+  "UserCommissionRate": {
     "symbol": "BTCUSDT",
-    "price": "6000.01",
-    "time": 1589437530011
+    "makerCommissionRate": "0.0002",
+    "takerCommissionRate": "0.0004"
   }
 }

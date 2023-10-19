@@ -1,7 +1,7 @@
 from typing import Any
 
 from data.enums import (
-    TIF,
+    TimeInForce,
     AmountSpacing,
     OrderType,
     PositionSide,
@@ -21,7 +21,7 @@ def create_order(
     position_side: PositionSide,
     price: float = 0.0,
     order_type: OrderType = OrderType.LIMIT,
-    time_in_force: TIF = TIF.GTC,
+    time_in_force: TimeInForce = TimeInForce.GTC,
     price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> dict[str, Any]:
     order = {
@@ -61,7 +61,7 @@ def create_multiple_orders(
     quantities_and_prices: list[tuple[float, float]],
     position_side: PositionSide,
     order_type: OrderType = OrderType.LIMIT,
-    time_in_force: TIF = TIF.GTC,
+    time_in_force: TimeInForce = TimeInForce.GTC,
     price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> list[Any]:
     result = []

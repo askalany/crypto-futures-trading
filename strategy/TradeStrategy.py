@@ -1,7 +1,7 @@
 import concurrent.futures
 from typing import Any
 
-from data.enums import TIF, PositionSide, TickerSymbol
+from data.enums import TimeInForce, PositionSide, TickerSymbol
 from repository.repository import TradeRepo
 
 
@@ -14,7 +14,7 @@ class TradeStrategy:
         buy_orders_num: int = 100,
         sell_orders_num: int = 100,
         use_mark_price: bool = False,
-        tif: TIF = TIF.GTC,
+        tif: TimeInForce = TimeInForce.GTC,
         price_sell_max_mult: float = 1.2,
         price_sell_min_mult: float = 1.0008,
         price_buy_max_mult: float = 0.9992,

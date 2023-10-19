@@ -1,4 +1,4 @@
-from data.enums import TIF, PositionSide, Side, TickerSymbol
+from data.enums import TimeInForce, PositionSide, Side, TickerSymbol
 from strategy.TradeStrategy import TradeStrategy
 from utils.mathutils import get_max_buy_amount
 from utils.orderutils import create_all_queue_price_match_orders
@@ -9,7 +9,7 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
         self,
         symbol: TickerSymbol,
         position_side: PositionSide,
-        tif: TIF = TIF.GTC,
+        tif: TimeInForce = TimeInForce.GTC,
     ):
         super().__init__(
             symbol=symbol,
