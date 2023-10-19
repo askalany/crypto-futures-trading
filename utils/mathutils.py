@@ -1,5 +1,7 @@
 import numpy as np
 
+from data.enums import PositionSide
+
 
 def get_geom_scale(orders_num: int, high_price: float, low_price: float) -> list[float]:
     return np.geomspace(
@@ -86,3 +88,23 @@ def get_max_buy_amount(
     if leverage <= 0 or available_balance < 0 or mark_price <= 0.0:
         raise ValueError("Invalid input values")
     return (leverage * available_balance) / mark_price
+
+
+def cost_to_open_position(
+    quantity: float,
+    leverage: int,
+    side: PositionSide,
+    mark_price: float,
+    order_price: float,
+    precision: int,
+    number_of_Contract: int = 1,
+) -> float:
+    # Step 1: Calculate the Initial Margin
+    notional_value = order_price * quantity
+    initial_margin = notional_value / leverage
+    # Step 2: Calculate Open Loss
+    direction_of_order = 1 if side == PositionSide.LONG else -1
+    open_loss = number_of_Contract * abs(
+        min(0, direction_of_order * (mark_price - order_price))
+    )
+    return round(initial_margin + open_loss, precision)

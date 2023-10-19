@@ -35,7 +35,7 @@ def on_message(_, message) -> None:
 
 
 def main() -> None:
-    live = Live(renderable=layout, refresh_per_second=10, screen=True)
+    live = Live(renderable=layout, refresh_per_second=1, screen=True)
     live.start()
     repo = TradeRepo()
     (

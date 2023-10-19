@@ -39,8 +39,8 @@ class FixedRangeStrategy(TradeStrategy):
         position_amount = position_risk.positionAmt
         entry_price = mark_price if self.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
-        leveraged_balance = position_risk.leverage * account_info.availableBalance
-        amount_buy = leveraged_balance
+        leveraged_balance = position_risk.leverage * min(account_info.availableBalance, position_risk.maxNotionalValue)
+        amount_buy = leveraged_balance / center_price
         (
             price_sell_max,
             price_sell_min,
