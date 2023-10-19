@@ -69,7 +69,21 @@ def main() -> None:
         speed=100,
     )
     try:
+        max_leverage = 10
         while True:
+            repo.cancel_all_orders(TickerSymbol.BTCUSDT)
+            position_risk = repo.get_position_risk(symbol=symbol_input)
+            target_leverage = position_risk.leverage + 1
+            while (
+                repo.get_position_risk(symbol=symbol_input).leverage
+                < target_leverage
+                <= max_leverage
+            ):
+                try:
+                    repo.change_initial_leverage(TickerSymbol.BTCUSDT, target_leverage)
+                except ClientError as e:
+                    target_leverage += 1
+                    print(f"{target_leverage=}")
             if strategy_input is Strategy.FIXED_RANGE:
                 strategy_1 = FixedRangeStrategy(
                     symbol=symbol_input,

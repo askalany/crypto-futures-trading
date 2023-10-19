@@ -4,7 +4,6 @@ from utils.listutils import batched_lists
 from utils.mathutils import get_grid_maxs_and_mins
 from utils.orderutils import create_multiple_orders, get_orders_quantities_and_prices
 
-
 class FixedRangeStrategy(TradeStrategy):
     def __int__(
         self,
@@ -33,7 +32,6 @@ class FixedRangeStrategy(TradeStrategy):
         )
 
     def run_loop(self):
-        self.repo.cancel_all_orders(symbol=self.symbol)
         mark_price = self.repo.get_mark_price(symbol=self.symbol).markPrice
         position_risk = self.repo.get_position_risk(symbol=self.symbol)
         account_info = self.repo.get_account_info()

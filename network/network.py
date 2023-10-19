@@ -5,6 +5,7 @@ from binance.error import ClientError
 from binance.um_futures import UMFutures
 
 from base.helpers import Singleton
+from model import ChangeInitialLeverage
 from network.responses.responses import (
     AccountInfoResponse,
     CancelAllOrdersResponse,
@@ -28,6 +29,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return CancelAllOrdersResponse(**response)
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def new_price_match_order_request(
@@ -53,6 +55,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def new_order_request(
@@ -79,6 +82,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def new_batch_order_request(self, params) -> Any | dict[Any, Any]:
@@ -87,6 +91,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_position_risk_request(
@@ -97,6 +102,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return [PositionInformationResponse(**i) for i in response]
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_account_info_request(
@@ -108,6 +114,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return AccountInfoResponse(**response)
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_mark_price_request(self, symbol: str) -> MarkPriceResponse:
@@ -116,6 +123,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return MarkPriceResponse(**response)
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_ticker_price_request(self, symbol: str) -> Any | dict[Any, Any]:
@@ -124,6 +132,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_listen_key_request(
@@ -134,6 +143,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return ListenKeyResponse(**response)
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def close_listen_key_request(self, listen_key: str) -> Any | dict[Any, Any]:
@@ -142,6 +152,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_open_orders_request(self, symbol: str) -> Any | dict[Any, Any]:
@@ -150,6 +161,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def keep_alive_request(self, listen_key: str):
@@ -158,6 +170,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_time_request(self) -> Any | dict[Any, Any]:
@@ -166,6 +179,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_orders_request(self, symbol):
@@ -174,6 +188,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_balance_request(self):
@@ -182,6 +197,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
             raise e
 
     def get_depth_request(self, symbol: str, limit: int = 5):
@@ -190,4 +206,14 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.info(response)
             return response
         except ClientError as e:
+            logging.error(e)
+            raise e
+        
+    def change_initial_leverage_request(self, symbol: str, leverage: int) -> ChangeInitialLeverage:
+        try:
+            response = self.client.change_leverage(symbol=symbol, leverage=leverage)
+            logging.info(response)
+            return ChangeInitialLeverage(**response)
+        except ClientError as e:
+            logging.error(e)
             raise e

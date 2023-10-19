@@ -1,15 +1,15 @@
 {
   "once": false,
   "use_mark_price": false,
-  "delay_seconds": 3200.0,
+  "delay_seconds": 20.0,
   "symbol": "TickerSymbol.BTCUSDT",
   "strategy": "Strategy.FIXED_RANGE",
   "position_side": "PositionSide.LONG",
   "buy_orders_num": 100,
   "sell_orders_num": 100,
-  "TimeInForce": "TimeInForce.GTC",
-  "price_sell_max_mult": 1.05,
+  "timeInForce": "TimeInForce.GTC",
+  "price_sell_max_mult": 1.02,
   "price_sell_min_mult": 1.0014,
   "price_buy_max_mult": 0.9986,
-  "price_buy_min_mult": 0.8
+  "price_buy_min_mult": 0.98
 }

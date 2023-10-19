@@ -47,6 +47,6 @@ class Footer(metaclass=Singleton):
         pnl_mark = (mark_price - position_risk.entryPrice) * position_risk.positionAmt
         pnl_last = (last_price - position_risk.entryPrice) * position_risk.positionAmt
         return Panel(
-            f"PnL Mark={f_money(pnl_mark)}, PnL Last={f_money(pnl_last)}, Position Amount={position_risk.positionAmt}, Entry Price={f_money(position_risk.entryPrice)}, Mark Price={f_money(mark_price)}, Last Price={f_money(last_price)}, Last Update={get_date_and_time()}",
+            f"Leverage={position_risk.leverage}, PnL Mark={f_money(pnl_mark)}, PnL Last={f_money(pnl_last)}, Position Amount={position_risk.positionAmt}, Entry Price={f_money(position_risk.entryPrice)}, Mark Price={f_money(mark_price)}, Last Price={f_money(last_price)}, Last Update={get_date_and_time()}",
             title="Footer",
         )

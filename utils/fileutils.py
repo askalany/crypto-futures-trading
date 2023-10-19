@@ -35,7 +35,7 @@ def get_inputs_from_file(
         )
         buy_orders_num_input = data["buy_orders_num"]
         sell_orders_num_input = data["sell_orders_num"]
-        time_in_force_input = get_enum_member_from_name(data["TimeInForce"], ALL_ENUMS)
+        time_in_force_input = get_enum_member_from_name(data["timeInForce"], ALL_ENUMS)
         price_sell_max_mult: float = data["price_sell_max_mult"]
         price_sell_min_mult: float = data["price_sell_min_mult"]
         price_buy_max_mult: float = data["price_buy_max_mult"]
