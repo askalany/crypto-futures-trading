@@ -1,4 +1,4 @@
-from data.enums import TimeInForce, PositionSide, Side, TickerSymbol
+from data.enums import PositionSide, Side, TickerSymbol, TimeInForce
 from strategy.TradeStrategy import TradeStrategy
 from utils.mathutils import get_max_buy_amount
 from utils.orderutils import create_all_queue_price_match_orders
@@ -9,14 +9,14 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
         self,
         symbol: TickerSymbol,
         position_side: PositionSide,
-        tif: TimeInForce = TimeInForce.GTC,
+        time_in_force: TimeInForce = TimeInForce.GTC,
     ):
         super().__init__(
             symbol=symbol,
             position_side=position_side,
             buy_orders_num=4,
             sell_orders_num=4,
-            tif=tif,
+            time_in_force=time_in_force,
         )
 
     def run_loop(self):

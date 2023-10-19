@@ -1,4 +1,4 @@
-from data.enums import TimeInForce, AmountSpacing, PositionSide, Side, TickerSymbol
+from data.enums import AmountSpacing, PositionSide, Side, TickerSymbol, TimeInForce
 from strategy.TradeStrategy import TradeStrategy
 from utils.listutils import batched_lists
 from utils.mathutils import get_grid_maxs_and_mins
@@ -13,7 +13,7 @@ class FixedRangeStrategy(TradeStrategy):
         buy_orders_num: int = 100,
         sell_orders_num: int = 100,
         use_mark_price: bool = False,
-        tif: TimeInForce = TimeInForce.GTC,
+        time_in_force: TimeInForce = TimeInForce.GTC,
         price_sell_max_mult: float = 1.2,
         price_sell_min_mult: float = 1.0008,
         price_buy_max_mult: float = 0.9992,
@@ -25,7 +25,7 @@ class FixedRangeStrategy(TradeStrategy):
             buy_orders_num=buy_orders_num,
             sell_orders_num=sell_orders_num,
             use_mark_price=use_mark_price,
-            tif=tif,
+            time_in_force=time_in_force,
             price_sell_max_mult=price_sell_max_mult,
             price_sell_min_mult=price_sell_min_mult,
             price_buy_max_mult=price_buy_max_mult,
@@ -68,7 +68,7 @@ class FixedRangeStrategy(TradeStrategy):
             side=Side.BUY,
             quantities_and_prices=buy_orders_quantities_and_prices,
             position_side=self.position_side,
-            time_in_force=self.tif,
+            time_in_force=self.time_in_force,
         )
         sell_orders_quantities_and_prices = get_orders_quantities_and_prices(
             orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
@@ -83,7 +83,7 @@ class FixedRangeStrategy(TradeStrategy):
             side=Side.SELL,
             quantities_and_prices=sell_orders_quantities_and_prices,
             position_side=self.position_side,
-            time_in_force=self.tif,
+            time_in_force=self.time_in_force,
         )
         batched_orders = batched_lists(buy_orders + sell_orders, 5)
         self.execute_orders(batched_orders)

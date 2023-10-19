@@ -33,7 +33,7 @@ def check_file_inputs(
     position_side: Any,
     buy_orders_num: int,
     sell_orders_num: int,
-    tif: Any,
+    time_in_force: Any,
     price_sell_max_mult: float,
     price_sell_min_mult: float,
     price_buy_max_mult: float,
@@ -65,8 +65,8 @@ def check_file_inputs(
         raise ValueError("incorrect input for strategy")
     if not isinstance(position_side, PositionSide):
         raise ValueError("incorrect input for position_side")
-    if not isinstance(tif, TimeInForce):
-        raise ValueError("incorrect input for tif")
+    if not isinstance(time_in_force, TimeInForce):
+        raise ValueError("incorrect input for TimeInForce")
     if not isinstance(price_sell_max_mult, float):
         raise ValueError("incorrect input for price_sell_max_mult")
     if not isinstance(price_sell_min_mult, float):
@@ -84,7 +84,7 @@ def check_file_inputs(
         position_side,
         buy_orders_num,
         sell_orders_num,
-        tif,
+        time_in_force,
         price_sell_max_mult,
         price_sell_min_mult,
         price_buy_max_mult,
