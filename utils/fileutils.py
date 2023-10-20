@@ -1,7 +1,7 @@
 import json
 
 from base.validation import check_file_inputs
-from data.enums import ALL_ENUMS, TimeInForce, PositionSide, Strategy, TickerSymbol
+from data.enums import ALL_ENUMS, PositionSide, Strategy, TickerSymbol, TimeInForce
 from utils.enumutils import get_enum_member_from_name
 
 
@@ -19,6 +19,9 @@ def get_inputs_from_file(
     TimeInForce,
     float,
     float,
+    float,
+    float,
+    bool,
     float,
     float,
 ]:
@@ -40,6 +43,9 @@ def get_inputs_from_file(
         price_sell_min_mult: float = data["price_sell_min_mult"]
         price_buy_max_mult: float = data["price_buy_max_mult"]
         price_buy_min_mult: float = data["price_buy_min_mult"]
+        market_making: bool = data["market_making"]
+        mm_sell_quantity: float = data["mm_sell_quantity"]
+        mm_buy_quantity: float = data["mm_buy_quantity"]
         return check_file_inputs(
             once_input,
             use_mark_price_input,
@@ -54,4 +60,7 @@ def get_inputs_from_file(
             price_sell_min_mult,
             price_buy_max_mult,
             price_buy_min_mult,
+            market_making,
+            mm_sell_quantity,
+            mm_buy_quantity,
         )

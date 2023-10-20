@@ -19,6 +19,9 @@ class TradeStrategy:
         price_sell_min_mult: float = 1.0008,
         price_buy_max_mult: float = 0.9992,
         price_buy_min_mult: float = 0.8,
+        market_making: bool = False,
+        mm_sell_quantity: float = 0.0,
+        mm_buy_quantity: float = 0.0,
     ):
         self.symbol = symbol
         self.position_side = position_side
@@ -31,6 +34,9 @@ class TradeStrategy:
         self.price_sell_min_mult = price_sell_min_mult
         self.price_buy_max_mult = price_buy_max_mult
         self.price_buy_min_mult = price_buy_min_mult
+        self.market_making = market_making
+        self.mm_sell_quantity = mm_sell_quantity
+        self.mm_buy_quantity = mm_buy_quantity
 
     def work(self, order) -> Any | dict[Any, Any]:
         if isinstance(order, list):

@@ -52,6 +52,9 @@ def main() -> None:
         price_sell_min_mult,
         price_buy_max_mult,
         price_buy_min_mult,
+        market_making,
+        mm_sell_quantity,
+        mm_buy_quantity,
     ) = get_inputs_from_file()
     listen_key = repo.get_listen_key().listenKey
     ws_client = repo.get_websocket_client(
@@ -69,7 +72,7 @@ def main() -> None:
         speed=100,
     )
     try:
-        max_leverage = 50
+        max_leverage = 2
         while True:
             repo.cancel_all_orders(TickerSymbol.BTCUSDT)
             current_leverage = repo.get_position_risk(symbol=symbol_input).leverage
@@ -92,6 +95,9 @@ def main() -> None:
                     price_sell_min_mult=price_sell_min_mult,
                     price_buy_max_mult=price_buy_max_mult,
                     price_buy_min_mult=price_buy_min_mult,
+                    market_making=market_making,
+                    mm_sell_quantity=mm_sell_quantity,
+                    mm_buy_quantity=mm_buy_quantity,
                 )
                 strategy_1.run_loop()
             elif strategy_input is Strategy.PRICE_MATCH_QUEUE:

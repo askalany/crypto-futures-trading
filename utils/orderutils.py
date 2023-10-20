@@ -1,7 +1,5 @@
 from typing import Any
 
-from numpy import append
-
 from data.enums import (
     AmountSpacing,
     OrderType,
@@ -107,6 +105,8 @@ def get_buy_orders_quantities_and_prices(
     order_quantity_min: float,
     order_quantity_max: float,
     amount_spacing: AmountSpacing = AmountSpacing.LINEAR,
+    market_making: bool = False,
+    mm_buy_quantity: float = 0.0,
 ) -> list[tuple[float, float]]:
     if orders_num == 0:
         return []
@@ -134,7 +134,9 @@ def get_buy_orders_quantities_and_prices(
             precision=precision,
         )
         order_quantity = min(max(max_quantity, order_quantity_min), order_quantity_max)
-        quantities_and_prices.append((order_price, order_quantity))
+        quantities_and_prices.append(
+            (order_price, mm_buy_quantity if market_making else order_quantity)
+        )
     return quantities_and_prices
 
 
@@ -145,6 +147,8 @@ def get_sell_orders_quantities_and_prices(
     amount: float,
     order_quantity_min: float = -1.0,
     amount_spacing: AmountSpacing = AmountSpacing.LINEAR,
+    market_making: bool = False,
+    mm_sell_quantity: float = 0.0,
 ) -> list[tuple[float, float]]:
     quantities_and_prices = []
     if amount > 0.0 and orders_num > 0:
@@ -163,7 +167,8 @@ def get_sell_orders_quantities_and_prices(
             )
         )
         quantities_and_prices = [
-            (round(i, 1), round(quantity, 3)) for i in amount_spacing_list
+            (round(i, 1), mm_sell_quantity if market_making else quantity)
+            for i in amount_spacing_list
         ]
     return quantities_and_prices
 

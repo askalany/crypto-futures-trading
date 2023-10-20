@@ -1,7 +1,7 @@
 from typing import Any
 
 from base.error import ParameterRequiredError, ParameterTypeError, ParameterValueError
-from data.enums import TimeInForce, PositionSide, Strategy, TickerSymbol
+from data.enums import PositionSide, Strategy, TickerSymbol, TimeInForce
 
 
 def check_required_parameter(value, name) -> None:
@@ -38,6 +38,9 @@ def check_file_inputs(
     price_sell_min_mult: float,
     price_buy_max_mult: float,
     price_buy_min_mult: float,
+    market_making: bool,
+    mm_sell_quantity: float,
+    mm_buy_quantity: float,
 ) -> tuple[
     bool,
     bool,
@@ -50,6 +53,9 @@ def check_file_inputs(
     TimeInForce,
     float,
     float,
+    float,
+    float,
+    bool,
     float,
     float,
 ]:
@@ -75,6 +81,12 @@ def check_file_inputs(
         raise ValueError("incorrect input for price_buy_max_mult")
     if not isinstance(price_buy_min_mult, float):
         raise ValueError("incorrect input for price_buy_min_mult")
+    if not isinstance(market_making, bool):
+        raise ValueError("incorrect input for market_making")
+    if not isinstance(mm_sell_quantity, float):
+        raise ValueError("incorrect input for mm_sell_quantity")
+    if not isinstance(mm_buy_quantity, float):
+        raise ValueError("incorrect input for mm_buy_quantity")
     return (
         once,
         use_mark_price,
@@ -89,4 +101,7 @@ def check_file_inputs(
         price_sell_min_mult,
         price_buy_max_mult,
         price_buy_min_mult,
+        market_making,
+        mm_sell_quantity,
+        mm_buy_quantity,
     )

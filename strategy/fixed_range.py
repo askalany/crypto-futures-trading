@@ -22,6 +22,9 @@ class FixedRangeStrategy(TradeStrategy):
         price_sell_min_mult: float = 1.0008,
         price_buy_max_mult: float = 0.9992,
         price_buy_min_mult: float = 0.8,
+        market_making: bool = False,
+        mm_sell_quantity: float = 0.0,
+        mm_buy_quantity: float = 0.0,
     ):
         super().__init__(
             symbol=symbol,
@@ -34,6 +37,9 @@ class FixedRangeStrategy(TradeStrategy):
             price_sell_min_mult=price_sell_min_mult,
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
+            market_making=market_making,
+            mm_sell_quantity=mm_sell_quantity,
+            mm_buy_quantity=mm_buy_quantity,
         )
 
     def run_loop(self):
@@ -56,28 +62,32 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=self.price_buy_max_mult,
             price_buy_min_mult=self.price_buy_min_mult,
         )
-        buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
-            orders_num=self.buy_orders_num,
-            high_price=price_buy_max,
-            low_price=price_buy_min,
-            available_balance=account_info.availableBalance,
-            leverage=position_risk.leverage,
-            mark_price=mark_price,
-            max_notional_value=position_risk.maxNotionalValue,
-            notional=position_risk.notional,
-            side=PositionSide.LONG,
-            precision=3,
-            order_quantity_min=0.001,
-            order_quantity_max=1000.0,
-            amount_spacing=AmountSpacing.GEOMETRIC,
-        )
-        buy_orders = create_multiple_orders(
-            symbol=self.symbol,
-            side=Side.BUY,
-            quantities_and_prices=buy_orders_quantities_and_prices,
-            position_side=self.position_side,
-            time_in_force=self.time_in_force,
-        )
+        buy_orders = []
+        if position_amount < 2000.0:
+            buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
+                orders_num=self.buy_orders_num,
+                high_price=price_buy_max,
+                low_price=price_buy_min,
+                available_balance=account_info.availableBalance,
+                leverage=position_risk.leverage,
+                mark_price=mark_price,
+                max_notional_value=position_risk.maxNotionalValue,
+                notional=position_risk.notional,
+                side=PositionSide.LONG,
+                precision=3,
+                order_quantity_min=0.001,
+                order_quantity_max=1000.0,
+                amount_spacing=AmountSpacing.GEOMETRIC,
+                market_making=self.market_making,
+                mm_buy_quantity=self.mm_buy_quantity,
+            )
+            buy_orders = create_multiple_orders(
+                symbol=self.symbol,
+                side=Side.BUY,
+                quantities_and_prices=buy_orders_quantities_and_prices,
+                position_side=self.position_side,
+                time_in_force=self.time_in_force,
+            )
         sell_orders_quantities_and_prices = get_sell_orders_quantities_and_prices(
             orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
             high_price=price_sell_max,
@@ -85,6 +95,8 @@ class FixedRangeStrategy(TradeStrategy):
             amount=position_amount,
             order_quantity_min=0.001,
             amount_spacing=AmountSpacing.GEOMETRIC,
+            market_making=self.market_making,
+            mm_sell_quantity=self.mm_sell_quantity,
         )
         sell_orders = create_multiple_orders(
             symbol=self.symbol,
