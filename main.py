@@ -2,7 +2,6 @@ import contextlib
 import json
 import logging
 import time
-
 import typer
 from binance.error import ClientError
 from binance.lib.utils import config_logging
@@ -32,7 +31,6 @@ def on_message(_, message) -> None:
     if "data" in message:
         generate_table(data=data["data"])
         # live.update(renderable=, refresh=True)
-
 
 def main() -> None:
     live = Live(renderable=layout, refresh_per_second=1, screen=True)
@@ -118,6 +116,7 @@ def main() -> None:
         live.stop()
         ws_client.stop()
         repo.close_listen_key(listen_key=listen_key)
+        typer.Exit()
 
 
 if __name__ == "__main__":

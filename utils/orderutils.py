@@ -110,18 +110,10 @@ def get_buy_orders_quantities_and_prices(
 ) -> list[tuple[float, float]]:
     if orders_num == 0:
         return []
-    amount_spacing_list = (
-        get_linear_scale(
-            orders_num=orders_num, high_price=high_price, low_price=low_price
-        )
-        if amount_spacing is AmountSpacing.LINEAR
-        else get_geom_scale(
-            orders_num=orders_num, high_price=high_price, low_price=low_price
-        )
-    )
+    prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
     order_dollar_amount = available_balance / orders_num
     quantities_and_prices = []
-    for i in amount_spacing_list:
+    for i in prices:
         order_price = round(i, 1)
         max_quantity = max_open_quantity(
             leverage=leverage,
@@ -133,10 +125,12 @@ def get_buy_orders_quantities_and_prices(
             side=side,
             precision=precision,
         )
-        order_quantity = min(max(max_quantity, order_quantity_min), order_quantity_max)
-        quantities_and_prices.append(
-            (order_price, mm_buy_quantity if market_making else order_quantity)
+        order_quantity = (
+            min(mm_buy_quantity, max_quantity) if market_making else max_quantity
         )
+        order_quantity = min(order_quantity, order_quantity_max)
+        order_quantity = max(order_quantity, order_quantity_min)
+        quantities_and_prices.append((order_price, round(order_quantity, precision)))
     return quantities_and_prices
 
 
@@ -150,27 +144,21 @@ def get_sell_orders_quantities_and_prices(
     market_making: bool = False,
     mm_sell_quantity: float = 0.0,
 ) -> list[tuple[float, float]]:
-    quantities_and_prices = []
-    if amount > 0.0 and orders_num > 0:
-        order_amount = amount / orders_num
-        quantity = max(order_amount, order_quantity_min)
-        if order_amount < order_quantity_min:
-            quantity = order_quantity_min
-            orders_num = int(amount / order_quantity_min)
-        amount_spacing_list = (
-            get_linear_scale(
-                orders_num=orders_num, high_price=high_price, low_price=low_price
-            )
-            if amount_spacing is AmountSpacing.LINEAR
-            else get_geom_scale(
-                orders_num=orders_num, high_price=high_price, low_price=low_price
-            )
-        )
-        quantities_and_prices = [
-            (round(i, 1), mm_sell_quantity if market_making else quantity)
-            for i in amount_spacing_list
-        ]
-    return quantities_and_prices
+    if orders_num < 0:
+        raise ValueError("orders_num must be positive")
+    if amount < 0.0:
+        raise ValueError("amount must be positive")
+    if orders_num == 0 or amount < order_quantity_min:
+        return []
+    order_amount = max(
+        max(mm_sell_quantity, (amount / orders_num))
+        if market_making
+        else (amount / orders_num),
+        order_quantity_min,
+    )
+    orders_num = int(amount / order_amount)
+    prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
+    return [(round(i, 1), round(order_amount, 3)) for i in prices]
 
 
 def max_open_quantity(
@@ -196,4 +184,18 @@ def max_open_quantity(
     return round(
         min(leveraged_balance / leveraged_gap, remaining_notional / order_price),
         precision,
+    )
+
+
+def get_prices_list(
+    orders_num: int, high_price: float, low_price: float, amount_spacing: AmountSpacing
+) -> list[float]:
+    return (
+        get_linear_scale(
+            orders_num=orders_num, high_price=high_price, low_price=low_price
+        )
+        if amount_spacing is AmountSpacing.LINEAR
+        else get_geom_scale(
+            orders_num=orders_num, high_price=high_price, low_price=low_price
+        )
     )
