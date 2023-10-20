@@ -1,3 +1,4 @@
+import logging
 from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
@@ -37,42 +38,47 @@ layout = make_it()
 
 
 def generate_table(data) -> None:
-    if "e" in data:
-        if data["e"] in ["ACCOUNT_UPDATE"]:
-            data["last_account_updated"] = get_date_and_time()
-            display_data_1, display_data_2 = get_display_data(data)
-            layout["left_left"].update(
-                renderable=Panel(
-                    renderable=create_table_1(display_data=display_data_1),
+    try:
+        if "e" in data:
+            if data["e"] in ["ACCOUNT_UPDATE"]:
+                data["last_account_updated"] = get_date_and_time()
+                display_data_1, display_data_2 = get_display_data(data)
+                layout["left_left"].update(
+                    renderable=Panel(
+                        renderable=create_table_1(display_data=display_data_1),
+                    )
                 )
-            )
-            layout["left_right"].update(
-                renderable=Panel(
-                    renderable=create_table_1(display_data=display_data_2),
+                layout["left_right"].update(
+                    renderable=Panel(
+                        renderable=create_table_1(display_data=display_data_2),
+                    )
                 )
-            )
 
-        elif data["e"] in ["depthUpdate"]:
-            layout["right_left"].update(
-                renderable=Align(
-                    Panel(
-                        renderable=create_book_side_table(data["b"], "green", "ltr"),
-                        title="Bids",
-                        expand=False,
-                    ),
-                    align="right",
+            elif data["e"] in ["depthUpdate"]:
+                layout["right_left"].update(
+                    renderable=Align(
+                        Panel(
+                            renderable=create_book_side_table(
+                                data["b"], "green", "ltr"
+                            ),
+                            title="Bids",
+                            expand=False,
+                        ),
+                        align="right",
+                    )
                 )
-            )
-            layout["right_right"].update(
-                renderable=Align(
-                    Panel(
-                        renderable=create_book_side_table(data["a"], "red", "rtl"),
-                        title="Asks",
-                        expand=False,
-                    ),
-                    align="left",
+                layout["right_right"].update(
+                    renderable=Align(
+                        Panel(
+                            renderable=create_book_side_table(data["a"], "red", "rtl"),
+                            title="Asks",
+                            expand=False,
+                        ),
+                        align="left",
+                    )
                 )
-            )
+    except Exception as e:
+        logging.error(e)
 
 
 def create_table_1(display_data) -> Table:
@@ -85,9 +91,6 @@ def create_table_1(display_data) -> Table:
 
 def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
-    orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
-    open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
-    open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
     mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice
     last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
     position_risk = repo.get_position_risk(TickerSymbol.BTCUSDT)
@@ -128,8 +131,6 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
 
     display_data_2 = {
         "balance_plus_unrealized": f_money(balance_plus_unrealized),
-        "open_buy_orders_num": f"{open_buy_orders_num}",
-        "open_sell_orders_num": f"{open_sell_orders_num}",
         "pnl_mark": f_money(pnl_mark),
         "pnl_last": f_money(pnl_last),
         "profit_loss_percentage": f_pct(pnl_pct_mark),

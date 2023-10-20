@@ -41,12 +41,15 @@ class Right:
 class Footer(metaclass=Singleton):
     def __rich__(self) -> Panel:
         repo = TradeRepo()
+        orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
+        open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
+        open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
         position_risk = repo.get_position_risk(TickerSymbol.BTCUSDT)
         mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice
         last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
         pnl_mark = (mark_price - position_risk.entryPrice) * position_risk.positionAmt
         pnl_last = (last_price - position_risk.entryPrice) * position_risk.positionAmt
         return Panel(
-            f"Leverage={position_risk.leverage}, PnL Mark={f_money(pnl_mark)}, PnL Last={f_money(pnl_last)}, Position Amount={position_risk.positionAmt}, Entry Price={f_money(position_risk.entryPrice)}, Mark Price={f_money(mark_price)}, Last Price={f_money(last_price)}, Last Update={get_date_and_time()}",
+            f"OBO={open_buy_orders_num}, OSO={open_sell_orders_num}, LVRG={position_risk.leverage}, PnLMrk={f_money(pnl_mark)}, PnLLst={f_money(pnl_last)}, Ps. Amt.={position_risk.positionAmt}, Ent. Price={f_money(position_risk.entryPrice)}, Mrk Price={f_money(mark_price)}, Lst Price={f_money(last_price)}, Last Update={get_date_and_time()}",
             title="Footer",
         )

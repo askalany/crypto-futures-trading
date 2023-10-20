@@ -24,7 +24,7 @@ FORMAT = "%(message)s"
 #     datefmt="[%X]",
 #     handlers=[RichHandler(markup=True)],
 # )
-# config_logging(logging, logging.INFO)
+config_logging(logging, logging.ERROR)
 
 
 def on_message(_, message) -> None:
@@ -69,7 +69,7 @@ def main() -> None:
         speed=100,
     )
     try:
-        max_leverage = 5
+        max_leverage = 2
         while True:
             repo.cancel_all_orders(TickerSymbol.BTCUSDT)
             current_leverage = repo.get_position_risk(symbol=symbol_input).leverage

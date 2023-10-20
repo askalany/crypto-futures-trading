@@ -19,13 +19,9 @@ class BinanceNetworkClient(metaclass=Singleton):
     def __init__(self, client: UMFutures):
         self.client = client
 
-    def cancel_all_orders_request(
-        self, symbol, receive_window: int = 4000
-    ) -> CancelAllOrdersResponse:
+    def cancel_all_orders_request(self, symbol) -> CancelAllOrdersResponse:
         try:
-            response = self.client.cancel_open_orders(
-                symbol=symbol, recvWindow=receive_window
-            )
+            response = self.client.cancel_open_orders(symbol=symbol)
             logging.info(response)
             return CancelAllOrdersResponse(**response)
         except ClientError as e:
@@ -77,7 +73,6 @@ class BinanceNetworkClient(metaclass=Singleton):
                 quantity=str(quantity),
                 timeInForce=time_in_force,
                 price=price,
-                recvWindow=6000,
             )
             logging.info(response)
             return response
@@ -98,7 +93,7 @@ class BinanceNetworkClient(metaclass=Singleton):
         self, symbol: str
     ) -> list[PositionInformationResponse]:
         try:
-            response = self.client.get_position_risk(symbol=symbol, recvWindow=6000)
+            response = self.client.get_position_risk(symbol=symbol)
             logging.info(response)
             return [PositionInformationResponse(**i) for i in response]
         except ClientError as e:
@@ -110,7 +105,7 @@ class BinanceNetworkClient(metaclass=Singleton):
     ) -> AccountInfoResponse:
         try:
             # noinspection PyCallingNonCallable
-            response = self.client.account(recvWindow=6000)
+            response = self.client.account()
             logging.info(response)
             return AccountInfoResponse(**response)
         except ClientError as e:
