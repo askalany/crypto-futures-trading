@@ -69,7 +69,7 @@ def main() -> None:
         speed=100,
     )
     try:
-        max_leverage = 2
+        max_leverage = 50
         while True:
             repo.cancel_all_orders(TickerSymbol.BTCUSDT)
             current_leverage = repo.get_position_risk(symbol=symbol_input).leverage

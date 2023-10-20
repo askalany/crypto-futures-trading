@@ -1,4 +1,6 @@
 import logging
+from uu import Error
+
 from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
@@ -77,7 +79,7 @@ def generate_table(data) -> None:
                         align="left",
                     )
                 )
-    except Exception as e:
+    except Error as e:
         logging.error(e)
 
 
