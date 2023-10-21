@@ -35,7 +35,7 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_min_mult=self.file_input.price_buy_min_mult,
         )
         buy_orders = []
-        if position_amount < 5000.0 or not self.file_input.market_making:
+        if position_amount < 100.0 or not self.file_input.market_making:
             buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
                 orders_num=self.file_input.buy_orders_num,
                 high_price=price_buy_max,
