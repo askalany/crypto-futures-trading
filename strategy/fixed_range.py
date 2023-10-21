@@ -40,10 +40,7 @@ class FixedRangeStrategy(TradeStrategy):
                 orders_num=self.file_input.buy_orders_num,
                 high_price=price_buy_max,
                 low_price=price_buy_min,
-                available_balance=(
-                    account_info.totalWalletBalance
-                    - ((position_amount * mark_price) / float(position_risk.leverage))
-                ),
+                available_balance=account_info.availableBalance,
                 leverage=position_risk.leverage,
                 mark_price=mark_price,
                 max_notional_value=position_risk.maxNotionalValue,
