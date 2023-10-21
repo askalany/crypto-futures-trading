@@ -468,3 +468,4 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,pycharm,windows,linux,macos,python,venv,intellij+all,git
 .vscode/PythonImportHelper-v2-Completion.json
+my_trading.json
