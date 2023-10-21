@@ -22,6 +22,9 @@ class FixedRangeStrategy(TradeStrategy):
         position_amount = position_risk.positionAmt
         entry_price = mark_price if self.file_input.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
+        max_mm_position = 400.0
+        if position_amount >= max_mm_position and self.file_input.market_making:
+            center_price = min(position_risk.entryPrice, mark_price)
         (
             price_sell_max,
             price_sell_min,
@@ -35,7 +38,7 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_min_mult=self.file_input.price_buy_min_mult,
         )
         buy_orders = []
-        if position_amount < 100.0 or not self.file_input.market_making:
+        if position_amount < max_mm_position or not self.file_input.market_making:
             buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
                 orders_num=self.file_input.buy_orders_num,
                 high_price=price_buy_max,
