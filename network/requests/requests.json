@@ -23,14 +23,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/ping",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "ping"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "ping"]
             },
             "description": "Test connectivity to the Rest API."
           },
@@ -49,14 +43,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/time",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "time"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "time"]
             }
           },
           "response": []
@@ -74,14 +62,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/exchangeInfo",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "exchangeInfo"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "exchangeInfo"]
             }
           },
           "response": []
@@ -99,14 +81,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/depth?symbol=BTCUSDT",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "depth"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "depth"],
               "query": [
                 {
                   "key": "symbol",
@@ -136,14 +112,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/trades?symbol=BTCUSDT",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "trades"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "trades"],
               "query": [
                 {
                   "key": "symbol",
@@ -178,14 +148,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/historicalTrades?symbol=BTCUSDT",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "historicalTrades"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "historicalTrades"],
               "query": [
                 {
                   "key": "symbol",
@@ -221,14 +185,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/aggTrades?symbol=BTCUSDT",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "aggTrades"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "aggTrades"],
               "query": [
                 {
                   "key": "symbol",
@@ -273,14 +231,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/klines?symbol=BTCUSDT&interval=1h",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "klines"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "klines"],
               "query": [
                 {
                   "key": "symbol",
@@ -326,14 +278,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/continuousKlines?pair=&contractType=&interval=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "continuousKlines"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "continuousKlines"],
               "query": [
                 {
                   "key": "pair",
@@ -381,14 +327,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/indexPriceKlines?pair=BTCUSDT&interval=1h",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "indexPriceKlines"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "indexPriceKlines"],
               "query": [
                 {
                   "key": "pair",
@@ -434,14 +374,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "markPriceKlines"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "markPriceKlines"],
               "query": [
                 {
                   "key": "symbol",
@@ -487,14 +421,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/premiumIndex",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "premiumIndex"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "premiumIndex"],
               "query": [
                 {
                   "key": "symbol",
@@ -520,14 +448,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/fundingRate",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "fundingRate"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "fundingRate"],
               "query": [
                 {
                   "key": "symbol",
@@ -568,15 +490,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/ticker/24hr",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "ticker",
-                "24hr"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "ticker", "24hr"],
               "query": [
                 {
                   "key": "symbol",
@@ -602,15 +517,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/ticker/price",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "ticker",
-                "price"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "ticker", "price"],
               "query": [
                 {
                   "key": "symbol",
@@ -636,15 +544,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/ticker/bookTicker",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "ticker",
-                "bookTicker"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "ticker", "bookTicker"],
               "query": [
                 {
                   "key": "symbol",
@@ -670,14 +571,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/openInterest?symbol=BTCUSDT",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "openInterest"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "openInterest"],
               "query": [
                 {
                   "key": "symbol",
@@ -707,14 +602,8 @@
             ],
             "url": {
               "raw": "{{url}}/futures/data/openInterestHist?symbol=BTCUSDT&period=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "futures",
-                "data",
-                "openInterestHist"
-              ],
+              "host": ["{{url}}"],
+              "path": ["futures", "data", "openInterestHist"],
               "query": [
                 {
                   "key": "symbol",
@@ -759,14 +648,8 @@
             ],
             "url": {
               "raw": "{{url}}/futures/data/topLongShortAccountRatio?symbol=BTCUSDT&period=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "futures",
-                "data",
-                "topLongShortAccountRatio"
-              ],
+              "host": ["{{url}}"],
+              "path": ["futures", "data", "topLongShortAccountRatio"],
               "query": [
                 {
                   "key": "symbol",
@@ -811,14 +694,8 @@
             ],
             "url": {
               "raw": "{{url}}/futures/data/topLongShortPositionRatio?symbol=BTCUSDT&period=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "futures",
-                "data",
-                "topLongShortPositionRatio"
-              ],
+              "host": ["{{url}}"],
+              "path": ["futures", "data", "topLongShortPositionRatio"],
               "query": [
                 {
                   "key": "symbol",
@@ -868,14 +745,8 @@
             ],
             "url": {
               "raw": "{{url}}/futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "futures",
-                "data",
-                "globalLongShortAccountRatio"
-              ],
+              "host": ["{{url}}"],
+              "path": ["futures", "data", "globalLongShortAccountRatio"],
               "query": [
                 {
                   "key": "symbol",
@@ -925,14 +796,8 @@
             ],
             "url": {
               "raw": "{{url}}/futures/data/takerlongshortRatio?symbol=BTCUSDT&period=5m",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "futures",
-                "data",
-                "takerlongshortRatio"
-              ],
+              "host": ["{{url}}"],
+              "path": ["futures", "data", "takerlongshortRatio"],
               "query": [
                 {
                   "key": "symbol",
@@ -982,14 +847,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/lvtKlines?symbol=&interval=",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "lvtKlines"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "lvtKlines"],
               "query": [
                 {
                   "key": "symbol",
@@ -1039,14 +898,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/indexInfo",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "indexInfo"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "indexInfo"],
               "query": [
                 {
                   "key": "symbol",
@@ -1072,14 +925,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/assetIndex",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "assetIndex"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "assetIndex"],
               "query": [
                 {
                   "key": "symbol",
@@ -1103,9 +950,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1126,14 +971,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v2/account?recvWindow=5000&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v2",
-                "account"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v2", "account"],
               "query": [
                 {
                   "key": "recvWindow",
@@ -1158,10 +997,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  "",
-                  ""
-                ],
+                "exec": ["", ""],
                 "type": "text/javascript"
               }
             }
@@ -1182,14 +1018,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/income?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "income"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "income"],
               "query": [
                 {
                   "key": "symbol",
@@ -1241,9 +1071,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1264,14 +1092,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v2/positionRisk?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v2",
-                "positionRisk"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v2", "positionRisk"],
               "query": [
                 {
                   "key": "symbol",
@@ -1302,10 +1124,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  "",
-                  ""
-                ],
+                "exec": ["", ""],
                 "type": "text/javascript"
               }
             }
@@ -1326,14 +1145,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/userTrades?symbol=BTCUSDT&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "userTrades"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "userTrades"],
               "query": [
                 {
                   "key": "symbol",
@@ -1384,9 +1197,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1407,14 +1218,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v2/balance?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v2",
-                "balance"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v2", "balance"],
               "query": [
                 {
                   "key": "recvWindow",
@@ -1452,14 +1257,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/leverageBracket?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "leverageBracket"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "leverageBracket"],
               "query": [
                 {
                   "key": "symbol",
@@ -1492,10 +1291,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  "",
-                  ""
-                ],
+                "exec": ["", ""],
                 "type": "text/javascript"
               }
             }
@@ -1516,14 +1312,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/adlQuantile?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "adlQuantile"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "adlQuantile"],
               "query": [
                 {
                   "key": "symbol",
@@ -1555,10 +1345,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  "",
-                  ""
-                ],
+                "exec": ["", ""],
                 "type": "text/javascript"
               }
             }
@@ -1579,14 +1366,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/commissionRate?symbol=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "commissionRate"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "commissionRate"],
               "query": [
                 {
                   "key": "symbol",
@@ -1617,9 +1398,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1640,14 +1419,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/multiAssetsMargin?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "multiAssetsMargin"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "multiAssetsMargin"],
               "query": [
                 {
                   "key": "recvWindow",
@@ -1685,14 +1458,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/multiAssetsMargin?multiAssetsMargin=true&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "multiAssetsMargin"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "multiAssetsMargin"],
               "query": [
                 {
                   "key": "multiAssetsMargin",
@@ -1727,9 +1494,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1751,14 +1516,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order?symbol=&side=&type=&quantity=&price=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order"],
               "query": [
                 {
                   "key": "symbol",
@@ -1861,9 +1620,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1885,14 +1642,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order?symbol=&side=&type=&quantity=&price=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order"],
               "query": [
                 {
                   "key": "orderId",
@@ -1946,9 +1697,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -1970,14 +1719,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/batchOrders?batchOrders=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "batchOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "batchOrders"],
               "query": [
                 {
                   "key": "batchOrders",
@@ -2009,9 +1752,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2033,14 +1774,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/batchOrders?batchOrders=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "batchOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "batchOrders"],
               "query": [
                 {
                   "key": "batchOrders",
@@ -2073,9 +1808,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2097,14 +1830,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/orderAmendment?symbol=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "orderAmendment"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "orderAmendment"],
               "query": [
                 {
                   "key": "symbol",
@@ -2165,9 +1892,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2189,15 +1914,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order/asyn?startTime=&endTime=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order",
-                "asyn"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order", "asyn"],
               "query": [
                 {
                   "key": "startTime",
@@ -2236,9 +1954,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2260,16 +1976,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order/asyn/id?downloadId=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order",
-                "asyn",
-                "id"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order", "asyn", "id"],
               "query": [
                 {
                   "key": "downloadId",
@@ -2303,9 +2011,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2327,15 +2033,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/trade/asyn?startTime=&endTime=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "trade",
-                "asyn"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "trade", "asyn"],
               "query": [
                 {
                   "key": "startTime",
@@ -2374,9 +2073,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2398,16 +2095,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/trade/asyn/id?downloadId=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "trade",
-                "asyn",
-                "id"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "trade", "asyn", "id"],
               "query": [
                 {
                   "key": "downloadId",
@@ -2441,9 +2130,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2465,14 +2152,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order?symbol=BTCUSDT&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order"],
               "query": [
                 {
                   "key": "symbol",
@@ -2513,9 +2194,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2537,14 +2216,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/order?symbol=BTCUSDT&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "order"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "order"],
               "query": [
                 {
                   "key": "symbol",
@@ -2585,9 +2258,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2609,14 +2280,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/allOpenOrders?symbol=BTCUSDT&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "allOpenOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "allOpenOrders"],
               "query": [
                 {
                   "key": "symbol",
@@ -2647,9 +2312,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2671,14 +2334,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/countdownCancelAll?symbol=&countdownTime=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "countdownCancelAll"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "countdownCancelAll"],
               "query": [
                 {
                   "key": "symbol",
@@ -2714,9 +2371,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2738,14 +2393,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/batchOrders?symbol=BTCUSDT&origClientOrderIdList=[IKDQAMirf7vElig8hTZHh0,HwJSQKA7drF37tqqAN6q6q]&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "batchOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "batchOrders"],
               "query": [
                 {
                   "key": "symbol",
@@ -2786,9 +2435,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2810,14 +2457,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/openOrders?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "openOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "openOrders"],
               "query": [
                 {
                   "key": "symbol",
@@ -2849,9 +2490,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2873,14 +2512,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/openOrder?symbol=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "openOrder"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "openOrder"],
               "query": [
                 {
                   "key": "symbol",
@@ -2921,9 +2554,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -2945,14 +2576,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/allOrders?symbol=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "allOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "allOrders"],
               "query": [
                 {
                   "key": "symbol",
@@ -3004,9 +2629,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3028,14 +2651,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/forceOrders?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "forceOrders"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "forceOrders"],
               "query": [
                 {
                   "key": "symbol",
@@ -3092,9 +2709,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3116,14 +2731,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/marginType?symbol=BTCUSDT&marginType=ISOLATED&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "marginType"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "marginType"],
               "query": [
                 {
                   "key": "symbol",
@@ -3158,9 +2767,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3182,14 +2789,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/leverage?symbol=BTCUSDT&leverage=20&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "leverage"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "leverage"],
               "query": [
                 {
                   "key": "symbol",
@@ -3224,9 +2825,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3248,14 +2847,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/positionMargin?symbol=BTCUSDT&amount=100&type=1&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "positionMargin"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "positionMargin"],
               "query": [
                 {
                   "key": "symbol",
@@ -3300,9 +2893,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3324,15 +2915,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/positionMargin/history?symbol=BTCUSDT&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "positionMargin",
-                "history"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "positionMargin", "history"],
               "query": [
                 {
                   "key": "symbol",
@@ -3383,9 +2967,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3407,15 +2989,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/positionSide/dual?dualSidePosition=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "positionSide",
-                "dual"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "positionSide", "dual"],
               "query": [
                 {
                   "key": "dualSidePosition",
@@ -3447,9 +3022,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3471,15 +3044,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/positionSide/dual?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "positionSide",
-                "dual"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "positionSide", "dual"],
               "query": [
                 {
                   "key": "recvWindow",
@@ -3506,9 +3072,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3530,14 +3094,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/multiAssetsMargin?multiAssetsMargin=true&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "multiAssetsMargin"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "multiAssetsMargin"],
               "query": [
                 {
                   "key": "multiAssetsMargin",
@@ -3569,9 +3127,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3593,14 +3149,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/multiAssetsMargin?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "multiAssetsMargin"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "multiAssetsMargin"],
               "query": [
                 {
                   "key": "recvWindow",
@@ -3627,9 +3177,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3651,14 +3199,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/apiTradingStatus?timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "apiTradingStatus"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "apiTradingStatus"],
               "query": [
                 {
                   "key": "symbol",
@@ -3707,14 +3249,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/listenKey",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "listenKey"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "listenKey"]
             }
           },
           "response": []
@@ -3737,14 +3273,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/listenKey",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "listenKey"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "listenKey"]
             }
           },
           "response": []
@@ -3767,14 +3297,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/listenKey",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "listenKey"
-              ]
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "listenKey"]
             }
           },
           "response": []
@@ -3790,9 +3314,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -3814,14 +3336,8 @@
             ],
             "url": {
               "raw": "{{url}}/fapi/v1/pmAccountInfo?asset=&timestamp={{timestamp}}&signature={{signature}}",
-              "host": [
-                "{{url}}"
-              ],
-              "path": [
-                "fapi",
-                "v1",
-                "pmAccountInfo"
-              ],
+              "host": ["{{url}}"],
+              "path": ["fapi", "v1", "pmAccountInfo"],
               "query": [
                 {
                   "key": "asset",
@@ -3910,9 +3426,7 @@
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ]
