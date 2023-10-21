@@ -1,18 +1,19 @@
 {
   "once": false,
   "use_mark_price": false,
-  "delay_seconds": 20.0,
-  "symbol": "TickerSymbol.BTCUSDT",
-  "strategy": "Strategy.FIXED_RANGE",
-  "position_side": "PositionSide.LONG",
+  "delay_seconds": 120.0,
+  "symbol": "BTCUSDT",
+  "strategy": "FIXED_RANGE",
+  "position_side": "LONG",
   "buy_orders_num": 100,
   "sell_orders_num": 100,
-  "timeInForce": "TimeInForce.GTC",
-  "price_sell_max_mult": 1.02,
+  "time_in_force": "GTC",
+  "price_sell_max_mult": 1.05,
   "price_sell_min_mult": 1.0008,
   "price_buy_max_mult": 0.9992,
-  "price_buy_min_mult": 0.98,
-  "market_making": true,
+  "price_buy_min_mult": 0.8,
+  "market_making": false,
   "mm_sell_quantity": 1.0,
-  "mm_buy_quantity": 1.0
+  "mm_buy_quantity": 1.0,
+  "leverage": 3
 }

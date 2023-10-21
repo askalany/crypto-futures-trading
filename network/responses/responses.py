@@ -86,7 +86,7 @@ class AccountInfoResponse(BaseModel):
     multiAssetsMargin: bool
     tradeGroupId: int
     totalInitialMargin: str
-    totalMaintMargin: str
+    totalMaintMargin: float
     totalWalletBalance: float
     totalUnrealizedProfit: str
     totalMarginBalance: str

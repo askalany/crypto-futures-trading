@@ -5,16 +5,16 @@ from binance.um_futures import UMFutures
 from binance.websocket.um_futures.websocket_client import UMFuturesWebsocketClient
 from requests.adapters import HTTPAdapter
 
-from base.consts import BASE_URL, KEY, SECRET, STREAM_URL
+from base.consts import Settings
 from base.helpers import Singleton
 from data.enums import (
-    TimeInForce,
     OrderType,
     PositionSide,
     PriceMatch,
     PriceMatchNone,
     Side,
     TickerSymbol,
+    TimeInForce,
 )
 from model import ChangeInitialLeverage
 from network.network import BinanceNetworkClient
@@ -29,7 +29,9 @@ from network.responses.responses import (
 
 class TradeRepo(metaclass=Singleton):
     def __init__(self):
-        um_client = UMFutures(key=KEY, secret=SECRET, base_url=BASE_URL)
+        um_client = UMFutures(
+            key=Settings().KEY, secret=Settings().SECRET, base_url=Settings().BASE_URL
+        )
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
@@ -129,7 +131,7 @@ class TradeRepo(metaclass=Singleton):
         is_combined: bool = False,
     ):
         return UMFuturesWebsocketClient(
-            stream_url=STREAM_URL,
+            stream_url=Settings().STREAM_URL,
             on_message=message_handler,
             on_open=on_open,
             on_close=on_close,

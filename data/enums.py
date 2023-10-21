@@ -58,7 +58,7 @@ class Side(AutoName):
 
 
 # noinspection PyUnusedName,PyUnusedClass
-class Strategy(Enum):
+class Strategy(AutoName):
     FIXED_RANGE = auto()
     PRICE_MATCH_QUEUE = auto()
 

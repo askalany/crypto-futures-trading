@@ -112,6 +112,7 @@ def get_buy_orders_quantities_and_prices(
         return []
     prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
     order_dollar_amount = available_balance / orders_num
+    print(f"{available_balance=}, {order_dollar_amount}")
     quantities_and_prices = []
     for i in prices:
         order_price = round(i, 1)

@@ -1,17 +1,12 @@
-import os
-
-from dotenv import load_dotenv
-
-load_dotenv()
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-def get_env_var(key: str) -> str:
-    if result := os.getenv(key):
-        return result
-    raise KeyError(f"Environment variable {key} is not set")
-
-
-KEY = get_env_var("KEY")
-SECRET = get_env_var("SECRET")
-BASE_URL = get_env_var("BASE_URL")
-STREAM_URL = get_env_var("STREAM_URL")
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file="./.env", env_file_encoding="utf-8", extra="allow"
+    )
+    KEY: str = Field(default="", alias="KEY")
+    SECRET: str = Field(default="", alias="SECRET")
+    BASE_URL: str = Field(default="", alias="BASE_URL")
+    STREAM_URL: str = Field(default="", alias="STREAM_URL")
