@@ -8,7 +8,7 @@ from binance.error import ClientError
 from binance.lib.utils import config_logging
 from rich.live import Live
 
-from data.enums import Strategy, TickerSymbol
+from data.enums import Strategy
 from display.display import generate_table, layout
 from repository.repository import TradeRepo
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
@@ -41,11 +41,11 @@ def main() -> None:
     listen_key = repo.get_listen_key().listenKey
     ws_client = repo.get_websocket_client(message_handler=on_message, is_combined=True)
     ws_client.user_data(listen_key=listen_key, id=1)
-    ws_client.partial_book_depth(symbol=TickerSymbol.BTCUSDT.name, id=2, level=10, speed=100)
+    ws_client.partial_book_depth(symbol=file_input.symbol.name, id=2, level=10, speed=100)
     try:
         max_leverage = file_input.leverage
         while True:
-            repo.cancel_all_orders(TickerSymbol.BTCUSDT)
+            repo.cancel_all_orders(file_input.symbol)
             current_leverage = repo.get_position_risk(symbol=file_input.symbol).leverage
             try:
                 if max_leverage > current_leverage:

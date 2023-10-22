@@ -1,5 +1,6 @@
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from data.enums import TickerSymbol
 
 
 class Settings(BaseSettings):
@@ -10,3 +11,4 @@ class Settings(BaseSettings):
     SECRET: str = Field(default="", alias="SECRET")
     BASE_URL: str = Field(default="", alias="BASE_URL")
     STREAM_URL: str = Field(default="", alias="STREAM_URL")
+    symbol: TickerSymbol = TickerSymbol.BTCUSDT

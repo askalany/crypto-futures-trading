@@ -2,9 +2,9 @@ from datetime import datetime
 
 from rich.panel import Panel
 from rich.table import Table
+from base.consts import Settings
 
 from base.helpers import Singleton
-from data.enums import TickerSymbol
 from display.utils import f_money
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
@@ -15,10 +15,7 @@ class Header:
         grid = Table.grid(expand=True)
         grid.add_column(justify="center", ratio=1)
         grid.add_column(justify="right")
-        grid.add_row(
-            "Trading App",
-            datetime.now().ctime().replace(":", "[blink]:[/]"),
-        )
+        grid.add_row("Trading App", datetime.now().ctime().replace(":", "[blink]:[/]"))
         return Panel(grid, style="white on blue")
 
 
@@ -41,12 +38,12 @@ class Right:
 class Footer(metaclass=Singleton):
     def __rich__(self) -> Panel:
         repo = TradeRepo()
-        orders = repo.get_open_orders(TickerSymbol.BTCUSDT)
+        orders = repo.get_open_orders(Settings().symbol)
         open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
         open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-        position_risk = repo.get_position_risk(TickerSymbol.BTCUSDT)
-        mark_price = repo.get_mark_price(TickerSymbol.BTCUSDT).markPrice
-        last_price = float(repo.get_ticker_price(TickerSymbol.BTCUSDT))
+        position_risk = repo.get_position_risk(Settings().symbol)
+        mark_price = repo.get_mark_price(Settings().symbol).markPrice
+        last_price = float(repo.get_ticker_price(Settings().symbol))
         pnl_mark = (mark_price - position_risk.entryPrice) * position_risk.positionAmt
         pnl_last = (last_price - position_risk.entryPrice) * position_risk.positionAmt
         return Panel(
