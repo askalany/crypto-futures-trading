@@ -72,9 +72,9 @@ def create_table_1(display_data) -> Table:
 
 def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
-    mark_price = repo.get_mark_price(Settings().symbol).markPrice
-    last_price = float(repo.get_ticker_price(Settings().symbol))
-    position_risk = repo.get_position_risk(Settings().symbol)
+    mark_price = repo.get_mark_price(Settings().file_input.symbol).markPrice
+    last_price = float(repo.get_ticker_price(Settings().file_input.symbol))
+    position_risk = repo.get_position_risk(Settings().file_input.symbol)
     account_info = repo.get_account_info()
     entry_price = float(data["a"]["P"][0]["ep"] if data else position_risk.entryPrice)
     break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)

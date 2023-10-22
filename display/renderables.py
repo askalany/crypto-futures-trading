@@ -38,12 +38,12 @@ class Right:
 class Footer(metaclass=Singleton):
     def __rich__(self) -> Panel:
         repo = TradeRepo()
-        orders = repo.get_open_orders(Settings().symbol)
+        orders = repo.get_open_orders(Settings().file_input.symbol)
         open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
         open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-        position_risk = repo.get_position_risk(Settings().symbol)
-        mark_price = repo.get_mark_price(Settings().symbol).markPrice
-        last_price = float(repo.get_ticker_price(Settings().symbol))
+        position_risk = repo.get_position_risk(Settings().file_input.symbol)
+        mark_price = repo.get_mark_price(Settings().file_input.symbol).markPrice
+        last_price = float(repo.get_ticker_price(Settings().file_input.symbol))
         pnl_mark = (mark_price - position_risk.entryPrice) * position_risk.positionAmt
         pnl_last = (last_price - position_risk.entryPrice) * position_risk.positionAmt
         return Panel(

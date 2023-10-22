@@ -7,15 +7,7 @@ from requests.adapters import HTTPAdapter
 
 from base.consts import Settings
 from base.helpers import Singleton
-from data.enums import (
-    OrderType,
-    PositionSide,
-    PriceMatch,
-    PriceMatchNone,
-    Side,
-    TickerSymbol,
-    TimeInForce,
-)
+from data.enums import OrderType, PositionSide, PriceMatch, PriceMatchNone, Side, TickerSymbol, TimeInForce
 from model import ChangeInitialLeverage
 from network.network import BinanceNetworkClient
 from network.responses.responses import (
@@ -29,21 +21,15 @@ from network.responses.responses import (
 
 class TradeRepo(metaclass=Singleton):
     def __init__(self):
-        um_client = UMFutures(
-            key=Settings().KEY, secret=Settings().SECRET, base_url=Settings().BASE_URL
-        )
+        um_client = UMFutures(key=Settings().KEY, secret=Settings().SECRET, base_url=Settings().BASE_URL)
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
 
-    def get_account_info(
-        self,
-    ) -> AccountInfoResponse:
+    def get_account_info(self) -> AccountInfoResponse:
         return self.client.get_account_info_request()
 
-    def get_cross_wallet_balance(
-        self,
-    ) -> float:
+    def get_cross_wallet_balance(self) -> float:
         return self.client.get_balance_request()[0]["crossWalletBalance"]
 
     def get_mark_price(self, symbol: TickerSymbol) -> MarkPriceResponse:
@@ -101,9 +87,7 @@ class TradeRepo(metaclass=Singleton):
     def cancel_all_orders(self, symbol: TickerSymbol) -> CancelAllOrdersResponse:
         return self.client.cancel_all_orders_request(symbol=symbol.name)
 
-    def get_listen_key(
-        self,
-    ) -> ListenKeyResponse:
+    def get_listen_key(self) -> ListenKeyResponse:
         return self.client.get_listen_key_request()
 
     def close_listen_key(self, listen_key: str) -> Any | dict[Any, Any]:
@@ -115,9 +99,7 @@ class TradeRepo(metaclass=Singleton):
     def keep_alive(self, listen_key: str):
         return self.client.keep_alive_request(listen_key=listen_key)
 
-    def get_time(
-        self,
-    ) -> int:
+    def get_time(self) -> int:
         return self.client.get_time_request()["serverTime"]
 
     def get_websocket_client(
@@ -145,9 +127,12 @@ class TradeRepo(metaclass=Singleton):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
 
     def get_position_risk(self, symbol: TickerSymbol) -> PositionInformationResponse:
-        return self.client.get_position_risk_request(symbol=symbol.name)[0]
+        return list(
+            filter(
+                lambda x: x.symbol == symbol.name and x.positionSide == Settings().file_input.position_side,
+                self.client.get_position_risk_request(symbol=symbol.name),
+            )
+        )[0]
 
-    def change_initial_leverage(
-        self, symbol: TickerSymbol, leverage: int
-    ) -> ChangeInitialLeverage:
+    def change_initial_leverage(self, symbol: TickerSymbol, leverage: int) -> ChangeInitialLeverage:
         return self.client.change_initial_leverage_request(symbol.name, leverage)

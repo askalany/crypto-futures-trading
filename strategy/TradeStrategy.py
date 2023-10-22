@@ -1,17 +1,14 @@
 import concurrent.futures
 from typing import Any
 
-from base.models.FileInput import FileInput
 from repository.repository import TradeRepo
 
 
 class TradeStrategy:
     def __init__(
         self,
-        file_input: FileInput,
         repo: TradeRepo = TradeRepo(),
     ) -> None:
-        self.file_input = file_input
         self.repo = repo
 
     def work(self, order) -> Any | dict[Any, Any]:
