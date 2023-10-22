@@ -25,13 +25,12 @@ class FixedRangeStrategy(TradeStrategy):
         max_mm_position = 400.0
         if position_amount >= max_mm_position and self.file_input.market_making:
             last_price = self.repo.get_ticker_price(self.file_input.symbol)
-            center_price = min(position_risk.entryPrice, mark_price, last_price)
-        (
-            price_sell_max,
-            price_sell_min,
-            price_buy_max,
-            price_buy_min,
-        ) = get_grid_maxs_and_mins(
+            center_price = (
+                min(position_risk.entryPrice, mark_price, last_price)
+                if position_risk.positionSide == PositionSide.LONG
+                else max(position_risk.entryPrice, mark_price, last_price)
+            )
+        (price_sell_max, price_sell_min, price_buy_max, price_buy_min) = get_grid_maxs_and_mins(
             center_price=center_price,
             price_sell_max_mult=self.file_input.price_sell_max_mult,
             price_sell_min_mult=self.file_input.price_sell_min_mult,
@@ -57,9 +56,10 @@ class FixedRangeStrategy(TradeStrategy):
                 market_making=self.file_input.market_making,
                 mm_buy_quantity=self.file_input.mm_buy_quantity,
             )
+            side_open = Side.BUY if self.file_input.position_side == PositionSide.LONG else Side.SELL
             buy_orders = create_multiple_orders(
                 symbol=self.file_input.symbol,
-                side=Side.BUY,
+                side=side_open,
                 quantities_and_prices=buy_orders_quantities_and_prices,
                 position_side=self.file_input.position_side,
                 time_in_force=self.file_input.time_in_force,
@@ -74,9 +74,10 @@ class FixedRangeStrategy(TradeStrategy):
             market_making=self.file_input.market_making,
             mm_sell_quantity=self.file_input.mm_sell_quantity,
         )
+        side_close = Side.SELL if self.file_input.position_side == PositionSide.LONG else Side.BUY
         sell_orders = create_multiple_orders(
             symbol=self.file_input.symbol,
-            side=Side.SELL,
+            side=side_close,
             quantities_and_prices=sell_orders_quantities_and_prices,
             position_side=self.file_input.position_side,
             time_in_force=self.file_input.time_in_force,

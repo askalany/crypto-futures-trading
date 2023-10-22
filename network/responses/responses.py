@@ -1,6 +1,7 @@
 from typing import List
 
 from pydantic import BaseModel
+from data.enums import PositionSide
 
 
 class CancelAllOrdersResponse(BaseModel):
@@ -36,10 +37,11 @@ class PositionInformationResponse(BaseModel):
     marginType: str
     isolatedMargin: float
     isAutoAddMargin: bool
-    positionSide: str
+    positionSide: PositionSide
     notional: float
     isolatedWallet: str
     updateTime: int
+
 
 
 class Asset(BaseModel):
@@ -72,7 +74,7 @@ class Position(BaseModel):
     maxNotional: str
     bidNotional: str
     askNotional: str
-    positionSide: str
+    positionSide: PositionSide
     positionAmt: str
     updateTime: int
 
