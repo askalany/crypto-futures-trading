@@ -1,4 +1,7 @@
-def f_money(amount, color: None | str = None) -> str:
+from typing import Union
+
+
+def f_money(amount, color: Union[None, str] = None) -> str:
     formatted_amount = "{:,.2f}".format(amount)
     if color:
         return f"[{color}]{formatted_amount}"

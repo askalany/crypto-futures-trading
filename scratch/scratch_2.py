@@ -1,13 +1,17 @@
-from tkinter import *
+import contextlib
+from re import S
+from tkinter import E
+from tkinter import N
+from tkinter import StringVar
+from tkinter import Tk
+from tkinter import W
 from tkinter import ttk
 
 
 def calculate(*args):
-    try:
+    with contextlib.suppress(ValueError):
         value = float(feet.get())
         meters.set(int(0.3048 * value * 10000.0 + 0.5) / 10000.0)
-    except ValueError:
-        pass
 
 
 root = Tk()
@@ -25,9 +29,7 @@ feet_entry.grid(column=2, row=1, sticky=(W, E))
 meters = StringVar()
 ttk.Label(mainframe, textvariable=meters).grid(column=2, row=2, sticky=(W, E))
 
-ttk.Button(mainframe, text="Calculate", command=calculate).grid(
-    column=3, row=3, sticky=W
-)
+ttk.Button(mainframe, text="Calculate", command=calculate).grid(column=3, row=3, sticky=W)
 
 ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
 ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)

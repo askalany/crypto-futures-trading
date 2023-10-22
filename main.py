@@ -39,20 +39,9 @@ def main() -> None:
     repo = TradeRepo()
     file_input = get_inputs_from_file()
     listen_key = repo.get_listen_key().listenKey
-    ws_client = repo.get_websocket_client(
-        message_handler=on_message,
-        is_combined=True,
-    )
-    ws_client.user_data(
-        listen_key=listen_key,
-        id=1,
-    )
-    ws_client.partial_book_depth(
-        symbol=TickerSymbol.BTCUSDT.name,
-        id=2,
-        level=10,
-        speed=100,
-    )
+    ws_client = repo.get_websocket_client(message_handler=on_message, is_combined=True)
+    ws_client.user_data(listen_key=listen_key, id=1)
+    ws_client.partial_book_depth(symbol=TickerSymbol.BTCUSDT.name, id=2, level=10, speed=100)
     try:
         max_leverage = file_input.leverage
         while True:
@@ -60,13 +49,9 @@ def main() -> None:
             current_leverage = repo.get_position_risk(symbol=file_input.symbol).leverage
             try:
                 if max_leverage > current_leverage:
-                    repo.change_initial_leverage(
-                        file_input.symbol, current_leverage + 1
-                    )
+                    repo.change_initial_leverage(file_input.symbol, current_leverage + 1)
                 elif max_leverage < current_leverage:
-                    repo.change_initial_leverage(
-                        file_input.symbol, current_leverage - 1
-                    )
+                    repo.change_initial_leverage(file_input.symbol, current_leverage - 1)
             except ClientError as e:
                 logging.error(e)
             if file_input.strategy is Strategy.FIXED_RANGE:
