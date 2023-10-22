@@ -49,7 +49,7 @@ class FixedRangeStrategy(TradeStrategy):
                 mark_price=mark_price,
                 max_notional_value=position_risk.maxNotionalValue,
                 notional=position_risk.notional,
-                side=PositionSide.LONG,
+                side=self.file_input.position_side,
                 precision=3,
                 order_quantity_min=0.001,
                 order_quantity_max=1000.0,
