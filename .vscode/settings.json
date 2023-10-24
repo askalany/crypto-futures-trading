@@ -154,5 +154,6 @@
     "notebook.diff.ignoreOutputs": true,
     "jupyter.interactiveWindow.creationMode": "perFile",
     "jupyter.askForKernelRestart": false,
-    "jupyter.themeMatplotlibPlots": true
+    "jupyter.themeMatplotlibPlots": true,
+    "workbench.editor.empty.hint": "hidden"
 }
