@@ -9,6 +9,7 @@ from display.utils import f_money
 from display.utils import f_pct
 from model import BalanceAndPositionUpdate
 from model import DepthUpdate
+from model import MarkPriceUpdate
 from repository.repository import TradeRepo
 from rich.align import Align
 from rich.layout import Layout
@@ -69,6 +70,8 @@ def generate_table(data) -> None:
                         align="left",
                     )
                 )
+            elif data["e"] in ["markPriceUpdate"]:
+                mark_price_update = MarkPriceUpdate(**data)
     except Error as e:
         logging.error(e)
 

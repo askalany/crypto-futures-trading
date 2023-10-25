@@ -294,6 +294,16 @@ class DepthUpdate(BaseModel):
     b: List[List[str]]
     a: List[List[str]]
 
+class MarkPriceUpdate(BaseModel):
+    e: str
+    E: int
+    s: str
+    p: str
+    i: str
+    P: str
+    r: str
+    T: int
+
 
 class Model(BaseModel):
     AccountInformation: AccountInformation
