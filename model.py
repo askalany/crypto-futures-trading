@@ -283,11 +283,24 @@ class SymbolPriceTickerListItem(BaseModel):
     time: int
 
 
+class DepthUpdate(BaseModel):
+    e: str
+    E: int
+    T: int
+    s: str
+    U: int
+    u: int
+    pu: int
+    b: List[List[str]]
+    a: List[List[str]]
+
+
 class Model(BaseModel):
     AccountInformation: AccountInformation
     AccountBalances: List[AccountBalance]
     PositionInformation: List[PositionInformation]
     BalanceAndPositionUpdate: BalanceAndPositionUpdate
+    DepthUpdate: DepthUpdate
     PartialBookDepth: PartialBookDepth
     CurrentAllOpenOrders: List[Order]
     NewOrder: Order

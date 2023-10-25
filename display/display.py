@@ -1,4 +1,5 @@
 import logging
+from typing import List
 from uu import Error
 
 from base.Settings import Settings
@@ -6,7 +7,7 @@ from display.renderables import Footer
 from display.renderables import Header
 from display.utils import f_money
 from display.utils import f_pct
-from model import BalanceAndPositionUpdate
+from model import BalanceAndPositionUpdate, DepthUpdate
 from repository.repository import TradeRepo
 from rich.align import Align
 from rich.layout import Layout
@@ -48,15 +49,22 @@ def generate_table(data) -> None:
                 layout["left_right"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_2)))
 
             elif data["e"] in ["depthUpdate"]:
+                depth_update = DepthUpdate(**data)
                 layout["right_left"].update(
                     renderable=Align(
-                        Panel(renderable=create_book_side_table(data["b"], "green", "ltr"), title="Bids", expand=False),
+                        Panel(
+                            renderable=create_book_side_table(depth_update.b, "green", "ltr"),
+                            title="Bids",
+                            expand=False,
+                        ),
                         align="right",
                     )
                 )
                 layout["right_right"].update(
                     renderable=Align(
-                        Panel(renderable=create_book_side_table(data["a"], "red", "rtl"), title="Asks", expand=False),
+                        Panel(
+                            renderable=create_book_side_table(depth_update.a, "red", "rtl"), title="Asks", expand=False
+                        ),
                         align="left",
                     )
                 )
@@ -119,15 +127,15 @@ def get_display_data(balance_and_position_update: BalanceAndPositionUpdate) -> t
     return (display_data_1, display_data_2)
 
 
-def create_book_side_table(data, color: str, direction: str) -> Table:
+def create_book_side_table(book_side: List[List[str]], color: str, direction: str) -> Table:
     table = Table()
 
     if direction == "ltr":
         table.add_column("Quantity", justify="right")
         table.add_column("Price", justify="right")
-        [table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}") for i in data]
+        [table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}") for i in book_side]
     else:
         table.add_column("Price", justify="left")
         table.add_column("Quantity", justify="left")
-        [table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}") for i in data]
+        [table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}") for i in book_side]
     return table
