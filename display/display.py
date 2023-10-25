@@ -1,16 +1,18 @@
 import logging
 from uu import Error
 
+from base.Settings import Settings
+from display.renderables import Footer
+from display.renderables import Header
+from display.utils import f_money
+from display.utils import f_pct
+from model import BalanceAndPositionUpdate
+from repository.repository import TradeRepo
 from rich.align import Align
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
-
-from display.renderables import Footer, Header
-from display.utils import f_money, f_pct
-from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
-from base.Settings import Settings
 
 
 def make_it() -> Layout:
@@ -40,8 +42,8 @@ def generate_table(data) -> None:
     try:
         if "e" in data:
             if data["e"] in ["ACCOUNT_UPDATE"]:
-                data["last_account_updated"] = get_date_and_time()
-                display_data_1, display_data_2 = get_display_data(data)
+                balance_and_position_update = BalanceAndPositionUpdate(**data)
+                display_data_1, display_data_2 = get_display_data(balance_and_position_update)
                 layout["left_left"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_1)))
                 layout["left_right"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_2)))
 
@@ -70,18 +72,20 @@ def create_table_1(display_data) -> Table:
     return table
 
 
-def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
+def get_display_data(balance_and_position_update: BalanceAndPositionUpdate) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
     mark_price = repo.get_mark_price(Settings().file_input.symbol).markPrice
     last_price = float(repo.get_ticker_price(Settings().file_input.symbol))
     position_risk = repo.get_position_risk(Settings().file_input.symbol)
-    account_info = repo.get_account_info()
-    entry_price = float(data["a"]["P"][0]["ep"] if data else position_risk.entryPrice)
-    break_even_price = float(data["a"]["P"][0]["bep"] if data else 0.0)
-    accumulated_realized = float(data["a"]["P"][0]["cr"] if data else 0.0)
-    unrealized = float(data["a"]["P"][0]["up"] if data else account_info.totalCrossUnPnl)
-    position_amount = float(data["a"]["P"][0]["pa"] if data else position_risk.positionAmt)
-    wallet_balance = float(data["a"]["B"][0]["wb"] if data else account_info.totalWalletBalance)
+    a = balance_and_position_update.a.P[0].ep
+    p_0 = balance_and_position_update.a.P[0]
+    b_0 = balance_and_position_update.a.B[0]
+    entry_price = float(p_0.ep)
+    break_even_price = float(p_0.bep)
+    accumulated_realized = float(p_0.cr)
+    unrealized = float(p_0.up)
+    position_amount = float(p_0.pa)
+    wallet_balance = float(b_0.wb)
     liquidation_price = position_risk.liquidationPrice
     balance_minus_unrealized = wallet_balance - unrealized
     balance_plus_unrealized = wallet_balance + unrealized
@@ -111,8 +115,7 @@ def get_display_data(data) -> tuple[dict[str, str], dict[str, str]]:
         "profit_loss_percentage": f_pct(pnl_pct_mark),
         "profit_loss_percentage_last": f_pct(pnl_pct_last),
     }
-    if "last_account_updated" in data:
-        display_data_2["last_account_updated"] = data["last_account_updated"]
+    display_data_2["last_account_updated"] = get_date_and_time()
     return (display_data_1, display_data_2)
 
 
