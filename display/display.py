@@ -7,7 +7,8 @@ from display.renderables import Footer
 from display.renderables import Header
 from display.utils import f_money
 from display.utils import f_pct
-from model import BalanceAndPositionUpdate, DepthUpdate
+from model import BalanceAndPositionUpdate
+from model import DepthUpdate
 from repository.repository import TradeRepo
 from rich.align import Align
 from rich.layout import Layout
@@ -72,11 +73,12 @@ def generate_table(data) -> None:
         logging.error(e)
 
 
-def create_table_1(display_data) -> Table:
+def create_table_1(display_data: dict) -> Table:
     table = Table(expand=True)
     table.add_column("ID")
     table.add_column("Value")
-    {table.add_row(k, v) for k, v in display_data.items()}
+    for k, v in display_data.items():
+        table.add_row(k, v)
     return table
 
 
@@ -133,9 +135,11 @@ def create_book_side_table(book_side: List[List[str]], color: str, direction: st
     if direction == "ltr":
         table.add_column("Quantity", justify="right")
         table.add_column("Price", justify="right")
-        [table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}") for i in book_side]
+        for i in book_side:
+            table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}")
     else:
         table.add_column("Price", justify="left")
         table.add_column("Quantity", justify="left")
-        [table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}") for i in book_side]
+        for i in book_side:
+            table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}")
     return table
