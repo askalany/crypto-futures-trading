@@ -1,4 +1,4 @@
-from base.consts import Settings
+from base.Settings import Settings
 from data.enums import AmountSpacing, PositionSide, Side
 from strategy.TradeStrategy import TradeStrategy
 from utils.listutils import batched_lists

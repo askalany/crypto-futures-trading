@@ -10,7 +10,7 @@ from display.renderables import Footer, Header
 from display.utils import f_money, f_pct
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
-from base.consts import Settings
+from base.Settings import Settings
 
 
 def make_it() -> Layout:

@@ -1,6 +1,6 @@
 from enum import auto, Enum, EnumType, StrEnum
 
-from base.helpers import AutoName
+from base.AutoName import AutoName
 
 
 # noinspection PyUnusedName,PyUnusedClass

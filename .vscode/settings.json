@@ -155,5 +155,10 @@
     "jupyter.interactiveWindow.creationMode": "perFile",
     "jupyter.askForKernelRestart": false,
     "jupyter.themeMatplotlibPlots": true,
-    "workbench.editor.empty.hint": "hidden"
+    "workbench.editor.empty.hint": "hidden",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

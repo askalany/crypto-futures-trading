@@ -8,7 +8,7 @@ from binance.error import ClientError
 from binance.lib.utils import config_logging
 from rich.live import Live
 
-from base.consts import Settings
+from base.Settings import Settings
 from data.enums import Strategy
 from display.display import generate_table, layout
 from repository.repository import TradeRepo

@@ -1,9 +1,9 @@
+from base.models.FileInput import FileInput
+from utils.fileutils import get_inputs_from_file
+
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-from data.enums import TickerSymbol
-from utils.fileutils import get_inputs_from_file
-from base.models.FileInput import FileInput
 
 
 class Settings(BaseSettings):

@@ -1,29 +1,26 @@
 import logging
 from typing import Any
 
+from base.Singleton import Singleton
 from binance.error import ClientError
 from binance.um_futures import UMFutures
-
-from base.helpers import Singleton
+from model import AccountInformation
+from model import CancelAllOpenOrders
 from model import ChangeInitialLeverage
-from network.responses.responses import (
-    AccountInfoResponse,
-    CancelAllOrdersResponse,
-    ListenKeyResponse,
-    MarkPriceResponse,
-    PositionInformationResponse,
-)
+from network.responses.responses import ListenKeyResponse
+from network.responses.responses import MarkPriceResponse
+from network.responses.responses import PositionInformationResponse
 
 
 class BinanceNetworkClient(metaclass=Singleton):
     def __init__(self, client: UMFutures):
         self.client = client
 
-    def cancel_all_orders_request(self, symbol) -> CancelAllOrdersResponse:
+    def cancel_all_orders_request(self, symbol) -> CancelAllOpenOrders:
         try:
             response = self.client.cancel_open_orders(symbol=symbol)
             logging.info(response)
-            return CancelAllOrdersResponse(**response)
+            return CancelAllOpenOrders(**response)
         except ClientError as e:
             logging.error(e)
             raise e
@@ -89,9 +86,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.error(e)
             raise e
 
-    def get_position_risk_request(
-        self, symbol: str
-    ) -> list[PositionInformationResponse]:
+    def get_position_risk_request(self, symbol: str) -> list[PositionInformationResponse]:
         try:
             response = self.client.get_position_risk(symbol=symbol)
             logging.info(response)
@@ -100,14 +95,12 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.error(e)
             raise e
 
-    def get_account_info_request(
-        self,
-    ) -> AccountInfoResponse:
+    def get_account_info_request(self) -> AccountInformation:
         try:
             # noinspection PyCallingNonCallable
             response = self.client.account()
             logging.info(response)
-            return AccountInfoResponse(**response)
+            return AccountInformation(**response)
         except ClientError as e:
             logging.error(e)
             raise e
@@ -130,9 +123,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.error(e)
             raise e
 
-    def get_listen_key_request(
-        self,
-    ) -> ListenKeyResponse:
+    def get_listen_key_request(self) -> ListenKeyResponse:
         try:
             response = self.client.new_listen_key()
             logging.info(response)
@@ -204,9 +195,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             logging.error(e)
             raise e
 
-    def change_initial_leverage_request(
-        self, symbol: str, leverage: int
-    ) -> ChangeInitialLeverage:
+    def change_initial_leverage_request(self, symbol: str, leverage: int) -> ChangeInitialLeverage:
         try:
             response = self.client.change_leverage(symbol=symbol, leverage=leverage)
             logging.info(response)

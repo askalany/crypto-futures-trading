@@ -1,12 +1,5 @@
-from typing import List
-
-from pydantic import BaseModel
 from data.enums import PositionSide
-
-
-class CancelAllOrdersResponse(BaseModel):
-    code: int
-    msg: str
+from pydantic import BaseModel
 
 
 class ListenKeyResponse(BaseModel):
@@ -43,7 +36,6 @@ class PositionInformationResponse(BaseModel):
     updateTime: int
 
 
-
 class Asset(BaseModel):
     asset: str
     walletBalance: str
@@ -77,26 +69,3 @@ class Position(BaseModel):
     positionSide: PositionSide
     positionAmt: str
     updateTime: int
-
-
-class AccountInfoResponse(BaseModel):
-    feeTier: int
-    canTrade: bool
-    canDeposit: bool
-    canWithdraw: bool
-    updateTime: int
-    multiAssetsMargin: bool
-    tradeGroupId: int
-    totalInitialMargin: str
-    totalMaintMargin: float
-    totalWalletBalance: float
-    totalUnrealizedProfit: str
-    totalMarginBalance: str
-    totalPositionInitialMargin: str
-    totalOpenOrderInitialMargin: str
-    totalCrossWalletBalance: str
-    totalCrossUnPnl: float
-    availableBalance: float
-    maxWithdrawAmount: str
-    assets: List[Asset]
-    positions: List[Position]

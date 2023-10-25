@@ -4,44 +4,46 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
+from data.enums import PositionSide
 from pydantic import BaseModel
 
 
 class Asset(BaseModel):
     asset: str
-    walletBalance: str
-    unrealizedProfit: str
-    marginBalance: str
-    maintMargin: str
-    initialMargin: str
-    positionInitialMargin: str
-    openOrderInitialMargin: str
-    crossWalletBalance: str
-    crossUnPnl: str
-    availableBalance: str
-    maxWithdrawAmount: str
+    walletBalance: float
+    unrealizedProfit: float
+    marginBalance: float
+    maintMargin: float
+    initialMargin: float
+    positionInitialMargin: float
+    openOrderInitialMargin: float
+    crossWalletBalance: float
+    crossUnPnl: float
+    availableBalance: float
+    maxWithdrawAmount: float
     marginAvailable: bool
     updateTime: int
 
 
 class Position(BaseModel):
     symbol: str
-    initialMargin: str
-    maintMargin: str
-    unrealizedProfit: str
-    positionInitialMargin: str
-    openOrderInitialMargin: str
-    leverage: str
+    initialMargin: float
+    maintMargin: float
+    unrealizedProfit: float
+    positionInitialMargin: float
+    openOrderInitialMargin: float
+    leverage: int
     isolated: bool
-    entryPrice: str
-    breakEvenPrice: str
-    maxNotional: str
-    bidNotional: str
-    askNotional: str
-    positionSide: str
-    positionAmt: str
+    entryPrice: float
+    breakEvenPrice: float
+    maxNotional: float
+    bidNotional: float
+    askNotional: float
+    positionSide: PositionSide
+    positionAmt: float
     updateTime: int
 
 
@@ -53,17 +55,17 @@ class AccountInformation(BaseModel):
     updateTime: int
     multiAssetsMargin: bool
     tradeGroupId: int
-    totalInitialMargin: str
-    totalMaintMargin: str
-    totalWalletBalance: str
-    totalUnrealizedProfit: str
-    totalMarginBalance: str
-    totalPositionInitialMargin: str
-    totalOpenOrderInitialMargin: str
-    totalCrossWalletBalance: str
-    totalCrossUnPnl: str
-    availableBalance: str
-    maxWithdrawAmount: str
+    totalInitialMargin: float
+    totalMaintMargin: float
+    totalWalletBalance: float
+    totalUnrealizedProfit: float
+    totalMarginBalance: float
+    totalPositionInitialMargin: float
+    totalOpenOrderInitialMargin: float
+    totalCrossWalletBalance: float
+    totalCrossUnPnl: float
+    availableBalance: float
+    maxWithdrawAmount: float
     assets: List[Asset]
     positions: List[Position]
 

@@ -1,22 +1,25 @@
 from enum import Enum
 from typing import Any
 
+from base.Settings import Settings
+from base.Singleton import Singleton
 from binance.um_futures import UMFutures
 from binance.websocket.um_futures.websocket_client import UMFuturesWebsocketClient
-from requests.adapters import HTTPAdapter
-
-from base.consts import Settings
-from base.helpers import Singleton
-from data.enums import OrderType, PositionSide, PriceMatch, PriceMatchNone, Side, TickerSymbol, TimeInForce
+from data.enums import OrderType
+from data.enums import PositionSide
+from data.enums import PriceMatch
+from data.enums import PriceMatchNone
+from data.enums import Side
+from data.enums import TickerSymbol
+from data.enums import TimeInForce
+from model import AccountInformation
+from model import CancelAllOpenOrders
 from model import ChangeInitialLeverage
 from network.network import BinanceNetworkClient
-from network.responses.responses import (
-    AccountInfoResponse,
-    CancelAllOrdersResponse,
-    ListenKeyResponse,
-    MarkPriceResponse,
-    PositionInformationResponse,
-)
+from network.responses.responses import ListenKeyResponse
+from network.responses.responses import MarkPriceResponse
+from network.responses.responses import PositionInformationResponse
+from requests.adapters import HTTPAdapter
 
 
 class TradeRepo(metaclass=Singleton):
@@ -26,7 +29,7 @@ class TradeRepo(metaclass=Singleton):
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
 
-    def get_account_info(self) -> AccountInfoResponse:
+    def get_account_info(self) -> AccountInformation:
         return self.client.get_account_info_request()
 
     def get_cross_wallet_balance(self) -> float:
@@ -84,7 +87,7 @@ class TradeRepo(metaclass=Singleton):
             new_orders.append(new_dict)
         return self.client.new_batch_order_request(params=new_orders)
 
-    def cancel_all_orders(self, symbol: TickerSymbol) -> CancelAllOrdersResponse:
+    def cancel_all_orders(self, symbol: TickerSymbol) -> CancelAllOpenOrders:
         return self.client.cancel_all_orders_request(symbol=symbol.name)
 
     def get_listen_key(self) -> ListenKeyResponse:
@@ -136,3 +139,9 @@ class TradeRepo(metaclass=Singleton):
 
     def change_initial_leverage(self, symbol: TickerSymbol, leverage: int) -> ChangeInitialLeverage:
         return self.client.change_initial_leverage_request(symbol.name, leverage)
+
+    def get_margin_ratio(self) -> float:
+        account_info = self.get_account_info()
+        maintenance_margin = account_info.totalMaintMargin
+        total_wallet_balance = account_info.totalWalletBalance
+        return maintenance_margin / total_wallet_balance

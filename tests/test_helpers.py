@@ -1,4 +1,4 @@
-from base.helpers import Singleton
+from base.Singleton import Singleton
 
 
 class TestClass(metaclass=Singleton):

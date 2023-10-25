@@ -2,9 +2,9 @@ from datetime import datetime
 
 from rich.panel import Panel
 from rich.table import Table
-from base.consts import Settings
+from base.Settings import Settings
 
-from base.helpers import Singleton
+from base.Singleton import Singleton
 from display.utils import f_money
 from repository.repository import TradeRepo
 from utils.timeutils import get_date_and_time
