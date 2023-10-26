@@ -1,6 +1,4 @@
-import logging
 from typing import List
-from uu import Error
 
 from base.Settings import Settings
 from display.renderables import Footer
@@ -42,38 +40,31 @@ layout = make_it()
 
 
 def generate_table(data) -> None:
-    try:
-        if "e" in data:
-            if data["e"] in ["ACCOUNT_UPDATE"]:
-                balance_and_position_update = BalanceAndPositionUpdate(**data)
-                display_data_1, display_data_2 = get_display_data(balance_and_position_update)
-                layout["left_left"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_1)))
-                layout["left_right"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_2)))
+    if "e" in data:
+        if data["e"] in ["ACCOUNT_UPDATE"]:
+            balance_and_position_update = BalanceAndPositionUpdate(**data)
+            display_data_1, display_data_2 = get_display_data(balance_and_position_update)
+            layout["left_left"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_1)))
+            layout["left_right"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_2)))
 
-            elif data["e"] in ["depthUpdate"]:
-                depth_update = DepthUpdate(**data)
-                layout["right_left"].update(
-                    renderable=Align(
-                        Panel(
-                            renderable=create_book_side_table(depth_update.b, "green", "ltr"),
-                            title="Bids",
-                            expand=False,
-                        ),
-                        align="right",
-                    )
+        elif data["e"] in ["depthUpdate"]:
+            depth_update = DepthUpdate(**data)
+            layout["right_left"].update(
+                renderable=Align(
+                    Panel(
+                        renderable=create_book_side_table(depth_update.b, "green", "ltr"), title="Bids", expand=False
+                    ),
+                    align="right",
                 )
-                layout["right_right"].update(
-                    renderable=Align(
-                        Panel(
-                            renderable=create_book_side_table(depth_update.a, "red", "rtl"), title="Asks", expand=False
-                        ),
-                        align="left",
-                    )
+            )
+            layout["right_right"].update(
+                renderable=Align(
+                    Panel(renderable=create_book_side_table(depth_update.a, "red", "rtl"), title="Asks", expand=False),
+                    align="left",
                 )
-            elif data["e"] in ["markPriceUpdate"]:
-                mark_price_update = MarkPriceUpdate(**data)
-    except Error as e:
-        logging.error(e)
+            )
+        elif data["e"] in ["markPriceUpdate"]:
+            mark_price_update = MarkPriceUpdate(**data)
 
 
 def create_table_1(display_data: dict) -> Table:

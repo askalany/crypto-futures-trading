@@ -4,7 +4,6 @@ import time
 
 import typer
 from base.Settings import Settings
-from binance.error import ClientError
 from binance.lib.utils import config_logging
 from binance.websocket.binance_socket_manager import BinanceSocketManager
 from data.enums import Strategy
@@ -48,18 +47,15 @@ def main() -> None:
     ws_client.user_data(listen_key=listen_key, id=1)
     ws_client.partial_book_depth(symbol=Settings().file_input.symbol.name, id=2, level=10, speed=100)
     ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
-    try:
-        max_leverage = Settings().file_input.leverage
-        while True:
+    max_leverage = Settings().file_input.leverage
+    while True:
+        try:
             repo.cancel_all_orders(Settings().file_input.symbol)
             current_leverage = repo.get_position_risk(symbol=Settings().file_input.symbol).leverage
-            try:
-                if max_leverage > current_leverage:
-                    repo.change_initial_leverage(Settings().file_input.symbol, current_leverage + 1)
-                elif max_leverage < current_leverage:
-                    repo.change_initial_leverage(Settings().file_input.symbol, current_leverage - 1)
-            except ClientError as e:
-                logging.error(e)
+            if max_leverage > current_leverage:
+                repo.change_initial_leverage(Settings().file_input.symbol, current_leverage + 1)
+            elif max_leverage < current_leverage:
+                repo.change_initial_leverage(Settings().file_input.symbol, current_leverage - 1)
             if Settings().file_input.strategy is Strategy.FIXED_RANGE:
                 strategy_1 = FixedRangeStrategy()
                 strategy_1.run_loop()
@@ -69,13 +65,9 @@ def main() -> None:
             if Settings().file_input.once:
                 break
             time.sleep(Settings().file_input.delay_seconds)
-    except Exception as e:
-        logging.error(msg=e)
-    finally:
-        live.stop()
-        ws_client.stop()
-        repo.close_listen_key(listen_key=listen_key)
-        typer.Exit()
+        except Exception as e:
+            print(f"{e=}")
+            continue
 
 
 if __name__ == "__main__":
