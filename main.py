@@ -36,7 +36,6 @@ def on_message(ws, message) -> None:
 
 
 def on_ping(ws: BinanceSocketManager, arg2):
-    print(f"ping handler:{ws=}, {arg2=}")
     ws.ping()
     TradeRepo().keep_alive(listen_key=TradeRepo().get_listen_key().listenKey)
 
