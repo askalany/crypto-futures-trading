@@ -1,4 +1,3 @@
-import contextlib
 import json
 import logging
 import time
@@ -69,9 +68,6 @@ def main() -> None:
                 strategy_2.run_loop()
             if Settings().file_input.once:
                 break
-            with contextlib.suppress(ClientError):
-                repo.keep_alive(listen_key=listen_key)
-                ws_client.ping()
             time.sleep(Settings().file_input.delay_seconds)
     except Exception as e:
         logging.error(msg=e)

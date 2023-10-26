@@ -91,7 +91,7 @@ def create_multiple_orders(
     return result
 
 
-def get_buy_orders_quantities_and_prices(
+def get_open_orders_quantities_and_prices(
     orders_num: int,
     high_price: float,
     low_price: float,
@@ -134,7 +134,7 @@ def get_buy_orders_quantities_and_prices(
     return quantities_and_prices
 
 
-def get_sell_orders_quantities_and_prices(
+def get_close_orders_quantities_and_prices(
     orders_num: int,
     high_price: float,
     low_price: float,

@@ -5,8 +5,8 @@ from utils.listutils import batched_lists
 from utils.mathutils import get_grid_maxs_and_mins
 from utils.orderutils import (
     create_multiple_orders,
-    get_buy_orders_quantities_and_prices,
-    get_sell_orders_quantities_and_prices,
+    get_open_orders_quantities_and_prices,
+    get_close_orders_quantities_and_prices,
 )
 
 
@@ -20,7 +20,7 @@ class FixedRangeStrategy(TradeStrategy):
         entry_price = mark_price if Settings().file_input.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
         max_mm_position = 300.0
-        if position_amount >= max_mm_position and Settings().file_input.market_making:
+        if abs(position_amount) >= abs(max_mm_position) and Settings().file_input.market_making:
             last_price = self.repo.get_ticker_price(Settings().file_input.symbol)
             center_price = (
                 min(position_risk.entryPrice, mark_price, last_price)
@@ -35,8 +35,8 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_min_mult=Settings().file_input.price_buy_min_mult,
         )
         buy_orders = []
-        if position_amount < max_mm_position or not Settings().file_input.market_making:
-            buy_orders_quantities_and_prices = get_buy_orders_quantities_and_prices(
+        if abs(position_amount) < abs(max_mm_position) or not Settings().file_input.market_making:
+            buy_orders_quantities_and_prices = get_open_orders_quantities_and_prices(
                 orders_num=Settings().file_input.buy_orders_num,
                 high_price=price_buy_max,
                 low_price=price_buy_min,
@@ -61,11 +61,11 @@ class FixedRangeStrategy(TradeStrategy):
                 position_side=Settings().file_input.position_side,
                 time_in_force=Settings().file_input.time_in_force,
             )
-        sell_orders_quantities_and_prices = get_sell_orders_quantities_and_prices(
+        sell_orders_quantities_and_prices = get_close_orders_quantities_and_prices(
             orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
             high_price=price_sell_max,
             low_price=price_sell_min,
-            amount=position_amount,
+            amount=abs(position_amount),
             order_quantity_min=0.001,
             amount_spacing=AmountSpacing.GEOMETRIC,
             market_making=Settings().file_input.market_making,
