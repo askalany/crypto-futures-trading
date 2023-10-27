@@ -41,7 +41,7 @@ def main() -> None:
     listen_key = repo.get_listen_key().listenKey
     ws_client = repo.get_websocket_client(message_handler=on_message, on_ping=on_ping, is_combined=True)
     ws_client.user_data(listen_key=listen_key, id=1)
-    ws_client.partial_book_depth(symbol=Settings().file_input.symbol.name, id=2, level=10, speed=100)
+    ws_client.partial_book_depth(symbol=Settings().file_input.symbol.name, id=2, level=20, speed=100)
     ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
     max_leverage = Settings().file_input.leverage
     while True:

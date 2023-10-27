@@ -1,3 +1,4 @@
+from math import remainder
 from typing import List
 
 from base.Settings import Settings
@@ -129,11 +130,25 @@ def create_book_side_table(book_side: List[List[str]], color: str, direction: st
     if direction == "ltr":
         table.add_column("Quantity", justify="right")
         table.add_column("Price", justify="right")
-        for i in book_side:
-            table.add_row(f"[{color}]{i[1]}", f"[{color}]{i[0]}")
+        for k, v in compress_book(book_side).items():
+            table.add_row(f"[{color}]{v}", f"[{color}]{k}")
     else:
         table.add_column("Price", justify="left")
         table.add_column("Quantity", justify="left")
-        for i in book_side:
-            table.add_row(f"[{color}]{i[0]}", f"[{color}]{i[1]}")
+        for k, v in compress_book(book_side).items():
+            table.add_row(f"[{color}]{k}", f"[{color}]{v}")
     return table
+
+
+def round_to_hundreds(price) -> float:
+    p = float(price)
+    rem = remainder(p, 100)
+    return p + 100.0 - rem if rem > 0.0 else p + abs(rem)
+
+
+def compress_book(book: list[list[str]]):
+    result: dict[float, float] = {}
+    for b in book:
+        p = round_to_hundreds(b[0])
+        result[p] = round(result[p] + float(b[1]) if p in result else float(b[1]), 4)
+    return result
