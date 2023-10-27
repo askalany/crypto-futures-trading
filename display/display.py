@@ -130,25 +130,25 @@ def create_book_side_table(book_side: List[List[str]], color: str, direction: st
     if direction == "ltr":
         table.add_column("Quantity", justify="right")
         table.add_column("Price", justify="right")
-        for k, v in compress_book(book_side).items():
+        for k, v in compress_book(book_side, 10).items():
             table.add_row(f"[{color}]{v}", f"[{color}]{k}")
     else:
         table.add_column("Price", justify="left")
         table.add_column("Quantity", justify="left")
-        for k, v in compress_book(book_side).items():
+        for k, v in compress_book(book_side, 10).items():
             table.add_row(f"[{color}]{k}", f"[{color}]{v}")
     return table
 
 
-def round_to_hundreds(price) -> float:
+def round_up_to(price, up_to) -> float:
     p = float(price)
-    rem = remainder(p, 100)
+    rem = remainder(p, up_to)
     return p + 100.0 - rem if rem > 0.0 else p + abs(rem)
 
 
-def compress_book(book: list[list[str]]):
+def compress_book(book: list[list[str]], up_to):
     result: dict[float, float] = {}
     for b in book:
-        p = round_to_hundreds(b[0])
+        p = round_up_to(b[0], up_to)
         result[p] = round(result[p] + float(b[1]) if p in result else float(b[1]), 4)
     return result
