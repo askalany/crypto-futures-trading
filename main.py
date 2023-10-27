@@ -11,14 +11,14 @@ from display.display import generate_table
 from display.display import layout
 from repository.repository import TradeRepo
 from rich.live import Live
-from rich.logging import RichHandler
+#from rich.logging import RichHandler
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
 from strategy.fixed_range import FixedRangeStrategy
 
 
 FORMAT = "%(message)s"
 
-logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
+#logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
 config_logging(logging, logging.ERROR)
 
 
@@ -62,7 +62,7 @@ def main() -> None:
                 break
             time.sleep(Settings().file_input.delay_seconds)
         except Exception as e:
-            print(f"{e=}")
+            logging.error(e)
             continue
 
 
