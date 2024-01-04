@@ -19,7 +19,8 @@ class FixedRangeStrategy(TradeStrategy):
         position_amount = position_risk.positionAmt
         entry_price = mark_price if Settings().file_input.use_mark_price else entry_price
         center_price = entry_price if entry_price > 0.0 else mark_price
-        max_mm_position = 2000
+        #center_price = 43250.0
+        max_mm_position = 3000
         if abs(position_amount) >= abs(max_mm_position) and Settings().file_input.market_making:
             last_price = self.repo.get_ticker_price(Settings().file_input.symbol)
             center_price = (
