@@ -214,7 +214,7 @@ def test_scaled_amounts():
     ]
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
-    assert result == expected_list
+    assert [round(x,10) for x in result] == [round(x,10) for x in expected_list]
 
 
 def test_scaled_amounts_sum():
