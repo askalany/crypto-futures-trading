@@ -38,15 +38,12 @@ class Right:
 class Footer(metaclass=Singleton):
     def __rich__(self) -> Panel:
         repo = TradeRepo()
-        orders = repo.get_open_orders(Settings().file_input.symbol)
-        open_buy_orders_num = sum(order["side"] == "BUY" for order in orders)
-        open_sell_orders_num = sum(order["side"] == "SELL" for order in orders)
-        position_risk = repo.get_position_risk(Settings().file_input.symbol)
-        mark_price = repo.get_mark_price(Settings().file_input.symbol).markPrice
-        last_price = float(repo.get_ticker_price(Settings().file_input.symbol))
-        pnl_mark = (mark_price - position_risk.entryPrice) * position_risk.positionAmt
-        pnl_last = (last_price - position_risk.entryPrice) * position_risk.positionAmt
+        symbol = Settings().file_input.symbol
+        orders = repo.get_open_orders(symbol)
+        position_risk = repo.get_position_risk(symbol)
+        mark_price = repo.get_mark_price(symbol).markPrice
+        last_price = float(repo.get_ticker_price(symbol))
         return Panel(
-            f"OBO={open_buy_orders_num}, OSO={open_sell_orders_num}, LVRG={position_risk.leverage}, PnLMrk={f_money(pnl_mark)}, PnLLst={f_money(pnl_last)}, Ps. Amt.={position_risk.positionAmt}, Ent. Price={f_money(position_risk.entryPrice)}, Mrk Price={f_money(mark_price)}, Lst Price={f_money(last_price)}, Last Update={get_date_and_time()}",
+            f"OBO={sum(order['side'] == 'BUY' for order in orders)}, OSO={sum(order['side'] == 'SELL' for order in orders)}, LVRG={position_risk.leverage}, PnLMrk={f_money((mark_price - position_risk.entryPrice) * position_risk.positionAmt)}, PnLLst={f_money((last_price - position_risk.entryPrice) * position_risk.positionAmt)}, Ps. Amt.={position_risk.positionAmt}, Ent. Price={f_money(position_risk.entryPrice)}, Mrk Price={f_money(mark_price)}, Lst Price={f_money(last_price)}, Last Update={get_date_and_time()}",
             title="Footer",
         )

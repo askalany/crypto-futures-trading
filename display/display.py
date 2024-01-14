@@ -43,8 +43,7 @@ layout = make_it()
 def generate_table(data) -> None:
     if "e" in data:
         if data["e"] in ["ACCOUNT_UPDATE"]:
-            balance_and_position_update = BalanceAndPositionUpdate(**data)
-            display_data_1, display_data_2 = get_display_data(balance_and_position_update)
+            display_data_1, display_data_2 = get_display_data(BalanceAndPositionUpdate(**data))
             layout["left_left"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_1)))
             layout["left_right"].update(renderable=Panel(renderable=create_table_1(display_data=display_data_2)))
 
@@ -79,46 +78,35 @@ def create_table_1(display_data: dict) -> Table:
 
 def get_display_data(balance_and_position_update: BalanceAndPositionUpdate) -> tuple[dict[str, str], dict[str, str]]:
     repo = TradeRepo()
-    mark_price = repo.get_mark_price(Settings().file_input.symbol).markPrice
-    last_price = float(repo.get_ticker_price(Settings().file_input.symbol))
-    position_risk = repo.get_position_risk(Settings().file_input.symbol)
-    a = balance_and_position_update.a.P[0].ep
+    symbol = Settings().file_input.symbol
+    mark_price = repo.get_mark_price(symbol).markPrice
+    last_price = float(repo.get_ticker_price(symbol))
     p_0 = balance_and_position_update.a.P[0]
-    b_0 = balance_and_position_update.a.B[0]
     entry_price = float(p_0.ep)
-    break_even_price = float(p_0.bep)
-    accumulated_realized = float(p_0.cr)
     unrealized = float(p_0.up)
     position_amount = float(p_0.pa)
-    wallet_balance = float(b_0.wb)
-    liquidation_price = position_risk.liquidationPrice
-    balance_minus_unrealized = wallet_balance - unrealized
-    balance_plus_unrealized = wallet_balance + unrealized
+    wallet_balance = float(balance_and_position_update.a.B[0].wb)
     price_change_mark = mark_price - entry_price
-    pnl_mark = price_change_mark * position_amount
-    pnl_pct_mark = float(float(price_change_mark / entry_price) * 100.0)
     price_change_last = last_price - entry_price
-    pnl_last = price_change_last * position_amount
-    pnl_pct_last = float(float(price_change_last / last_price) * 100.0)
     display_data_1 = {
         "mark_price": f_money(mark_price),
         "last_price": f_money(last_price),
         "entry_price": f_money(entry_price),
-        "break_even_price": f_money(break_even_price),
-        "accumulated_realized": f_money(accumulated_realized),
+        "break_even_price": f_money(float(p_0.bep)),
+        "accumulated_realized": f_money(float(p_0.cr)),
         "unrealized": f_money(unrealized),
         "position_amount": f"{position_amount}",
-        "liquidation_price": f_money(liquidation_price),
+        "liquidation_price": f_money(repo.get_position_risk(symbol).liquidationPrice),
         "wallet_balance": f_money(wallet_balance, "yellow"),
-        "balance_minus_unrealized-realized": f_money(balance_minus_unrealized),
+        "balance_minus_unrealized-realized": f_money(wallet_balance - unrealized),
     }
 
     display_data_2 = {
-        "balance_plus_unrealized": f_money(balance_plus_unrealized),
-        "pnl_mark": f_money(pnl_mark),
-        "pnl_last": f_money(pnl_last),
-        "profit_loss_percentage": f_pct(pnl_pct_mark),
-        "profit_loss_percentage_last": f_pct(pnl_pct_last),
+        "balance_plus_unrealized": f_money(wallet_balance + unrealized),
+        "pnl_mark": f_money(price_change_mark * position_amount),
+        "pnl_last": f_money(price_change_last * position_amount),
+        "profit_loss_percentage": f_pct(float(float(price_change_mark / entry_price) * 100.0)),
+        "profit_loss_percentage_last": f_pct(float(float(price_change_last / last_price) * 100.0)),
     }
     display_data_2["last_account_updated"] = get_date_and_time()
     return (display_data_1, display_data_2)

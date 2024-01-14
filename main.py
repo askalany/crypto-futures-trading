@@ -11,14 +11,24 @@ from display.display import generate_table
 from display.display import layout
 from repository.repository import TradeRepo
 from rich.live import Live
-#from rich.logging import RichHandler
+
+# from rich.logging import RichHandler
+from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
+from strategy.fixed_range import FixedRangeStrategy
+from base.Settings import Settings
+from binance.lib.utils import config_logging
+from binance.websocket.binance_socket_manager import BinanceSocketManager
+from data.enums import Strategy
+from display.display import generate_table
+from display.display import layout
+from repository.repository import TradeRepo
+from rich.live import Live
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
 from strategy.fixed_range import FixedRangeStrategy
 
-
 FORMAT = "%(message)s"
 
-#logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
+# logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
 config_logging(logging, logging.ERROR)
 
 
@@ -52,18 +62,22 @@ def main() -> None:
                 repo.change_initial_leverage(Settings().file_input.symbol, current_leverage + 1)
             elif max_leverage < current_leverage:
                 repo.change_initial_leverage(Settings().file_input.symbol, current_leverage - 1)
-            if Settings().file_input.strategy is Strategy.FIXED_RANGE:
-                strategy_1 = FixedRangeStrategy()
-                strategy_1.run_loop()
-            elif Settings().file_input.strategy is Strategy.PRICE_MATCH_QUEUE:
-                strategy_2 = AllPriceMatchQueueStrategy()
-                strategy_2.run_loop()
+            strategy = Settings().file_input.strategy
+            if strategy is Strategy.FIXED_RANGE:
+                FixedRangeStrategy().run_loop()
+            elif strategy is Strategy.PRICE_MATCH_QUEUE:
+                AllPriceMatchQueueStrategy().run_loop()
             if Settings().file_input.once:
                 break
             time.sleep(Settings().file_input.delay_seconds)
         except Exception as e:
             logging.error(e)
             continue
+
+
+if __name__ == "__main__":
+    config_logging(logging, logging.ERROR)
+    typer.run(main)
 
 
 if __name__ == "__main__":

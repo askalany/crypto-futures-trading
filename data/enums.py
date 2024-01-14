@@ -50,6 +50,7 @@ class PriceMatchQueue(PriceMatch):
 class TickerSymbol(AutoName):
     BTCUSDT = auto()
     ETHUSDT = auto()
+    XMRUSDT = auto()
 
 
 # noinspection PyUnusedName,PyUnusedClass
