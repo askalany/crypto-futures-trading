@@ -15,21 +15,23 @@ class TradeStrategy:
         if isinstance(order, list):
             return self.repo.new_batch_order(orders=order)
         if "priceMatch" in order:
-            return self.repo.new_order(
+            response = self.repo.new_order(
                 symbol=order["symbol"],
                 side=order["side"],
                 quantity=order["quantity"],
                 position_side=order["positionSide"],
                 price_match=order["priceMatch"],
             )
+
         else:
-            return self.repo.new_order(
+            response = self.repo.new_order(
                 symbol=order["symbol"],
                 side=order["side"],
                 quantity=order["quantity"],
                 position_side=order["positionSide"],
                 price=order["price"],
             )
+        return response
 
     def execute_orders(self, batched_orders) -> None:
         with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:

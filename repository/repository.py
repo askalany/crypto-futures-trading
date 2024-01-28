@@ -24,10 +24,9 @@ from requests.adapters import HTTPAdapter
 
 class TradeRepo(metaclass=Singleton):
     def __init__(self):
-        key = "d45caa464dd967a905316d222bd417b25fb573b1ea0c8af15674c3378f1a1eb0"#
-        secret = "a7494661ffc12bacfc6208f8d907e506764e1a8da72ac38bd92b5e4d5e934781"#
-        key = Settings().KEY
-        secret = Settings().SECRET
+
+        #key = Settings().KEY
+        #secret = Settings().SECRET
         um_client = UMFutures(key=key, secret=secret, base_url=Settings().BASE_URL)
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
         um_client.session.mount("https://", adapter)

@@ -18,7 +18,7 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
         buy_order_amount = round(buy_amount / float(file_input.buy_orders_num), 4)
         sell_order_amount = round(position_risk.positionAmt / float(file_input.sell_orders_num), 4)
         buy_orders = create_all_queue_price_match_orders(
-            symbol=self.file_input.symbol,
+            symbol=file_input.symbol,
             side=Side.BUY,
             position_side=position_side,
             quantity=min(buy_order_amount, 1000.0),

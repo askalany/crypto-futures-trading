@@ -6,6 +6,7 @@ from data.enums import (
     PositionSide,
     PriceMatch,
     PriceMatchNone,
+    PriceMatchOpponent,
     PriceMatchQueue,
     Side,
     TickerSymbol,
@@ -42,17 +43,20 @@ def create_order(
 def create_all_queue_price_match_orders(
     symbol: TickerSymbol, side: Side, position_side: PositionSide, quantity: float
 ) -> list[Any]:
-    return [
-        create_order(
-            symbol=symbol,
-            side=side,
-            quantity=quantity,
-            position_side=position_side,
-            price_match=member,
-        )
-        for name, member in PriceMatchQueue.__members__.items()
-        if quantity > 0.0
-    ]
+    orders = []
+    members = (
+        PriceMatchQueue.__members__.items()
+        if (position_side == PositionSide.LONG and side == Side.BUY)
+        or (position_side == PositionSide.SHORT and side == Side.SELL)
+        else PriceMatchOpponent.__members__.items()
+    )
+    for name, member in members:
+        if quantity > 0.0:
+            order = create_order(
+                symbol=symbol, side=side, quantity=quantity, position_side=position_side, price_match=member
+            )
+            orders.append(order)
+    return orders
 
 
 def create_multiple_orders(
@@ -125,9 +129,7 @@ def get_open_orders_quantities_and_prices(
             side=side,
             precision=precision,
         )
-        order_quantity = (
-            min(mm_buy_quantity, max_quantity) if market_making else max_quantity
-        )
+        order_quantity = min(mm_buy_quantity, max_quantity) if market_making else max_quantity
         order_quantity = min(order_quantity, order_quantity_max)
         order_quantity = max(order_quantity, order_quantity_min)
         quantities_and_prices.append((order_price, round(order_quantity, precision)))
@@ -151,12 +153,10 @@ def get_close_orders_quantities_and_prices(
     if orders_num == 0 or amount < order_quantity_min:
         return []
     order_amount = max(
-        max(mm_sell_quantity, (amount / orders_num))
-        if market_making
-        else (amount / orders_num),
-        order_quantity_min,
+        min(mm_sell_quantity, (amount / orders_num)) if market_making else (amount / orders_num), order_quantity_min
     )
-    orders_num = int(amount / order_amount)
+    if not market_making:
+        orders_num = int(amount / order_amount)
     prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
     return [(round(i, 1), round(order_amount, 3)) for i in prices]
 
@@ -181,21 +181,12 @@ def max_open_quantity(
         c = max(order_price, mark_price)
     leveraged_gap = c + max(leveraged_order_mark_diff, 0)
     remaining_notional = max_notional_value - notional
-    return round(
-        min(leveraged_balance / leveraged_gap, remaining_notional / order_price),
-        precision,
-    )
+    return round(min(leveraged_balance / leveraged_gap, remaining_notional / order_price), precision)
 
 
-def get_prices_list(
-    orders_num: int, high_price: float, low_price: float, amount_spacing: AmountSpacing
-) -> list[float]:
+def get_prices_list(orders_num: int, high_price: float, low_price: float, amount_spacing: AmountSpacing) -> list[float]:
     return (
-        get_linear_scale(
-            orders_num=orders_num, high_price=high_price, low_price=low_price
-        )
+        get_linear_scale(orders_num=orders_num, high_price=high_price, low_price=low_price)
         if amount_spacing is AmountSpacing.LINEAR
-        else get_geom_scale(
-            orders_num=orders_num, high_price=high_price, low_price=low_price
-        )
+        else get_geom_scale(orders_num=orders_num, high_price=high_price, low_price=low_price)
     )

@@ -48,28 +48,31 @@ def main() -> None:
     live = Live(renderable=layout, refresh_per_second=1, screen=True)
     live.start()
     repo = TradeRepo()
-    listen_key = repo.get_listen_key().listenKey
-    ws_client = repo.get_websocket_client(message_handler=on_message, on_ping=on_ping, is_combined=True)
-    ws_client.user_data(listen_key=listen_key, id=1)
-    ws_client.partial_book_depth(symbol=Settings().file_input.symbol.name, id=2, level=20, speed=100)
-    ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
-    max_leverage = Settings().file_input.leverage
+    file_input = Settings().file_input
+    symbol = file_input.symbol
+    max_leverage = file_input.leverage
     while True:
         try:
-            repo.cancel_all_orders(Settings().file_input.symbol)
-            current_leverage = repo.get_position_risk(symbol=Settings().file_input.symbol).leverage
+            listen_key = repo.get_listen_key().listenKey
+            ws_client = repo.get_websocket_client(message_handler=on_message, on_ping=on_ping, is_combined=True)
+            ws_client.user_data(listen_key=listen_key, id=1)
+            ws_client.partial_book_depth(symbol=symbol.name, id=2, level=20, speed=100)
+            ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
+            repo.cancel_all_orders(symbol)
+            current_leverage = repo.get_position_risk(symbol=symbol).leverage
             if max_leverage > current_leverage:
-                repo.change_initial_leverage(Settings().file_input.symbol, current_leverage + 1)
+                repo.change_initial_leverage(symbol, current_leverage + 1)
             elif max_leverage < current_leverage:
-                repo.change_initial_leverage(Settings().file_input.symbol, current_leverage - 1)
-            strategy = Settings().file_input.strategy
+                repo.change_initial_leverage(symbol, current_leverage - 1)
+            strategy = file_input.strategy
             if strategy is Strategy.FIXED_RANGE:
                 FixedRangeStrategy().run_loop()
             elif strategy is Strategy.PRICE_MATCH_QUEUE:
                 AllPriceMatchQueueStrategy().run_loop()
-            if Settings().file_input.once:
+            if file_input.once:
                 break
-            time.sleep(Settings().file_input.delay_seconds)
+            ws_client.stop()
+            time.sleep(file_input.delay_seconds)
         except Exception as e:
             logging.error(e)
             continue
