@@ -1,5 +1,5 @@
 from typing import Any
-
+from functools import cache
 from data.enums import (
     AmountSpacing,
     OrderType,
@@ -95,6 +95,24 @@ def create_multiple_orders(
     return result
 
 
+@cache
+def get_orders(min_order, multiplier, orders_num):
+    orders = [min_order]
+    [orders.append(round(multiplier * orders[i - 1], 3)) for i in range(1, orders_num)]
+    return orders
+
+
+def get_optimized_orders(total, orders_num, min_order):
+    multiplier = 1.0
+    while True:
+        multiplier = round(multiplier + (1 / 1000.0), 3)
+        orders = get_orders(min_order, multiplier, orders_num)
+        if sum(orders) > total:
+            multiplier = round(multiplier - (1 / 1000.0), 3)
+            orders = get_orders(min_order, multiplier, orders_num)
+            return orders
+
+
 def get_open_orders_quantities_and_prices(
     orders_num: int,
     high_price: float,
@@ -116,12 +134,14 @@ def get_open_orders_quantities_and_prices(
         return []
     prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
     order_dollar_amount = available_balance / orders_num
+    optimized_orders = get_optimized_orders(available_balance, orders_num, 200.0)
     quantities_and_prices = []
-    for i in prices:
+    prices.sort(reverse=True)
+    for i, o in zip(prices, optimized_orders):
         order_price = round(i, 1)
         max_quantity = max_open_quantity(
             leverage=leverage,
-            available_balance=order_dollar_amount,
+            available_balance=o,
             order_price=order_price,
             mark_price=mark_price,
             max_notional_value=max_notional_value,

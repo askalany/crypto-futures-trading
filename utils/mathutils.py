@@ -1,6 +1,7 @@
 from typing import List, Tuple
 
 import numpy as np
+from base.models.FixedRangeGrid import FixedRangeGrid
 
 from data.enums import PositionSide
 
@@ -58,7 +59,7 @@ def get_grid_maxs_and_mins(
     price_sell_min_mult: float,
     price_buy_max_mult: float,
     price_buy_min_mult: float,
-) -> Tuple[float, float, float, float]:
+) -> FixedRangeGrid:
     price_sell_max, price_sell_min, price_buy_max, price_buy_min = (
         center_price * price_sell_max_mult,
         center_price * price_sell_min_mult,
@@ -71,7 +72,12 @@ def get_grid_maxs_and_mins(
         price_buy_max=price_buy_max,
         price_buy_min=price_buy_min,
     )
-    return price_sell_max, price_sell_min, price_buy_max, price_buy_min
+    return FixedRangeGrid(
+        price_sell_max=price_sell_max,
+        price_sell_min=price_sell_min,
+        price_buy_max=price_buy_max,
+        price_buy_min=price_buy_min,
+    )
 
 
 def get_max_buy_amount(leverage: int, available_balance: float, mark_price: float) -> float:

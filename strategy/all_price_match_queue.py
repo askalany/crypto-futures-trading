@@ -8,6 +8,7 @@ class AllPriceMatchQueueStrategy(TradeStrategy):
     def run_loop(self):
         file_input = Settings().file_input
         symbol = Settings().file_input.symbol
+        self.repo.cancel_all_orders(symbol)
         position_side= file_input.position_side
         mark_price = self.repo.get_mark_price(symbol=symbol).markPrice
         position_risk = self.repo.get_position_risk(symbol=symbol)

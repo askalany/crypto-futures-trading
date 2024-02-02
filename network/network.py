@@ -48,18 +48,24 @@ class BinanceNetworkClient(metaclass=Singleton):
         side: str,
         quantity: float,
         position_side: str,
-        price: float,
         order_type: str,
-        time_in_force: str,
+        price: float = None,
+        time_in_force: str = None,
     ) -> Any | dict[Any, Any]:
-        response = self.client.new_order(
-            symbol=symbol,
-            side=side,
-            positionSide=position_side,
-            type=order_type,
-            quantity=str(quantity),
-            timeInForce=time_in_force,
-            price=price,
+        response = (
+            self.client.new_order(
+                symbol=symbol,
+                side=side,
+                positionSide=position_side,
+                type=order_type,
+                quantity=str(quantity),
+                timeInForce=time_in_force,
+                price=price,
+            )
+            if time_in_force is not None and price is not None
+            else self.client.new_order(
+                symbol=symbol, side=side, positionSide=position_side, type=order_type, quantity=str(quantity)
+            )
         )
         logging.info(response)
         return response
@@ -133,3 +139,7 @@ class BinanceNetworkClient(metaclass=Singleton):
         response = self.client.change_leverage(symbol=symbol, leverage=leverage)
         logging.info(response)
         return ChangeInitialLeverage(**response)
+
+    def cancel_order(self, symbol: str, orderId: int) -> Any | dict[Any, Any]:
+        response = self.client.cancel_order(symbol, orderId)
+        return response

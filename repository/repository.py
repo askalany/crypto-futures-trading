@@ -1,3 +1,4 @@
+import concurrent.futures
 from enum import Enum
 from typing import Any
 
@@ -24,7 +25,6 @@ from requests.adapters import HTTPAdapter
 
 class TradeRepo(metaclass=Singleton):
     def __init__(self):
-
         key = Settings().KEY
         secret = Settings().SECRET
         um_client = UMFutures(key=key, secret=secret, base_url=Settings().BASE_URL)
@@ -56,14 +56,24 @@ class TradeRepo(metaclass=Singleton):
         price_match: PriceMatch = PriceMatchNone.NONE,
     ) -> Any | dict[Any, Any]:
         return (
-            self.client.new_order_request(
-                symbol=symbol.name,
-                side=side.name,
-                quantity=quantity,
-                position_side=position_side.name,
-                price=price,
-                order_type=order_type.name,
-                time_in_force=time_in_force.name,
+            (
+                self.client.new_order_request(
+                    symbol=symbol.name,
+                    side=side.name,
+                    quantity=quantity,
+                    position_side=position_side.name,
+                    order_type=order_type.name,
+                )
+                if order_type == OrderType.MARKET
+                else self.client.new_order_request(
+                    symbol=symbol.name,
+                    side=side.name,
+                    quantity=quantity,
+                    position_side=position_side.name,
+                    order_type=order_type.name,
+                    price=price,
+                    time_in_force=TimeInForce.GTX if side == Side.BUY else TimeInForce.GTC,
+                )
             )
             if price_match is PriceMatchNone.NONE
             else self.client.new_price_match_order_request(
@@ -148,3 +158,17 @@ class TradeRepo(metaclass=Singleton):
         maintenance_margin = account_info.totalMaintMargin
         total_wallet_balance = account_info.totalWalletBalance
         return maintenance_margin / total_wallet_balance
+
+    def get_all_orders(self, symbol: TickerSymbol, side: Side = None):
+        orders = self.client.get_orders_request(symbol.name)
+        return orders if side is None else list(filter(lambda x: x["side"] == side.name, orders))
+
+    def delete_all_side_orders(self, symbol: TickerSymbol, side: Side):
+        all_sell_orders = self.get_all_orders(symbol, Side.SELL)
+        all_sell_orders_ids = [order["orderId"] for order in all_sell_orders]
+
+        def cancel_order(orderId: int) -> None:
+            response = self.client.cancel_order(symbol.name, orderId)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=61) as executor:
+            executor.map(cancel_order, all_sell_orders_ids, chunksize=5)

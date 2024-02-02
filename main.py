@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 import time
 
 import typer
@@ -29,7 +30,7 @@ from strategy.fixed_range import FixedRangeStrategy
 FORMAT = "%(message)s"
 
 # logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
-config_logging(logging, logging.ERROR)
+config_logging(logging=logging, logging_devel=logging.ERROR)
 
 
 def on_message(ws, message) -> None:
@@ -58,12 +59,12 @@ def main() -> None:
             ws_client.user_data(listen_key=listen_key, id=1)
             ws_client.partial_book_depth(symbol=symbol.name, id=2, level=20, speed=100)
             ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
-            repo.cancel_all_orders(symbol)
+            repo.cancel_all_orders(symbol=symbol)
             current_leverage = repo.get_position_risk(symbol=symbol).leverage
             if max_leverage > current_leverage:
-                repo.change_initial_leverage(symbol, current_leverage + 1)
+                repo.change_initial_leverage(symbol=symbol, leverage=current_leverage + 1)
             elif max_leverage < current_leverage:
-                repo.change_initial_leverage(symbol, current_leverage - 1)
+                repo.change_initial_leverage(symbol=symbol, leverage=current_leverage - 1)
             strategy = file_input.strategy
             if strategy is Strategy.FIXED_RANGE:
                 FixedRangeStrategy().run_loop()
@@ -72,7 +73,7 @@ def main() -> None:
             if file_input.once:
                 break
             ws_client.stop()
-            time.sleep(file_input.delay_seconds)
+            time.sleep(file_input.delay_seconds) #+ (random.random()* 40.0))
         except Exception as e:
             logging.error(e)
             continue
@@ -80,7 +81,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     config_logging(logging, logging.ERROR)
-    typer.run(main)
+    typer.run(function=main)
 
 
 if __name__ == "__main__":
