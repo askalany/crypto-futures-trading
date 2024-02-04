@@ -37,7 +37,7 @@ class FixedRangeStrategy(TradeStrategy):
         maxNotionalValue = position_risk.maxNotionalValue
         notional = position_risk.notional
         position_amount = position_risk.positionAmt
-        current_buy_orders_num = len(self.repo.get_all_orders(symbol=symbol, side=Side.BUY))
+        # current_buy_orders_num = len(self.repo.get_all_orders(symbol=symbol, side=Side.BUY))
         """ if position_amount == 0.0:
             if current_buy_orders_num != 0:
                 self.repo.cancel_all_orders(symbol=symbol)
@@ -51,6 +51,15 @@ class FixedRangeStrategy(TradeStrategy):
             return
         else:
             self.repo.delete_all_side_orders(symbol=symbol, side=Side.SELL) """
+        if position_amount == 0.0:
+            self.repo.new_order(
+                symbol=symbol,
+                side=Side.BUY,
+                quantity=0.004,
+                position_side=PositionSide.LONG,
+                order_type=OrderType.MARKET,
+            )
+            return
         entry_price = mark_price if use_mark_price else position_risk.entryPrice
         center_price = entry_price if entry_price > 0.0 or use_mark_price else mark_price
         # center_price = mark_price + 100.0
@@ -68,10 +77,10 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        # price_sell_max = 43000.0
-        # price_sell_min = 42900.0
-        # price_buy_max = 43050.0
-        # price_buy_min = 42700.0
+        #fixed_range_grid.price_sell_max = 43240.0
+        # fixed_range_grid.price_sell_min = 42900.0
+        # fixed_range_grid.price_buy_max = 43050.0
+        #fixed_range_grid.price_buy_min = 42880.0
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:
             if position_amount == 0.0:

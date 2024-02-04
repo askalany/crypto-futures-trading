@@ -37,7 +37,6 @@ def on_message(ws, message) -> None:
     data = json.loads(message)
     if "data" in message:
         generate_table(data=data["data"])
-        # live.update(renderable=, refresh=True)
 
 
 def on_ping(ws: BinanceSocketManager, arg2):
@@ -73,15 +72,11 @@ def main() -> None:
             if file_input.once:
                 break
             ws_client.stop()
-            time.sleep(file_input.delay_seconds) #+ (random.random()* 40.0))
+            random_secs = random.random() * 40.0
+            time.sleep(file_input.delay_seconds + random_secs)
         except Exception as e:
             logging.error(e)
             continue
-
-
-if __name__ == "__main__":
-    config_logging(logging, logging.ERROR)
-    typer.run(function=main)
 
 
 if __name__ == "__main__":

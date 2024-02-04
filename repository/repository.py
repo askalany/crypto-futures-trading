@@ -55,6 +55,8 @@ class TradeRepo(metaclass=Singleton):
         time_in_force: TimeInForce = TimeInForce.GTC,
         price_match: PriceMatch = PriceMatchNone.NONE,
     ) -> Any | dict[Any, Any]:
+        if time_in_force == TimeInForce.GTX and side == Side.BUY:
+            time_in_force = TimeInForce.GTC
         return (
             (
                 self.client.new_order_request(
@@ -72,7 +74,7 @@ class TradeRepo(metaclass=Singleton):
                     position_side=position_side.name,
                     order_type=order_type.name,
                     price=price,
-                    time_in_force=TimeInForce.GTX if side == Side.BUY else TimeInForce.GTC,
+                    time_in_force=time_in_force,
                 )
             )
             if price_match is PriceMatchNone.NONE
