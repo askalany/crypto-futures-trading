@@ -3,14 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from data.enums import (
-    STPMODE,
-    PositionSide,
-    PriceMatch,
-    ResponseType,
-    TimeInForce,
-    WorkingType,
-)
+from data.enums import STPMODE, PositionSide, PriceMatch, ResponseType, TimeInForce, WorkingType
 
 
 class NewOrderRequest(BaseModel):

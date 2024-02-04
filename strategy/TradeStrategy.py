@@ -5,10 +5,7 @@ from repository.repository import TradeRepo
 
 
 class TradeStrategy:
-    def __init__(
-        self,
-        repo: TradeRepo = TradeRepo(),
-    ) -> None:
+    def __init__(self, repo: TradeRepo = TradeRepo()) -> None:
         self.repo = repo
 
     def work(self, order) -> Any | dict[Any, Any]:

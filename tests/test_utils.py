@@ -3,15 +3,7 @@ from typing import Any
 import pytest
 from _pytest.python_api import RaisesContext
 
-from data.enums import (
-    TimeInForce,
-    OrderType,
-    PositionSide,
-    PriceMatchNone,
-    PriceMatchQueue,
-    Side,
-    TickerSymbol,
-)
+from data.enums import TimeInForce, OrderType, PositionSide, PriceMatchNone, PriceMatchQueue, Side, TickerSymbol
 from utils.mathutils import get_max_buy_amount, get_scaled_amounts, get_scaled_mults
 from utils.orderutils import create_order
 
@@ -25,29 +17,11 @@ def order_value():
     order_type = OrderType.LIMIT
     time_in_force = TimeInForce.GTC
     price_match = PriceMatchNone.NONE
-    return (
-        symbol,
-        side,
-        quantity,
-        price,
-        position_side,
-        order_type,
-        time_in_force,
-        price_match,
-    )
+    return (symbol, side, quantity, price, position_side, order_type, time_in_force, price_match)
 
 
 def test_create_order_price():
-    (
-        symbol,
-        side,
-        quantity,
-        price,
-        position_side,
-        order_type,
-        time_in_force,
-        price_match,
-    ) = order_value()
+    (symbol, side, quantity, price, position_side, order_type, time_in_force, price_match) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
@@ -62,16 +36,7 @@ def test_create_order_price():
 
 
 def test_create_order_price_value():
-    (
-        symbol,
-        side,
-        quantity,
-        price,
-        position_side,
-        order_type,
-        time_in_force,
-        price_match,
-    ) = order_value()
+    (symbol, side, quantity, price, position_side, order_type, time_in_force, price_match) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
@@ -86,16 +51,7 @@ def test_create_order_price_value():
 
 
 def test_create_order_price_match():
-    (
-        symbol,
-        side,
-        quantity,
-        price,
-        position_side,
-        order_type,
-        time_in_force,
-        price_match,
-    ) = order_value()
+    (symbol, side, quantity, price, position_side, order_type, time_in_force, price_match) = order_value()
     order = create_order(
         symbol=symbol,
         side=side,
@@ -214,7 +170,7 @@ def test_scaled_amounts():
     ]
     expected_sum = 1000
     result = get_scaled_amounts(total_amount=1000, volume_scale=1.01, num=100)
-    assert [round(x,10) for x in result] == [round(x,10) for x in expected_list]
+    assert [round(x, 10) for x in result] == [round(x, 10) for x in expected_list]
 
 
 def test_scaled_amounts_sum():
@@ -232,9 +188,7 @@ def test_scaled_amounts_sum():
     ],
     ids=["test_1", "test_2", "test_3"],
 )
-def test_get_scaled_mults_happy_path(
-    scaled: list[float], sum_scaled: float, expected_output: list[float]
-):
+def test_get_scaled_mults_happy_path(scaled: list[float], sum_scaled: float, expected_output: list[float]):
     # Act
     result = get_scaled_mults(scaled, sum_scaled)
 
@@ -243,11 +197,7 @@ def test_get_scaled_mults_happy_path(
 
 
 @pytest.mark.parametrize(
-    "scaled, sum_scaled, expected_output",
-    [
-        ([1.0, 2.0, 3.0], -1.0, pytest.raises(ValueError)),
-    ],
-    ids=["test_4"],
+    "scaled, sum_scaled, expected_output", [([1.0, 2.0, 3.0], -1.0, pytest.raises(ValueError))], ids=["test_4"]
 )
 def test_get_scaled_mults_edge_cases(
     scaled: list[float], sum_scaled: float, expected_output: RaisesContext[ValueError]
@@ -257,23 +207,14 @@ def test_get_scaled_mults_edge_cases(
         result = get_scaled_mults(scaled, sum_scaled)
 
 
-@pytest.mark.parametrize(
-    "scaled, sum_scaled, expected_output", [([], 1.0, [])], ids=["test_5"]
-)
-def test_get_scaled_mults_edge_cases_2(
-    scaled: Any, sum_scaled: float, expected_output: Any
-):
+@pytest.mark.parametrize("scaled, sum_scaled, expected_output", [([], 1.0, [])], ids=["test_5"])
+def test_get_scaled_mults_edge_cases_2(scaled: Any, sum_scaled: float, expected_output: Any):
     # Act & Assert
     assert expected_output == get_scaled_mults(scaled, sum_scaled)
 
 
 @pytest.mark.parametrize(
-    "scaled, sum_scaled",
-    [
-        ([1.0, 2.0, 3.0], 0.0),
-        ([1.0, 2.0, 3.0], -1.0),
-    ],
-    ids=["test_6", "test_7"],
+    "scaled, sum_scaled", [([1.0, 2.0, 3.0], 0.0), ([1.0, 2.0, 3.0], -1.0)], ids=["test_6", "test_7"]
 )
 def test_get_scaled_mults_error_cases(scaled: list[float], sum_scaled: float):
     # Act & Assert
@@ -283,16 +224,10 @@ def test_get_scaled_mults_error_cases(scaled: list[float], sum_scaled: float):
 
 @pytest.mark.parametrize(
     "leverage, available_balance, mark_price, expected_output",
-    [
-        (2, 100.0, 10.0, 20.0),
-        (1, 50.0, 5.0, 10.0),
-        (3, 200.0, 20.0, 30.0),
-    ],
+    [(2, 100.0, 10.0, 20.0), (1, 50.0, 5.0, 10.0), (3, 200.0, 20.0, 30.0)],
     ids=["test_1", "test_2", "test_3"],
 )
-def test_get_max_buy_amount_happy_path(
-    leverage, available_balance, mark_price, expected_output
-):
+def test_get_max_buy_amount_happy_path(leverage, available_balance, mark_price, expected_output):
     # Act
     result = get_max_buy_amount(leverage, available_balance, mark_price)
 
@@ -302,11 +237,7 @@ def test_get_max_buy_amount_happy_path(
 
 @pytest.mark.parametrize(
     "leverage, available_balance, mark_price",
-    [
-        (0, 100.0, 10.0),
-        (2, -50.0, 5.0),
-        (3, 200.0, 0.0),
-    ],
+    [(0, 100.0, 10.0), (2, -50.0, 5.0), (3, 200.0, 0.0)],
     ids=["test_4", "test_5", "test_6"],
 )
 def test_get_max_buy_amount_edge_cases(leverage, available_balance, mark_price):

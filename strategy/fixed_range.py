@@ -77,10 +77,10 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        #fixed_range_grid.price_sell_max = 43240.0
+        # fixed_range_grid.price_sell_max = 43240.0
         # fixed_range_grid.price_sell_min = 42900.0
         # fixed_range_grid.price_buy_max = 43050.0
-        #fixed_range_grid.price_buy_min = 42880.0
+        # fixed_range_grid.price_buy_min = 42880.0
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:
             if position_amount == 0.0:
