@@ -25,6 +25,10 @@ def create_order(
     time_in_force: TimeInForce = TimeInForce.GTC,
     price_match: PriceMatch = PriceMatchNone.NONE,
 ) -> dict[str, Any]:
+    if price < 0.0:
+        raise ValueError("Price cannot be negative")
+    if order_type in [OrderType.LIMIT, OrderType.MARKET, OrderType.STOP, OrderType.TAKE_PROFIT] and quantity < 0.0:
+        raise ValueError("Price cannot be negative")
     order = {
         "symbol": symbol,
         "side": side,
