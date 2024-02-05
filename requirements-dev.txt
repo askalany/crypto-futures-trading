@@ -1,25 +1,26 @@
-setuptools>=68.1.2
-build>=1.0.0
-twine>=4.0.0
+setuptools>=69.0.3
+build>=1.0.3
+twine>=4.0.2
 
 # Linting/Tooling
-black>=23.7.0
-isort>=5.12.0
-mypy>=1.5.1
-pre-commit>=3.4.0
-ruff>=0.0.287
-pyright>=1.1.325
+black>=24.1.1
+isort>=5.13.2
+mypy>=1.8.0
+pre-commit>=3.6.0
+ruff>=0.2.0
+pyright>=1.1.349
 
 # Testing
-pytest>=7.4.1
+pytest>=8.0.0
 codecov>=2.1.13
 pytest-cov>=4.1.0
 pytest-benchmark>=4.0.0
 
 # Documentation
-mkdocs>=1.5.2
-mkdocstrings>=0.23.0
-mkdocstrings[python]>=0.9.0
-mkdocs-material>=9.2.8
+mkdocs>=1.5.3
+mkdocstrings>=0.24.0
+mkdocstrings[python]>=0.24.0
+mkdocs-material>=9.5.7
 Pygments>=2.16.1
 freezegun>=1.4.0
+types-requests>=2.31.0.20240125

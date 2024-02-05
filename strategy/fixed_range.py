@@ -110,22 +110,33 @@ class FixedRangeStrategy(TradeStrategy):
                 position_side=position_side,
                 time_in_force=time_in_force,
             )
-        sell_orders_quantities_and_prices = get_close_orders_quantities_and_prices(
-            orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
-            high_price=fixed_range_grid.price_sell_max,
-            low_price=fixed_range_grid.price_sell_min,
-            amount=abs(position_amount),
-            order_quantity_min=order_quantity_min,
-            amount_spacing=AmountSpacing.GEOMETRIC,
-            market_making=market_making,
-            mm_sell_quantity=mm_sell_quantity,
-        )
-        side_close = Side.SELL if position_side == PositionSide.LONG else Side.BUY
-        sell_orders = create_multiple_orders(
-            symbol=symbol,
-            side=side_close,
-            quantities_and_prices=sell_orders_quantities_and_prices,
-            position_side=position_side,
-            time_in_force=time_in_force,
-        )
-        self.execute_orders(batched_orders=batched_lists(iterable=buy_orders + sell_orders, n=5))
+        if position_amount <= 0.004:
+            self.repo.new_order(
+                symbol=symbol,
+                side=Side.SELL,
+                quantity=position_amount,
+                position_side=PositionSide.LONG,
+                order_type=OrderType.MARKET,
+            )
+            all_orders = buy_orders
+        else:
+            sell_orders_quantities_and_prices = get_close_orders_quantities_and_prices(
+                orders_num=200 - len(buy_orders) if isinstance(buy_orders, list) else 0,
+                high_price=fixed_range_grid.price_sell_max,
+                low_price=fixed_range_grid.price_sell_min,
+                amount=abs(position_amount),
+                order_quantity_min=order_quantity_min,
+                amount_spacing=AmountSpacing.GEOMETRIC,
+                market_making=market_making,
+                mm_sell_quantity=mm_sell_quantity,
+            )
+            side_close = Side.SELL if position_side == PositionSide.LONG else Side.BUY
+            sell_orders = create_multiple_orders(
+                symbol=symbol,
+                side=side_close,
+                quantities_and_prices=sell_orders_quantities_and_prices,
+                position_side=position_side,
+                time_in_force=time_in_force,
+            )
+            all_orders = buy_orders + sell_orders
+        self.execute_orders(batched_orders=batched_lists(iterable=all_orders, n=5))

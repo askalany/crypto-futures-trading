@@ -54,7 +54,7 @@ skip_glob = [
 
 [tool.mypy]
 # Platform configuration
-python_version = "3.9"
+python_version = "3.10"
 # imports related
 ignore_missing_imports = true
 follow_imports = "silent"
@@ -124,7 +124,7 @@ max-args = 15
 allow-magic-value-types = ["str", "bytes", "complex", "float", "int", "tuple"]
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 typeCheckingMode = "basic"
 # enable subset of "strict"
 reportDuplicateImport = true

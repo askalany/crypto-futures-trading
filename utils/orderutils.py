@@ -107,14 +107,22 @@ def get_orders(min_order, multiplier, orders_num):
 
 
 def get_optimized_orders(total, orders_num, min_order):
-    multiplier = 1.0
-    while True:
-        multiplier = round(multiplier + (1 / 1000.0), 3)
-        orders = get_orders(min_order, multiplier, orders_num)
-        if sum(orders) > total:
-            multiplier = round(multiplier - (1 / 1000.0), 3)
-            orders = get_orders(min_order, multiplier, orders_num)
-            return orders
+    if orders_num <= 0:
+        raise ValueError("Length must be greater than 0")
+    if min_order >= total:
+        raise ValueError("Total must be greater than {min_element}")
+
+    if total == 0:
+        return [0] * orders_num
+
+    common_ratio = (total / min_order) ** (1 / (orders_num - 1))
+    series = [common_ratio**i for i in range(orders_num)]
+    scaled_series = [max(min_order, num / sum(series) * total) for num in series]
+
+    # Adjust the last element to make the sum exactly equal to or just less than the total
+    scaled_series[-1] += total - sum(scaled_series)
+
+    return scaled_series
 
 
 def get_open_orders_quantities_and_prices(
