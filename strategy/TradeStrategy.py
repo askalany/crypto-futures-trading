@@ -31,8 +31,10 @@ class TradeStrategy:
         return response
 
     def execute_orders(self, batched_orders) -> None:
-        with concurrent.futures.ProcessPoolExecutor(max_workers=61) as executor:
-            executor.map(self.work, batched_orders, chunksize=5)
+        for order in batched_orders:
+            self.work(order)
+        #with concurrent.futures.ThreadPoolExecutor(max_workers=61) as executor:
+            #executor.map(self.work, batched_orders, chunksize=5)
 
     def run_loop(self) -> None:
         pass

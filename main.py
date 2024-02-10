@@ -5,32 +5,21 @@ import time
 
 import typer
 from base.Settings import Settings
-from binance.lib.utils import config_logging
 from binance.websocket.binance_socket_manager import BinanceSocketManager
 from data.enums import Strategy
 from display.display import generate_table
 from display.display import layout
 from repository.repository import TradeRepo
 from rich.live import Live
+from rich.logging import RichHandler
 
 # from rich.logging import RichHandler
 from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
 from strategy.fixed_range import FixedRangeStrategy
-from base.Settings import Settings
-from binance.lib.utils import config_logging
-from binance.websocket.binance_socket_manager import BinanceSocketManager
-from data.enums import Strategy
-from display.display import generate_table
-from display.display import layout
-from repository.repository import TradeRepo
-from rich.live import Live
-from strategy.all_price_match_queue import AllPriceMatchQueueStrategy
-from strategy.fixed_range import FixedRangeStrategy
+
 
 FORMAT = "%(message)s"
-
-# logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
-config_logging(logging=logging, logging_devel=logging.ERROR)
+logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
 
 
 def on_message(ws, message) -> None:
@@ -60,6 +49,7 @@ def main() -> None:
             ws_client.mark_price(symbol="btcusdt", id=13, speed=1)
             repo.cancel_all_orders(symbol=symbol)
             current_leverage = repo.get_position_risk(symbol=symbol).leverage
+            logging.info(f"current_leverage={current_leverage}")
             if max_leverage > current_leverage:
                 repo.change_initial_leverage(symbol=symbol, leverage=current_leverage + 1)
             elif max_leverage < current_leverage:

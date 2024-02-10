@@ -74,7 +74,7 @@ class TradeRepo(metaclass=Singleton):
                     position_side=position_side.name,
                     order_type=order_type.name,
                     price=price,
-                    time_in_force=time_in_force,
+                    time_in_force=time_in_force.name,
                 )
             )
             if price_match is PriceMatchNone.NONE
@@ -98,8 +98,9 @@ class TradeRepo(metaclass=Singleton):
                 if isinstance(key_value, Enum):
                     new_dict[key] = key_value.value
                 else:
-                    new_dict[key] = str(key_value)
+                    new_dict[key] = key_value
             new_orders.append(new_dict)
+            print(new_orders)
         return self.client.new_batch_order_request(params=new_orders)
 
     def cancel_all_orders(self, symbol: TickerSymbol) -> CancelAllOpenOrders:

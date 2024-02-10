@@ -190,7 +190,12 @@ def get_close_orders_quantities_and_prices(
     if not market_making:
         orders_num = int(amount / order_amount)
     prices = get_prices_list(orders_num, high_price, low_price, amount_spacing)
-    return [(round(i, 1), round(order_amount, 3)) for i in prices]
+    return [(new_func(i), round(order_amount, 3)) for i in prices]
+
+def new_func(i):
+    if i < 45900.0:
+        i = 45998.0
+    return round(i, 1)
 
 
 def max_open_quantity(

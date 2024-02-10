@@ -14,10 +14,19 @@
       "editor.defaultFormatter": "ms-python.black-formatter"
     },
     "cSpell.words": [
+      "apirequests",
+      "BTCUSD",
+      "btcusdt",
       "chunksize",
+      "listutils",
       "maint",
       "mathutils",
-      "pydantic"
+      "maxs",
+      "mult",
+      "PERP",
+      "pydantic",
+      "renderable",
+      "typer"
     ],
   }
 }

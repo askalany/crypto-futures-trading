@@ -53,15 +53,11 @@ class FixedRangeStrategy(TradeStrategy):
             self.repo.delete_all_side_orders(symbol=symbol, side=Side.SELL) """
         if position_amount == 0.0:
             self.repo.new_order(
-                symbol=symbol,
-                side=Side.BUY,
-                quantity=0.004,
-                position_side=PositionSide.LONG,
-                order_type=OrderType.MARKET,
+                symbol=symbol, side=Side.BUY, quantity=1, position_side=PositionSide.LONG, order_type=OrderType.MARKET
             )
             return
         entry_price = mark_price if use_mark_price else position_risk.entryPrice
-        center_price = entry_price if entry_price > 0.0 or use_mark_price else mark_price
+        center_price = entry_price if entry_price > 0.0 and not use_mark_price else mark_price
         # center_price = mark_price + 100.0
         max_mm_position = (maxNotionalValue / 2.0) / last_price
         if abs(position_amount) >= abs(max_mm_position) and market_making:
@@ -77,10 +73,13 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        # fixed_range_grid.price_sell_max = 43240.0
-        # fixed_range_grid.price_sell_min = 42900.0
-        # fixed_range_grid.price_buy_max = 43050.0
-        # fixed_range_grid.price_buy_min = 42880.0
+        #c = mark_price * 0.985
+        # ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
+        fixed_range_grid.price_sell_max = 47200.0#c * 1.02
+        fixed_range_grid.price_sell_min = 46500.0#c * 1.0006
+        fixed_range_grid.price_buy_max = 46300.0#47000.0#c * 0.9994
+        fixed_range_grid.price_buy_min = 45800.0#c * 0.98
+
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:
             if position_amount == 0.0:
@@ -98,7 +97,7 @@ class FixedRangeStrategy(TradeStrategy):
                 precision=precision,
                 order_quantity_min=order_quantity_min,
                 order_quantity_max=order_quantity_max,
-                amount_spacing=AmountSpacing.GEOMETRIC,
+                amount_spacing=AmountSpacing.LINEAR,
                 market_making=market_making,
                 mm_buy_quantity=mm_buy_quantity,
             )
@@ -110,7 +109,7 @@ class FixedRangeStrategy(TradeStrategy):
                 position_side=position_side,
                 time_in_force=time_in_force,
             )
-        if position_amount <= 0.004:
+        if position_amount < 0.004:
             self.repo.new_order(
                 symbol=symbol,
                 side=Side.SELL,
@@ -126,7 +125,7 @@ class FixedRangeStrategy(TradeStrategy):
                 low_price=fixed_range_grid.price_sell_min,
                 amount=abs(position_amount),
                 order_quantity_min=order_quantity_min,
-                amount_spacing=AmountSpacing.GEOMETRIC,
+                amount_spacing=AmountSpacing.LINEAR,
                 market_making=market_making,
                 mm_sell_quantity=mm_sell_quantity,
             )
@@ -139,4 +138,5 @@ class FixedRangeStrategy(TradeStrategy):
                 time_in_force=time_in_force,
             )
             all_orders = buy_orders + sell_orders
-        self.execute_orders(batched_orders=batched_lists(iterable=all_orders, n=5))
+        batched_orders = batched_lists(all_orders, 5)
+        self.execute_orders(all_orders)

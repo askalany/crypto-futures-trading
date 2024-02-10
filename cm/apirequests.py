@@ -5,7 +5,7 @@ from binance.error import ClientError
 from requests.adapters import HTTPAdapter
 from rich.logging import RichHandler
 
-from models import AccountResponse, Balance, PositionInformation
+from cmmodels import AccountResponse, Balance, PositionInformation
 
 
 FORMAT = "%(message)s"
@@ -14,6 +14,8 @@ logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers
 # HMAC authentication with API key and secret
 key = ""
 secret = ""
+key=""
+secret=""
 base_url = "https://testnet.binancefuture.com"
 
 client = Client(key=key, secret=secret, base_url=base_url)
@@ -73,6 +75,21 @@ def new_order(symbol, side, position_side, quantity: float, price: float):
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
 
+def new_market_order(symbol, side, position_side, quantity: float):
+    try:
+        response = client.new_order(
+            symbol=symbol,
+            side=side,
+            type="MARKET",
+            positionSide=position_side,
+            quantity=quantity,
+            recvWindow=6000,
+        )
+        logging.info(response)
+    except ClientError as error:
+        logging.error(
+            f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
+        )
 
 def cancel_all_orders(symbol):
     try:
