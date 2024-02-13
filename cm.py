@@ -10,13 +10,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
-from apirequests import cancel_all_orders, get_client
-from apirequests import get_balance
-from apirequests import get_position_information
-from apirequests import new_market_order
-from apirequests import new_order
+from cm.apirequests import cancel_all_orders, get_client
+from cm.apirequests import get_balance
+from cm.apirequests import get_position_information
+from cm.apirequests import new_market_order
+from cm.apirequests import new_order
 from base.Settings import Settings
-from orderutils import get_optimized_orders
+from cm.orderutils import get_optimized_orders
 from rich import print
 
 

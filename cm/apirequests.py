@@ -5,7 +5,7 @@ from binance.error import ClientError
 from requests.adapters import HTTPAdapter
 from rich.logging import RichHandler
 
-from cmmodels import AccountResponse, Balance, PositionInformation
+from cm.cmmodels import AccountResponse, Balance, PositionInformation
 
 
 FORMAT = "%(message)s"
