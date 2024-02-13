@@ -62,7 +62,7 @@ def main() -> None:
             if file_input.once:
                 break
             ws_client.stop()
-            random_secs = random.random() * 40.0
+            random_secs = random.random() * 0.0
             time.sleep(file_input.delay_seconds + random_secs)
         except Exception as e:
             logging.error(e)

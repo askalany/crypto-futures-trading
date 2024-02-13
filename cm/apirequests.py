@@ -11,16 +11,16 @@ from cmmodels import AccountResponse, Balance, PositionInformation
 FORMAT = "%(message)s"
 logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
 
-# HMAC authentication with API key and secret
-key = ""
-secret = ""
-key=""
-secret=""
 base_url = "https://testnet.binancefuture.com"
 
-client = Client(key=key, secret=secret, base_url=base_url)
-adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
-client.session.mount("https://", adapter)
+def get_client(key, secret):
+    c = Client(key=key, secret=secret, base_url=base_url)
+    adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
+    c.session.mount("https://", adapter)
+    global client
+    client = c
+
+
 
 
 def get_account() -> AccountResponse:
@@ -66,9 +66,7 @@ def new_order(symbol, side, position_side, quantity: float, price: float):
             positionSide=position_side,
             quantity=quantity,
             timeInForce="GTC",
-            price=price,
-            recvWindow=6000,
-        )
+            price=price        )
         logging.info(response)
     except ClientError as error:
         logging.error(

@@ -84,7 +84,7 @@ class BinanceNetworkClient(metaclass=Singleton):
             )
             if time_in_force is not None and price is not None
             else self.client.new_order(
-                symbol=symbol, side=side, positionSide=position_side, type=order_type, quantity=str(quantity)
+                symbol=symbol, side=side, positionSide=position_side, type=order_type, quantity=str(quantity), recvWindow=6000
             )
         )
         logging.info(response)

@@ -3,17 +3,19 @@ from __future__ import annotations
 
 import datetime
 import math
+import random
 import sched
 import time
 from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
-from apirequests import cancel_all_orders
+from apirequests import cancel_all_orders, get_client
 from apirequests import get_balance
 from apirequests import get_position_information
 from apirequests import new_market_order
 from apirequests import new_order
+from base.Settings import Settings
 from orderutils import get_optimized_orders
 from rich import print
 
@@ -21,7 +23,8 @@ from rich import print
 s = sched.scheduler(time.monotonic, time.sleep)
 
 
-def trade_loop():
+def trade_loop(key, secret):
+    get_client(key, secret)
     symbol = "BTCUSD_PERP"
     buy_orders_num = 100
     sell_orders_num = 100
@@ -35,11 +38,12 @@ def trade_loop():
         return
     else:
         center_price = float(position_information.entryPrice)
+    fees = 0.07 / 100.0
     center_price = mark_price
-    sell_price_max = center_price * 1.2
-    sell_price_min = center_price * 1.005
-    buy_price_max = center_price * 0.995
-    buy_price_min = center_price * 0.8
+    sell_price_max = center_price * 1.1
+    sell_price_min = center_price * 1 + fees
+    buy_price_max = center_price * 1 - fees
+    buy_price_min = center_price * 0.9
     leverage = float(position_information.leverage)
     available_balance = float(get_balance("BTC").availableBalance)
     print(f"available_balance={available_balance}, current_position={current_position}")
@@ -68,14 +72,18 @@ def trade_loop():
         order_amt = round(current_position / float(sell_orders_num))
         orders.append((symbol, "SELL", "LONG", order_amt, round(sell_price, 1)))
         left_to_sell -= order_amt
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        executor.map(lambda m: new_order(*m), orders)
+    with ThreadPoolExecutor() as executor:
+        executor.map(lambda m: new_order(*m), orders, chunksize=5)
 
 
 def main():
     print(f"main - {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
-    trade_loop()
-    s.enter(900, 1, main)
+    key = Settings().KEY
+    secret = Settings().SECRET
+    keys_and_secrets = [(key, secret)]
+    for key, secret in keys_and_secrets:
+        trade_loop(key, secret)
+    s.enter(900 + (random.random() * 880.0), 1, main)
 
 
 if __name__ == "__main__":
