@@ -8,6 +8,7 @@ from utils.orderutils import (
     get_open_orders_quantities_and_prices,
     get_close_orders_quantities_and_prices,
 )
+import numpy as np
 
 
 class FixedRangeStrategy(TradeStrategy):
@@ -73,11 +74,20 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        # fixed_range_grid.price_sell_max = 48190.0
-        # fixed_range_grid.price_buy_min = 45900.0
-        # c = ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
-        # fixed_range_grid.price_sell_min = c * 1.0006
-        # fixed_range_grid.price_buy_max = c * 0.9994
+        order_book = self.repo.get_depth(symbol, limit=50)
+        bids = order_book.bids
+        bids_volumes = np.array(bids)
+        bids_centroid = bids_volumes.mean(0)[0]
+        asks = order_book.asks
+        asks_volumes = np.array(asks)
+        asks_centroid = asks_volumes.mean(0)[0]
+        fixed_range_grid.price_sell_max = round(float(asks_centroid), 1)
+        fixed_range_grid.price_buy_min = round(float(bids_centroid), 1)
+        c = ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
+        #if position_amount > 0.0:
+            #c = entry_price
+        fixed_range_grid.price_sell_min = c * 1.0006
+        fixed_range_grid.price_buy_max = c * 0.9994
 
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:

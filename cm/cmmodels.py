@@ -83,3 +83,13 @@ class Balance(BaseModel):
 
 class AccountBalanceResponse(BaseModel):
     balanceList: List[Balance]
+
+
+class OrderBookResponse(BaseModel):
+    lastUpdateId: int
+    symbol: str
+    pair: str
+    E: int
+    T: int
+    bids: List[List[float]]
+    asks: List[List[float]]

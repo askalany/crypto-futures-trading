@@ -5,13 +5,14 @@ from binance.error import ClientError
 from requests.adapters import HTTPAdapter
 from rich.logging import RichHandler
 
-from cm.cmmodels import AccountResponse, Balance, PositionInformation
+from cm.cmmodels import AccountResponse, Balance, OrderBookResponse, PositionInformation
 
 
 FORMAT = "%(message)s"
 logging.basicConfig(level=logging.ERROR, format=FORMAT, datefmt="[%X]", handlers=[RichHandler(markup=True)])
 
 base_url = "https://testnet.binancefuture.com"
+
 
 def get_client(key, secret):
     c = Client(key=key, secret=secret, base_url=base_url)
@@ -21,40 +22,49 @@ def get_client(key, secret):
     client = c
 
 
-
-
-def get_account() -> AccountResponse:
+def get_account() -> AccountResponse | None:
+    result = None
     try:
         response = client.account(recvWindow=6000)
-        return AccountResponse(**response)
+        result = AccountResponse(**response)
     except ClientError as error:
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
+    finally:
+        return result
 
 
-def get_position_information(symbol) -> PositionInformation:
+def get_position_information(symbol) -> PositionInformation | None:
+    result = None
     try:
         response = client.get_position_risk(symbol=symbol, recvWindow=6000)
         position_information_response = [
             PositionInformation(**position_information) for position_information in response
         ]
-        return list(filter(lambda x: x.symbol == symbol and x.positionSide == "LONG", position_information_response))[0]
+        result = list(filter(lambda x: x.symbol == symbol and x.positionSide == "LONG", position_information_response))[
+            0
+        ]
     except ClientError as error:
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
+    finally:
+        return result
 
 
-def get_balance(asset) -> Balance:
+def get_balance(asset) -> Balance | None:
+    result = None
     try:
         response = client.balance(recvWindow=6000)
         account_balance_response = [Balance(**balance) for balance in response]
-        return list(filter(lambda x: x.asset == asset, account_balance_response))[0]
+        result = list(filter(lambda x: x.asset == asset, account_balance_response))[0]
     except ClientError as error:
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
+    finally:
+        return result
 
 
 def new_order(symbol, side, position_side, quantity: float, price: float):
@@ -66,28 +76,26 @@ def new_order(symbol, side, position_side, quantity: float, price: float):
             positionSide=position_side,
             quantity=quantity,
             timeInForce="GTC",
-            price=price        )
+            price=price,
+        )
         logging.info(response)
     except ClientError as error:
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
 
+
 def new_market_order(symbol, side, position_side, quantity: float):
     try:
         response = client.new_order(
-            symbol=symbol,
-            side=side,
-            type="MARKET",
-            positionSide=position_side,
-            quantity=quantity,
-            recvWindow=6000,
+            symbol=symbol, side=side, type="MARKET", positionSide=position_side, quantity=quantity, recvWindow=6000
         )
         logging.info(response)
     except ClientError as error:
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
+
 
 def cancel_all_orders(symbol):
     try:
@@ -97,3 +105,17 @@ def cancel_all_orders(symbol):
         logging.error(
             f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
         )
+
+
+def get_depth(symbol: str, limit: int = 50) -> OrderBookResponse | None:
+    result = None
+    try:
+        response = client.depth(symbol=symbol, limit=limit)
+        logging.info(response)
+        result = OrderBookResponse(**response)
+    except ClientError as error:
+        logging.error(
+            f"Found error. status: {error.status_code}, error code: {error.error_code}, error message: {error.error_message}"
+        )
+    finally:
+        return result

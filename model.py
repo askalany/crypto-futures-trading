@@ -273,8 +273,8 @@ class OrderBook(BaseModel):
     lastUpdateId: int
     E: int
     T: int
-    bids: List[List[str]]
-    asks: List[List[str]]
+    bids: List[List[float]]
+    asks: List[List[float]]
 
 
 class SymbolPriceTickerListItem(BaseModel):

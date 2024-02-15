@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
-from cm.apirequests import cancel_all_orders, get_client
+from cm.apirequests import cancel_all_orders, get_client, get_depth
 from cm.apirequests import get_balance
 from cm.apirequests import get_position_information
 from cm.apirequests import new_market_order
@@ -20,18 +20,23 @@ from cm.orderutils import get_optimized_orders
 from rich import print
 
 
-s = sched.scheduler(time.monotonic, time.sleep)
+sc = sched.scheduler(time.monotonic, time.sleep)
 
 
-def trade_loop(key, secret):
+def trade_loop(key, secret, order_book):
     get_client(key, secret)
     symbol = "BTCUSD_PERP"
+    bids = order_book.bids
+    bids_volumes = np.array(bids)
+    bids_centroid = bids_volumes.mean(0)[0]
+    asks = order_book.asks
+    asks_volumes = np.array(asks)
+    asks_centroid = asks_volumes.mean(0)[0]
     buy_orders_num = 100
     sell_orders_num = 100
-    cancel_all_orders(symbol)
     position_information = get_position_information(symbol=symbol)
     mark_price = float(position_information.markPrice)
-    center_price = mark_price
+    center_price = mark_price#((asks_centroid - bids_centroid) / 2.0) + bids_centroid
     current_position = float(position_information.positionAmt)
     if current_position <= 0:
         new_market_order(symbol, "BUY", "LONG", 1)
@@ -40,10 +45,10 @@ def trade_loop(key, secret):
         center_price = float(position_information.entryPrice)
     fees = 0.07 / 100.0
     center_price = mark_price
-    sell_price_max = center_price * 1.1
+    sell_price_max = center_price * 1.2#asks_centroid
     sell_price_min = center_price * 1 + fees
     buy_price_max = center_price * 1 - fees
-    buy_price_min = center_price * 0.9
+    buy_price_min = center_price * 0.8#bids_centroid
     leverage = float(position_information.leverage)
     available_balance = float(get_balance("BTC").availableBalance)
     print(f"available_balance={available_balance}, current_position={current_position}")
@@ -77,15 +82,25 @@ def trade_loop(key, secret):
 
 
 def main():
+    once = True
     print(f"main - {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
     key = Settings().KEY
     secret = Settings().SECRET
-    keys_and_secrets = [(key, secret)]
-    for key, secret in keys_and_secrets:
-        trade_loop(key, secret)
-    s.enter(900 + (random.random() * 880.0), 1, main)
+    key_1 = ""
+    secret_1 = ""
+    keys_and_secrets = [(key_1, secret_1), (key, secret)]
+    for k, s in keys_and_secrets:
+        get_client(k, s)
+        cancel_all_orders("BTCUSD_PERP")
+    get_client(key, secret)
+    order_book = get_depth("BTCUSD_PERP", limit=50)
+    for k, s in keys_and_secrets:
+        trade_loop(k, s, order_book)
+    if not once:
+        random_secs = 0.0#880.0
+        sc.enter(20 + (random.random() * random_secs), 1, main)
 
 
 if __name__ == "__main__":
-    s.enter(0, 1, main)
-    s.run()
+    sc.enter(0, 1, main)
+    sc.run()

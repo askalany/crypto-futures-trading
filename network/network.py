@@ -3,7 +3,7 @@ from typing import Any
 
 from base.Singleton import Singleton
 from binance.um_futures import UMFutures
-from model import AccountInformation
+from model import AccountInformation, OrderBook
 from model import CancelAllOpenOrders
 from model import ChangeInitialLeverage
 from network.responses.responses import ListenKeyResponse
@@ -167,7 +167,7 @@ class BinanceNetworkClient(metaclass=Singleton):
     def get_depth_request(self, symbol: str, limit: int = 5):
         response = self.client.depth(symbol=symbol, **{"limit": limit})
         # logging.info(response)
-        return response
+        return OrderBook(**response)
 
     @client_error_handler
     def change_initial_leverage_request(self, symbol: str, leverage: int) -> ChangeInitialLeverage:
