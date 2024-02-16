@@ -36,7 +36,7 @@ def trade_loop(key, secret, order_book):
     sell_orders_num = 100
     position_information = get_position_information(symbol=symbol)
     mark_price = float(position_information.markPrice)
-    center_price = mark_price#((asks_centroid - bids_centroid) / 2.0) + bids_centroid
+    center_price = mark_price  # ((asks_centroid - bids_centroid) / 2.0) + bids_centroid
     current_position = float(position_information.positionAmt)
     if current_position <= 0:
         new_market_order(symbol, "BUY", "LONG", 1)
@@ -44,11 +44,12 @@ def trade_loop(key, secret, order_book):
     else:
         center_price = float(position_information.entryPrice)
     fees = 0.07 / 100.0
+    distance = 2 * fees
     center_price = mark_price
-    sell_price_max = center_price * 1.2#asks_centroid
+    sell_price_max = center_price * 1.2  # asks_centroid
     sell_price_min = center_price * 1 + fees
     buy_price_max = center_price * 1 - fees
-    buy_price_min = center_price * 0.8#bids_centroid
+    buy_price_min = center_price * 0.8  # bids_centroid
     leverage = float(position_information.leverage)
     available_balance = float(get_balance("BTC").availableBalance)
     print(f"available_balance={available_balance}, current_position={current_position}")
@@ -97,7 +98,7 @@ def main():
     for k, s in keys_and_secrets:
         trade_loop(k, s, order_book)
     if not once:
-        random_secs = 0.0#880.0
+        random_secs = 0.0  # 880.0
         sc.enter(20 + (random.random() * random_secs), 1, main)
 
 

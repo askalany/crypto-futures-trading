@@ -38,6 +38,9 @@ class FixedRangeStrategy(TradeStrategy):
         maxNotionalValue = position_risk.maxNotionalValue
         notional = position_risk.notional
         position_amount = position_risk.positionAmt
+        availableBalance = min(
+            availableBalance, position_risk.maxNotionalValue - (position_amount * position_risk.markPrice)
+        )
         # current_buy_orders_num = len(self.repo.get_all_orders(symbol=symbol, side=Side.BUY))
         """ if position_amount == 0.0:
             if current_buy_orders_num != 0:
@@ -81,11 +84,10 @@ class FixedRangeStrategy(TradeStrategy):
         asks = order_book.asks
         asks_volumes = np.array(asks)
         asks_centroid = asks_volumes.mean(0)[0]
-        fixed_range_grid.price_sell_max = round(float(asks_centroid), 1)
+        largest_ask_volume_price = sorted(asks, key=lambda x: x[1], reverse=True)[0][0]
+        fixed_range_grid.price_sell_max = round(float(largest_ask_volume_price),1)#round(float(asks_centroid), 1)
         fixed_range_grid.price_buy_min = round(float(bids_centroid), 1)
         c = ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
-        #if position_amount > 0.0:
-            #c = entry_price
         fixed_range_grid.price_sell_min = c * 1.0006
         fixed_range_grid.price_buy_max = c * 0.9994
 
