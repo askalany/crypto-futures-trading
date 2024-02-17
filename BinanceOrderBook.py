@@ -1,8 +1,10 @@
+from itertools import accumulate
 from typing import Any
 
 import numpy as np
 
 from data.enums import TickerSymbol
+from more_itertools import unzip
 from repository.repository import TradeRepo
 
 
@@ -34,3 +36,20 @@ class BinanceOrderBook:
     def centroids(self):
         bids_volumes, asks_volumes = self.volumes()
         return bids_volumes.mean(0)[0], asks_volumes.mean(0)[0]
+
+    def get_accumulated_side(self, side):
+        prices, volumes = unzip(side)
+        accumulated_volumes = list(accumulate(volumes, lambda x, y: round(x + y, 4)))
+        return list(zip(prices, accumulated_volumes))
+
+    def get_accumulated_asks(self):
+        return self.get_accumulated_side(self.asks)
+
+    def get_accumulated_bids(self):
+        return self.get_accumulated_side(self.bids)
+
+    def get_max_ask(self):
+        return max(self.get_accumulated_asks(), key=lambda x: x[1])
+
+    def get_max_bids(self):
+        return max(self.get_accumulated_bids(), key=lambda x: x[1])

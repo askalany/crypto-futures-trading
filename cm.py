@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import datetime
+from itertools import repeat
 import math
 import random
 import sched
@@ -56,6 +57,7 @@ def trade_loop(key, secret, order_book):
     leveraged_available_balance = math.floor(available_balance) * leverage
     min_order = 100.0 / buy_price_max
     optimized_orders = get_optimized_orders(leveraged_available_balance, buy_orders_num, min_order)
+    optimized_orders = repeat(leveraged_available_balance / 100.0,100)
     orders = []
     prices = np.linspace(start=buy_price_min, stop=buy_price_max, num=buy_orders_num, dtype=np.float64).tolist()
     for order, price in zip(optimized_orders, reversed(prices)):

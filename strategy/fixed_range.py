@@ -77,7 +77,7 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        order_book = self.repo.get_depth(symbol, limit=50)
+        order_book = self.repo.get_depth(symbol, limit=20)
         bids = order_book.bids
         bids_volumes = np.array(bids)
         bids_centroid = bids_volumes.mean(0)[0]
@@ -85,7 +85,10 @@ class FixedRangeStrategy(TradeStrategy):
         asks_volumes = np.array(asks)
         asks_centroid = asks_volumes.mean(0)[0]
         largest_ask_volume_price = sorted(asks, key=lambda x: x[1], reverse=True)[0][0]
-        fixed_range_grid.price_sell_max = round(float(largest_ask_volume_price),1)#round(float(asks_centroid), 1)
+        max_sell_price = (
+            min(largest_ask_volume_price, asks_centroid) if position_risk.entryPrice > mark_price else asks_centroid
+        )
+        fixed_range_grid.price_sell_max = round(float(max_sell_price), 1)  # round(float(asks_centroid), 1)
         fixed_range_grid.price_buy_min = round(float(bids_centroid), 1)
         c = ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
         fixed_range_grid.price_sell_min = c * 1.0006
