@@ -1,3 +1,4 @@
+from BinanceOrderBook import BinanceOrderBook
 from base.Settings import Settings
 from data.enums import AmountSpacing, OrderType, PositionSide, Side
 from strategy.TradeStrategy import TradeStrategy
@@ -77,22 +78,26 @@ class FixedRangeStrategy(TradeStrategy):
             price_buy_max_mult=price_buy_max_mult,
             price_buy_min_mult=price_buy_min_mult,
         )
-        order_book = self.repo.get_depth(symbol, limit=20)
-        bids = order_book.bids
-        bids_volumes = np.array(bids)
-        bids_centroid = bids_volumes.mean(0)[0]
-        asks = order_book.asks
-        asks_volumes = np.array(asks)
-        asks_centroid = asks_volumes.mean(0)[0]
-        largest_ask_volume_price = sorted(asks, key=lambda x: x[1], reverse=True)[0][0]
-        max_sell_price = (
-            min(largest_ask_volume_price, asks_centroid) if position_risk.entryPrice > mark_price else asks_centroid
-        )
-        fixed_range_grid.price_sell_max = round(float(max_sell_price), 1)  # round(float(asks_centroid), 1)
-        fixed_range_grid.price_buy_min = round(float(bids_centroid), 1)
-        c = ((fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0) + fixed_range_grid.price_buy_min
-        fixed_range_grid.price_sell_min = c * 1.0006
-        fixed_range_grid.price_buy_max = c * 0.9994
+        magic = True
+        if magic:
+            binance_order_book = BinanceOrderBook(repo=self.repo, symbol=symbol, limit=20)
+            (balanced_ask_price, balanced_bid_price) = binance_order_book.get_balanced_prices()
+            (asks_centroid, bids_centroid) = binance_order_book.centroids()
+            absolute_center = binance_order_book.get_absolute_center_price()
+            centroids_center = binance_order_book.get_centroids_center_price()
+            mean_center = round(float(np.mean([absolute_center, centroids_center])), 1)
+            mean_max = round(float(np.mean([balanced_ask_price, asks_centroid])), 1)
+            mean_min = round(float(np.mean([balanced_bid_price, bids_centroid])), 1)
+            fixed_range_grid.price_sell_max = mean_max
+            fixed_range_grid.price_buy_min = min(balanced_bid_price, bids_centroid)  # mean_min
+            c = (
+                (fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0
+            ) + fixed_range_grid.price_buy_min
+            c = ((mean_max - mean_min) / 2.0) + mean_min
+            fixed_range_grid.price_sell_max = c * 1.1
+            fixed_range_grid.price_sell_min = c * 1.0006
+            fixed_range_grid.price_buy_max = c * 0.9994
+            fixed_range_grid.price_buy_min = c * 0.9
 
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:

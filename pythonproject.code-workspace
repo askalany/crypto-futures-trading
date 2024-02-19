@@ -15,9 +15,11 @@
     },
     "cSpell.words": [
       "apirequests",
+      "argmax",
       "BTCUSD",
       "btcusdt",
       "chunksize",
+      "cumsum",
       "listutils",
       "maint",
       "mathutils",

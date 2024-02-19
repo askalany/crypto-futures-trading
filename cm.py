@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import datetime
-from itertools import repeat
+from itertools import dropwhile, repeat
 import math
 import random
 import sched
@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
-from cm.apirequests import cancel_all_orders, get_client, get_depth
+from cm.apirequests import cancel_all_orders, get_account, get_client, get_depth
 from cm.apirequests import get_balance
 from cm.apirequests import get_position_information
 from cm.apirequests import new_market_order
@@ -48,16 +48,17 @@ def trade_loop(key, secret, order_book):
     distance = 2 * fees
     center_price = mark_price
     sell_price_max = center_price * 1.2  # asks_centroid
-    sell_price_min = center_price * 1 + fees
-    buy_price_max = center_price * 1 - fees
+    sell_price_min = center_price * (1 + fees)
+    buy_price_max = center_price * (1 - fees)
     buy_price_min = center_price * 0.8  # bids_centroid
     leverage = float(position_information.leverage)
     available_balance = float(get_balance("BTC").availableBalance)
-    print(f"available_balance={available_balance}, current_position={current_position}")
+    wallet_balance = list(filter(lambda x: x.asset == "BTC", get_account().assets))[0].walletBalance
+    print(f"available_balance={available_balance}, current_position={current_position}, {wallet_balance=}")
     leveraged_available_balance = math.floor(available_balance) * leverage
     min_order = 100.0 / buy_price_max
     optimized_orders = get_optimized_orders(leveraged_available_balance, buy_orders_num, min_order)
-    optimized_orders = repeat(leveraged_available_balance / 100.0,100)
+    optimized_orders = repeat(leveraged_available_balance / 100.0, 100)
     orders = []
     prices = np.linspace(start=buy_price_min, stop=buy_price_max, num=buy_orders_num, dtype=np.float64).tolist()
     for order, price in zip(optimized_orders, reversed(prices)):
@@ -85,7 +86,7 @@ def trade_loop(key, secret, order_book):
 
 
 def main():
-    once = True
+    once = False
     print(f"main - {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
     key = Settings().KEY
     secret = Settings().SECRET
@@ -101,7 +102,7 @@ def main():
         trade_loop(k, s, order_book)
     if not once:
         random_secs = 0.0  # 880.0
-        sc.enter(20 + (random.random() * random_secs), 1, main)
+        sc.enter(delay=3600 + (random.random() * random_secs), priority=1, action=main)
 
 
 if __name__ == "__main__":

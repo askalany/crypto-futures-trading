@@ -24,10 +24,10 @@ from requests.adapters import HTTPAdapter
 
 
 class TradeRepo(metaclass=Singleton):
-    def __init__(self):
+    def __init__(self, testnet=True):
         key = Settings().KEY
         secret = Settings().SECRET
-        um_client = UMFutures(key=key, secret=secret, base_url=Settings().BASE_URL)
+        um_client = UMFutures(key=key, secret=secret, base_url=Settings().BASE_URL) if testnet else UMFutures()
         adapter = HTTPAdapter(pool_connections=200, pool_maxsize=200)
         um_client.session.mount("https://", adapter)
         self.client = BinanceNetworkClient(client=um_client)
