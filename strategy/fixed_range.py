@@ -80,7 +80,7 @@ class FixedRangeStrategy(TradeStrategy):
         )
         magic = True
         if magic:
-            binance_order_book = BinanceOrderBook(repo=self.repo, symbol=symbol, limit=20)
+            binance_order_book = BinanceOrderBook(repo=self.repo, symbol=symbol, limit=50)
             (balanced_ask_price, balanced_bid_price) = binance_order_book.get_balanced_prices()
             (asks_centroid, bids_centroid) = binance_order_book.centroids()
             absolute_center = binance_order_book.get_absolute_center_price()
@@ -89,15 +89,22 @@ class FixedRangeStrategy(TradeStrategy):
             mean_max = round(float(np.mean([balanced_ask_price, asks_centroid])), 1)
             mean_min = round(float(np.mean([balanced_bid_price, bids_centroid])), 1)
             fixed_range_grid.price_sell_max = mean_max
-            fixed_range_grid.price_buy_min = min(balanced_bid_price, bids_centroid)  # mean_min
+            fixed_range_grid.price_buy_min = mean_min
             c = (
                 (fixed_range_grid.price_sell_max - fixed_range_grid.price_buy_min) / 2.0
             ) + fixed_range_grid.price_buy_min
-            c = ((mean_max - mean_min) / 2.0) + mean_min
-            fixed_range_grid.price_sell_max = c * 1.1
+            c = mean_center
+            fixed_range_grid.price_sell_max = mean_max
             fixed_range_grid.price_sell_min = c * 1.0006
             fixed_range_grid.price_buy_max = c * 0.9994
-            fixed_range_grid.price_buy_min = c * 0.9
+            fixed_range_grid.price_buy_min = mean_min
+            # A = 51700.0
+            # B = 51200.0
+            #c = position_risk.entryPrice#((A-B)/2.0)+B#position_risk.entryPrice#52500.0#mark_price#mean_center
+            #fixed_range_grid.price_sell_max =c*1.2#mean_max
+            #fixed_range_grid.price_sell_min = c * 1.0006
+            #fixed_range_grid.price_buy_max = c* 0.9994
+            #fixed_range_grid.price_buy_min =c * 0.8
 
         buy_orders = []
         if abs(position_amount) < abs(max_mm_position) or not market_making:

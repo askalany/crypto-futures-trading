@@ -46,7 +46,7 @@ def trade_loop(key, secret, order_book):
         center_price = float(position_information.entryPrice)
     fees = 0.07 / 100.0
     distance = 2 * fees
-    center_price = mark_price
+    center_price = float(position_information.entryPrice)#mark_price
     sell_price_max = center_price * 1.2  # asks_centroid
     sell_price_min = center_price * (1 + fees)
     buy_price_max = center_price * (1 - fees)
@@ -102,7 +102,7 @@ def main():
         trade_loop(k, s, order_book)
     if not once:
         random_secs = 0.0  # 880.0
-        sc.enter(delay=3600 + (random.random() * random_secs), priority=1, action=main)
+        sc.enter(delay=900 + (random.random() * random_secs), priority=1, action=main)
 
 
 if __name__ == "__main__":
