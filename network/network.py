@@ -3,6 +3,7 @@ from typing import Any
 
 from base.Singleton import Singleton
 from binance.um_futures import UMFutures
+from data.enums import TimeInForce
 from model import AccountInformation, OrderBook
 from model import CancelAllOpenOrders
 from model import ChangeInitialLeverage
@@ -69,8 +70,8 @@ class BinanceNetworkClient(metaclass=Singleton):
         quantity: float,
         position_side: str,
         order_type: str,
-        price: float = None,
-        time_in_force: str = None,
+        price: float = 0.0,
+        time_in_force: str = TimeInForce.GTC.name,
     ) -> Any | dict[Any, Any]:
         response = (
             self.client.new_order(
@@ -84,7 +85,48 @@ class BinanceNetworkClient(metaclass=Singleton):
             )
             if time_in_force is not None and price is not None
             else self.client.new_order(
-                symbol=symbol, side=side, positionSide=position_side, type=order_type, quantity=str(quantity), recvWindow=6000
+                symbol=symbol,
+                side=side,
+                positionSide=position_side,
+                type=order_type,
+                quantity=str(quantity),
+                recvWindow=6000,
+            )
+        )
+        logging.info(response)
+        return response
+
+    @client_error_handler
+    def new_reduce_only_order_request(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        position_side: str,
+        order_type: str,
+        price: float = 0.0,
+        time_in_force: str = TimeInForce.GTC.name,
+    ) -> Any | dict[Any, Any]:
+        response = (
+            self.client.new_order(
+                symbol=symbol,
+                side=side,
+                positionSide=position_side,
+                type=order_type,
+                quantity=str(quantity),
+                reduceOnly="true",
+                timeInForce=time_in_force,
+                price=price,
+            )
+            if time_in_force is not None and price is not None
+            else self.client.new_order(
+                symbol=symbol,
+                side=side,
+                positionSide=position_side,
+                type=order_type,
+                quantity=str(quantity),
+                reduceOnly="true",
+                recvWindow=6000,
             )
         )
         logging.info(response)
@@ -178,5 +220,11 @@ class BinanceNetworkClient(metaclass=Singleton):
     @client_error_handler
     def cancel_order(self, symbol: str, orderId: int) -> Any | dict[Any, Any]:
         response = self.client.cancel_order(symbol, orderId)
+        # logging.info(response)
+        return response
+
+    @client_error_handler
+    def book_ticker(self, symbol: str) -> Any | dict[Any, Any]:
+        response = self.client.book_ticker(symbol)
         # logging.info(response)
         return response

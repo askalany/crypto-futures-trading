@@ -102,7 +102,7 @@ def main():
         trade_loop(k, s, order_book)
     if not once:
         random_secs = 0.0  # 880.0
-        sc.enter(delay=900 + (random.random() * random_secs), priority=1, action=main)
+        sc.enter(delay=3600 + (random.random() * random_secs), priority=1, action=main)
 
 
 if __name__ == "__main__":

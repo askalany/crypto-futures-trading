@@ -1,103 +1,132 @@
-from itertools import count
-import json
-from statistics import harmonic_mean, mean, median, median_high, median_low, mode
-from BinanceOrderBook import BinanceOrderBook
-from data.enums import TickerSymbol
-from model import DepthUpdate, OrderBook
-from repository.repository import TradeRepo
-from rich import print
-import numpy as np
+# Import necessary libraries and modules
+import concurrent.futures
 import time
-import logging
-from binance.lib.utils import config_logging
-from binance.websocket.um_futures.websocket_client import UMFuturesWebsocketClient
-from binance.um_futures import UMFutures
-import threading
-import queue
 
-from collections import deque
+import numpy as np
 
-config_logging(logging, logging.ERROR)
-
-depth = None
-
-q = queue.Queue()
+import requests
+from data.enums import PositionSide
+from data.enums import Side
+from data.enums import TickerSymbol
+from repository.repository import TradeRepo  # Replace with the actual API library
+from rich import print
 
 
-def worker():
-    while True:
-        item = q.get()
-        print(f'Working on {item}')
-        print(f'Finished {item}')
-        q.task_done()
+def check_internet_connection():
+    try:
+        requests.get("https://www.google.com", timeout=3)
+        return True
+    except requests.exceptions.RequestException:
+        return False
 
 
-def message_handler(_, message):
-    q.put(DepthUpdate(**json.loads(message)))
+class MarketMaker:
+    def __init__(self, api_key, api_secret, symbol: TickerSymbol, initial_balance):
+        self.exchange = TradeRepo()
+        self.symbol = symbol
+        self.balance = initial_balance
 
+    def place_limit_order(self, side: Side, quantity: float, position_side: PositionSide, price: float):
+        return self.exchange.new_order(
+            symbol=self.symbol, side=side, quantity=quantity, position_side=position_side, price=round(price, 1)
+        )
 
-um_futures_client = UMFutures()
+    def place_reduce_only_limit_order(self, side: Side, quantity: float, position_side: PositionSide, price: float):
+        return self.exchange.new_reduce_only_order(
+            symbol=self.symbol, side=side, quantity=quantity, position_side=position_side, price=round(price, 1)
+        )
 
+    def cancel_all_orders(self):
+        return self.exchange.cancel_all_orders(symbol=self.symbol)
 
-def main():
-    threading.Thread(target=worker, daemon=True).start()
-    my_client = UMFuturesWebsocketClient(on_message=message_handler)
-    # 1.Open a stream to wss://fstream.binance.com/stream?streams=btcusdt@depth.
-    my_client.diff_book_depth(symbol="btcusdt", speed=100, id=1)
-    # 2. Buffer the events you receive from the stream. For same price, latest received update covers the previous one.
-    # 3. Get a depth snapshot from https://fapi.binance.com/fapi/v1/depth?symbol=BTCUSDT&limit=1000.
-    global depth
-    depth = OrderBook(**um_futures_client.depth("BTCUSDT", **{"limit": 1000}))
-    # print(f"{depth=}")
-    # 4. Drop any event where u is < lastUpdateId in the snapshot.
-    # 5. The first processed event should have U <= lastUpdateId AND u >= lastUpdateId
-    # 6. While listening to the stream, each new event's pu should be equal to the previous event's u, otherwise initialize the process from step 3.
-    # 7. The data in each event is the absolute quantity for a price level.
-    # 8. If the quantity is 0, remove the price level.
-    # 9. Receiving an event that removes a price level that is not in your local order book can happen and is normal.
+    def get_orderbook(self):
+        return self.exchange.book_ticker(self.symbol)
 
-    q.join()
-    #time.sleep(10)
-    logging.debug("closing ws connection")
-    my_client.stop()
-    print('All work completed')
+    def mark_price(self):
+        return self.exchange.get_mark_price(symbol=self.symbol).markPrice
+
+    def position_amount(self):
+        return self.exchange.get_position_risk(self.symbol, position_side=PositionSide.BOTH).positionAmt
+
+    def get_account_balance(self):
+        return self.exchange.get_account_balance()
+
+    def execute_market_making_strategy(self):
+        forever = True
+        turn = 1
+        fee = 0.05 / 100.0
+        buy_orders_num = 100
+        sell_orders_num = 100
+        max_position = 10.0
+        distance_pct = 1.0
+        delay_secs = 20
+        order_quantity = round(0.1, 3)
+        start_balance = 0.0
+        while forever:
+            print(f"---round={turn}---")
+            if check_internet_connection():
+                try:
+                    self.cancel_all_orders()
+                    orderbook = self.get_orderbook()
+                    bid_price = float(orderbook["bidPrice"])
+                    ask_price = float(orderbook["askPrice"])
+                    mid_price = ((ask_price - bid_price) / 2) + bid_price
+                    buy_price = mid_price * (1 - fee)
+                    sell_price = mid_price * (1 + fee)
+                    position = self.position_amount()
+                    account_balance = list(filter(lambda x: x.asset == "USDT", self.get_account_balance()))[0]
+                    balance = account_balance.balance
+                    if turn == 1:
+                        start_balance = balance
+
+                    balance_change = balance - start_balance
+                    balance_change_pct = (balance_change / start_balance) * 100
+                    availableBalance = account_balance.availableBalance
+                    crossWalletBalance = account_balance.crossWalletBalance
+                    crossUnPnl = account_balance.crossUnPnl
+                    print(f"{mid_price=}, {order_quantity=}, {buy_price=}, {sell_price=}, {position=}")
+                    print(f"{balance=}, {availableBalance=}, {crossWalletBalance=}, {crossUnPnl=}")
+                    print(f"{balance_change=}, {balance_change_pct=}%")
+
+                    def buy(price: float):
+                        self.place_limit_order(
+                            side=Side.BUY, quantity=order_quantity, position_side=PositionSide.BOTH, price=price
+                        )
+
+                    def sell(price: float):
+                        self.place_limit_order(
+                            side=Side.SELL, quantity=order_quantity, position_side=PositionSide.BOTH, price=price
+                        )
+
+                    def submit_work(work, prices):
+                        with concurrent.futures.ThreadPoolExecutor() as executor:
+                            executor.map(work, prices)
+
+                    buy_price_min = mid_price * (1 - (distance_pct / 100.0))
+                    buy_price_max = buy_price
+                    sell_price_min = sell_price
+                    sell_price_max = mid_price * (1 + (distance_pct / 100.0))
+                    buy_prices = np.linspace(buy_price_min, buy_price_max, buy_orders_num)
+                    sell_prices = np.linspace(sell_price_min, sell_price_max, num=sell_orders_num)
+                    if position < max_position:
+                        submit_work(buy, buy_prices)
+                    if position > -max_position:
+                        submit_work(sell, sell_prices)
+                    turn = turn + 1
+                    if forever:
+                        time.sleep(delay_secs)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
+            else:
+                print("No internet connection, waiting for connection...")
+                time.sleep(1)  # Adjust sleep time as needed
 
 
 if __name__ == "__main__":
-    main()
+    api_key = 'your_api_key'
+    api_secret = 'your_api_secret'
+    symbol = TickerSymbol.BTCUSDT
+    initial_balance = 10000
 
-
-def trade():
-    print("try")
-    repo = TradeRepo(testnet=False)
-    binance_order_book = BinanceOrderBook(repo, symbol=TickerSymbol.BTCUSDT, limit=50)
-    (balanced_ask_price, balanced_bid_price) = binance_order_book.get_balanced_prices()
-    balanced_prices_center = (balanced_ask_price + balanced_bid_price) / 2.0
-    print(f"{balanced_ask_price=}, {balanced_prices_center=}, {balanced_bid_price=}")
-    (asks_centroid, bids_centroid) = binance_order_book.centroids()
-    centroids_center = binance_order_book.get_centroids_center_price()
-    print(f"{asks_centroid=}, {centroids_center=}, {bids_centroid=}")
-    absolute_center_price = binance_order_book.get_absolute_center_price()
-    print(f"{absolute_center_price=}")
-    (mean_max, mean_center, mean_min) = binance_order_book.get_all_means()
-    mark_price = binance_order_book.get_mark_price()
-    print(f"{mark_price=}")
-    print(f"{mean_max=}, {mean_center=}, {mean_min=}")
-    print(f"{mean([mean_max, mark_price])=}, {mean([mean_center, mark_price])=}, {mean([mean_min, mark_price])=}")
-    ask_prices = [x[0] for x in binance_order_book.asks]
-    bid_prices = [x[0] for x in binance_order_book.bids]
-    asks_harmonic_mean = harmonic_mean(ask_prices)
-    bids_harmonic_mean = harmonic_mean(bid_prices)
-    asks_median_high = median_high(ask_prices)
-    bids_median_low = median_low(bid_prices)
-    asks_mean = mean(ask_prices)
-    bids_mean = mean(bid_prices)
-    asks_median = median(ask_prices)
-    bids_median = median(bid_prices)
-    asks_mode = mode(ask_prices)
-    bids_mode = mode(bid_prices)
-    print(f"{asks_harmonic_mean=}, {bids_harmonic_mean=}")
-    print(f"{asks_median_high=}, {bids_median_low=}")
-    print(f"{asks_mean=}, {bids_mean=}")
-    print(f"{asks_median=}, {bids_median=}")
-    print(f"{asks_mode=}, {bids_mode=}")
+    market_maker = MarketMaker(api_key, api_secret, symbol, initial_balance)
+    market_maker.execute_market_making_strategy()

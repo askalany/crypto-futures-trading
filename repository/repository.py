@@ -13,7 +13,7 @@ from data.enums import PriceMatchNone
 from data.enums import Side
 from data.enums import TickerSymbol
 from data.enums import TimeInForce
-from model import AccountInformation
+from model import AccountBalance, AccountInformation
 from model import CancelAllOpenOrders
 from model import ChangeInitialLeverage
 from network.network import BinanceNetworkClient
@@ -89,6 +89,38 @@ class TradeRepo(metaclass=Singleton):
             )
         )
 
+    def new_reduce_only_order(
+        self,
+        symbol: TickerSymbol,
+        side: Side,
+        quantity: float,
+        position_side: PositionSide,
+        price: float = -1.0,
+        order_type: OrderType = OrderType.LIMIT,
+        time_in_force: TimeInForce = TimeInForce.GTC,
+    ) -> Any | dict[Any, Any]:
+        if time_in_force == TimeInForce.GTX and side == Side.BUY:
+            time_in_force = TimeInForce.GTC
+        return (
+            self.client.new_reduce_only_order_request(
+                symbol=symbol.name,
+                side=side.name,
+                quantity=quantity,
+                position_side=position_side.name,
+                order_type=order_type.name,
+            )
+            if order_type == OrderType.MARKET
+            else self.client.new_reduce_only_order_request(
+                symbol=symbol.name,
+                side=side.name,
+                quantity=quantity,
+                position_side=position_side.name,
+                order_type=order_type.name,
+                price=price,
+                time_in_force=time_in_force.name,
+            )
+        )
+
     def new_batch_order(self, orders: list) -> Any | dict[Any, Any]:
         new_orders = []
         for order in orders:
@@ -145,13 +177,11 @@ class TradeRepo(metaclass=Singleton):
     def get_depth(self, symbol: TickerSymbol, limit: int = 5):
         return self.client.get_depth_request(symbol=symbol.name, limit=limit)
 
-    def get_position_risk(self, symbol: TickerSymbol) -> PositionInformationResponse:
-        return list(
-            filter(
-                lambda x: x.symbol == symbol.name and x.positionSide == Settings().file_input.position_side,
-                self.client.get_position_risk_request(symbol=symbol.name),
-            )
-        )[0]
+    def get_position_risk(
+        self, symbol: TickerSymbol, position_side: PositionSide = Settings().file_input.position_side
+    ) -> PositionInformationResponse:
+        response = self.client.get_position_risk_request(symbol=symbol.name)
+        return list(filter(lambda x: x.symbol == symbol.name and x.positionSide == position_side, response))[0]
 
     def change_initial_leverage(self, symbol: TickerSymbol, leverage: int) -> ChangeInitialLeverage:
         return self.client.change_initial_leverage_request(symbol.name, leverage)
@@ -175,3 +205,10 @@ class TradeRepo(metaclass=Singleton):
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=61) as executor:
             executor.map(cancel_order, all_sell_orders_ids, chunksize=5)
+
+    def book_ticker(self, symbol: TickerSymbol) -> Any | dict[Any, Any]:
+        return self.client.book_ticker(symbol.name)
+
+    def get_account_balance(self) -> list[AccountBalance]:
+        response = self.client.get_balance_request()
+        return [AccountBalance(**i) for i in response]

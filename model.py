@@ -73,11 +73,11 @@ class AccountInformation(BaseModel):
 class AccountBalance(BaseModel):
     accountAlias: str
     asset: str
-    balance: str
-    crossWalletBalance: str
-    crossUnPnl: str
-    availableBalance: str
-    maxWithdrawAmount: str
+    balance: float
+    crossWalletBalance: float
+    crossUnPnl: float
+    availableBalance: float
+    maxWithdrawAmount: float
     marginAvailable: bool
     updateTime: int
 
@@ -293,6 +293,7 @@ class DepthUpdate(BaseModel):
     pu: int
     b: List[List[str]]
     a: List[List[str]]
+
 
 class MarkPriceUpdate(BaseModel):
     e: str
