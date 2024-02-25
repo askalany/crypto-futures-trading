@@ -20,6 +20,7 @@
       "btcusdt",
       "chunksize",
       "cumsum",
+      "fileutils",
       "listutils",
       "maint",
       "mathutils",

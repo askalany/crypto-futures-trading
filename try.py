@@ -1,8 +1,11 @@
 # Import necessary libraries and modules
 import concurrent.futures
+import datetime
+import locale
 import time
 
 import numpy as np
+import pandas as pd
 
 import requests
 from data.enums import PositionSide
@@ -10,6 +13,112 @@ from data.enums import Side
 from data.enums import TickerSymbol
 from repository.repository import TradeRepo  # Replace with the actual API library
 from rich import print
+from utils.fileutils import get_db_from_file
+from utils.fileutils import write_to_db_file
+import numpy as np
+from sklearn import linear_model
+import typer
+from rich.progress import track
+
+
+def calculate_apy(initial_balance, current_balance, start_time, current_time):
+    """
+    Calculates the APY (Annual Percentage Yield) given the initial balance, current balance, start time, and current time.
+
+    Args:
+        initial_balance: The initial balance of the investment.
+        current_balance: The current balance of the investment.
+        start_time: The start time of the investment as a datetime object.
+        current_time: The current time as a datetime object.
+
+    Returns:
+        The APY as a float.
+    """
+
+    # Ensure start_time and current_time are datetime objects
+    if not isinstance(start_time, datetime.datetime):
+        start_time = datetime.datetime.fromisoformat(start_time)
+    if not isinstance(current_time, datetime.datetime):
+        current_time = datetime.datetime.fromisoformat(current_time)
+
+    # Calculate the time difference in years
+    time_delta = current_time - start_time
+    total_years = time_delta.total_seconds() / (365.25 * 24 * 60 * 60)
+
+    # Calculate the return on investment (ROI)
+    roi = (current_balance - initial_balance) / initial_balance
+
+    # If there is no change in balance, APY is 0%
+    if roi == 0:
+        return 0
+
+    # Calculate and return the APY as a percentage
+    apy = (1 + roi) ** (1 / total_years) - 1
+    return round(apy * 100, 2)
+
+
+def calculate_dpy(initial_balance, current_balance, start_time, current_time):
+    """
+    Calculates the Daily Percentage Yield (DPY) given the initial balance, current balance, start time, and current time.
+
+    Args:
+        initial_balance: The initial balance of the investment.
+        current_balance: The current balance of the investment.
+        start_time: The start time of the investment as a datetime object.
+        current_time: The current time as a datetime object.
+
+    Returns:
+        The DPY as a float.
+    """
+
+    # Ensure start_time and current_time are datetime objects
+    if not isinstance(start_time, datetime.datetime):
+        start_time = datetime.datetime.fromisoformat(start_time)
+    if not isinstance(current_time, datetime.datetime):
+        current_time = datetime.datetime.fromisoformat(current_time)
+
+    # Calculate the time difference in days
+    time_delta = current_time - start_time
+    total_days = time_delta.total_seconds() / (24 * 60 * 60)
+
+    # Calculate the rest of the function as per the existing logic, replacing years with days
+    roi = (current_balance - initial_balance) / initial_balance
+    if roi == 0:
+        return 0
+    dpy = (1 + roi) ** (1 / total_days) - 1
+    return round(dpy * 100, 2)
+
+
+def calculate_mpy(initial_balance, current_balance, start_time, current_time):
+    """
+    Calculates the Monthly Percentage Yield (MPY) given the initial balance, current balance, start time, and current time.
+
+    Args:
+        initial_balance: The initial balance of the investment.
+        current_balance: The current balance of the investment.
+        start_time: The start time of the investment as a datetime object.
+        current_time: The current time as a datetime object.
+
+    Returns:
+        The MPY as a float.
+    """
+
+    # Ensure start_time and current_time are datetime objects
+    if not isinstance(start_time, datetime.datetime):
+        start_time = datetime.datetime.fromisoformat(start_time)
+    if not isinstance(current_time, datetime.datetime):
+        current_time = datetime.datetime.fromisoformat(current_time)
+
+    # Calculate the time difference in months
+    time_delta = current_time - start_time
+    total_months = (time_delta.total_seconds() / (365.25 * 24 * 60 * 60)) * 12
+
+    # Calculate the rest of the function as per the existing logic, replacing years with months
+    roi = (current_balance - initial_balance) / initial_balance
+    if roi == 0:
+        return 0
+    mpy = (1 + roi) ** (1 / total_months) - 1
+    return round(mpy * 100, 2)
 
 
 def check_internet_connection():
@@ -21,10 +130,9 @@ def check_internet_connection():
 
 
 class MarketMaker:
-    def __init__(self, api_key, api_secret, symbol: TickerSymbol, initial_balance):
+    def __init__(self, symbol: TickerSymbol):
         self.exchange = TradeRepo()
         self.symbol = symbol
-        self.balance = initial_balance
 
     def place_limit_order(self, side: Side, quantity: float, position_side: PositionSide, price: float):
         return self.exchange.new_order(
@@ -57,11 +165,14 @@ class MarketMaker:
         fee = 0.05 / 100.0
         buy_orders_num = 100
         sell_orders_num = 100
-        max_position = 10.0
-        distance_pct = 1.0
+        max_position = 10
+        distance_pct = 0.5
         delay_secs = 20
-        order_quantity = round(0.1, 3)
-        start_balance = 0.0
+        min_quantity = 0.003
+        order_quantity = max(min_quantity, round(max_position / (buy_orders_num + sell_orders_num), 3))
+        start_balance = get_db_from_file().balance
+        start_time = datetime.datetime.now()
+
         while forever:
             print(f"---round={turn}---")
             if check_internet_connection():
@@ -76,17 +187,50 @@ class MarketMaker:
                     position = self.position_amount()
                     account_balance = list(filter(lambda x: x.asset == "USDT", self.get_account_balance()))[0]
                     balance = account_balance.balance
-                    if turn == 1:
+                    if turn == 1 and start_balance == 0.0:
                         start_balance = balance
-
-                    balance_change = balance - start_balance
-                    balance_change_pct = (balance_change / start_balance) * 100
+                    write_to_db_file(balance)
+                    current_time = datetime.datetime.now()
+                    dpy = calculate_dpy(start_balance, balance, start_time, current_time)
+                    mpy = calculate_mpy(start_balance, balance, start_time, current_time)
+                    apy = calculate_apy(start_balance, balance, start_time, current_time)
+                    balance_change = round(balance - start_balance, 0)
+                    balance_change_pct = round((balance_change / start_balance) * 100, 2)
                     availableBalance = account_balance.availableBalance
                     crossWalletBalance = account_balance.crossWalletBalance
                     crossUnPnl = account_balance.crossUnPnl
-                    print(f"{mid_price=}, {order_quantity=}, {buy_price=}, {sell_price=}, {position=}")
-                    print(f"{balance=}, {availableBalance=}, {crossWalletBalance=}, {crossUnPnl=}")
-                    print(f"{balance_change=}, {balance_change_pct=}%")
+
+                    def vol(amount):
+                        return '[bold blue]{:,.4f} USDT[/bold blue]'.format(amount)
+
+                    def price(amount):
+                        return '[bold blue]{:,.1f} USDT[/bold blue]'.format(amount)
+
+                    def money(amount):
+                        if amount > 0:
+                            return '[bold green]{:,.2f} USDT[/bold green]'.format(amount)
+                        elif amount < 0:
+                            return '[bold red]-{:,.2f} USDT[/bold red]'.format(-amount)
+                        else:
+                            return '[bold blue]{:,.2f} USDT[/bold blue]'.format(amount)
+
+                    def pct(amount):
+                        if amount > 0:
+                            return '[bold green]{:}%[/bold green]'.format(amount)
+                        elif amount < 0:
+                            return '[bold red]-{:}%[/bold red]'.format(-amount)
+                        else:
+                            return '[bold blue]{:}%[/bold blue]'.format(amount)
+
+                    print(
+                        f"mid_price={price(mid_price)}, order_quantity={vol(order_quantity)}, buy_price={price(buy_price)}, sell_price={price(sell_price)}, position={vol(position)}"
+                    )
+                    print(
+                        f"balance={money(balance)}, availableBalance={money(availableBalance)}, crossWalletBalance={money(crossWalletBalance)}, crossUnPnl={money(crossUnPnl)}"
+                    )
+                    print(
+                        f"balance_change={money(balance_change)}, balance_change_pct={pct(balance_change_pct)}, dpy={pct(dpy)}, mpy={pct(mpy)}, apy={pct(apy)}"
+                    )
 
                     def buy(price: float):
                         self.place_limit_order(
@@ -106,8 +250,8 @@ class MarketMaker:
                     buy_price_max = buy_price
                     sell_price_min = sell_price
                     sell_price_max = mid_price * (1 + (distance_pct / 100.0))
-                    buy_prices = np.linspace(buy_price_min, buy_price_max, buy_orders_num)
-                    sell_prices = np.linspace(sell_price_min, sell_price_max, num=sell_orders_num)
+                    buy_prices = np.linspace(buy_price_max, buy_price_min, buy_orders_num)
+                    sell_prices = np.linspace(sell_price_min, sell_price_max, sell_orders_num)
                     if position < max_position:
                         submit_work(buy, buy_prices)
                     if position > -max_position:
@@ -122,11 +266,10 @@ class MarketMaker:
                 time.sleep(1)  # Adjust sleep time as needed
 
 
-if __name__ == "__main__":
-    api_key = 'your_api_key'
-    api_secret = 'your_api_secret'
+def main():
     symbol = TickerSymbol.BTCUSDT
-    initial_balance = 10000
+    MarketMaker(symbol).execute_market_making_strategy()
 
-    market_maker = MarketMaker(api_key, api_secret, symbol, initial_balance)
-    market_maker.execute_market_making_strategy()
+
+if __name__ == "__main__":
+    typer.run(main)

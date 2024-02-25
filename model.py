@@ -305,6 +305,9 @@ class MarkPriceUpdate(BaseModel):
     r: str
     T: int
 
+class DB(BaseModel):
+    balance: float
+
 
 class Model(BaseModel):
     AccountInformation: AccountInformation
