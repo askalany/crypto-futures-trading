@@ -1,13 +1,15 @@
 # Import necessary libraries and modules
 import concurrent.futures
 import datetime
-import locale
 import time
 
 import numpy as np
 import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 import requests
+import typer
 from data.enums import PositionSide
 from data.enums import Side
 from data.enums import TickerSymbol
@@ -15,10 +17,32 @@ from repository.repository import TradeRepo  # Replace with the actual API libra
 from rich import print
 from utils.fileutils import get_db_from_file
 from utils.fileutils import write_to_db_file
-import numpy as np
-from sklearn import linear_model
-import typer
-from rich.progress import track
+
+
+def vol(amount):
+    return '[bold blue]{:,.4f} USDT[/bold blue]'.format(amount)
+
+
+def price(amount):
+    return '[bold blue]{:,.1f} USDT[/bold blue]'.format(amount)
+
+
+def money(amount):
+    if amount > 0:
+        return '[bold green]{:,.2f} USDT[/bold green]'.format(amount)
+    elif amount < 0:
+        return '[bold red]-{:,.2f} USDT[/bold red]'.format(-amount)
+    else:
+        return '[bold blue]{:,.2f} USDT[/bold blue]'.format(amount)
+
+
+def pct(amount):
+    if amount > 0:
+        return '[bold green]{:}%[/bold green]'.format(amount)
+    elif amount < 0:
+        return '[bold red]-{:}%[/bold red]'.format(-amount)
+    else:
+        return '[bold blue]{:}%[/bold blue]'.format(amount)
 
 
 def calculate_apy(initial_balance, current_balance, start_time, current_time):
@@ -133,6 +157,11 @@ class MarketMaker:
     def __init__(self, symbol: TickerSymbol):
         self.exchange = TradeRepo()
         self.symbol = symbol
+        self.dpy_history = []
+        self.max_size = 10
+        self.max_quantity = 1
+        self.min_quantity = 0.003
+        self.order_size = 0.5  # initial order size
 
     def place_limit_order(self, side: Side, quantity: float, position_side: PositionSide, price: float):
         return self.exchange.new_order(
@@ -159,17 +188,43 @@ class MarketMaker:
     def get_account_balance(self):
         return self.exchange.get_account_balance()
 
+    def train_ml_model(self):
+        # Train a simple ML model based on historical APY data
+        X = np.arange(len(self.dpy_history)).reshape(-1, 1)
+        y = np.array(self.dpy_history)
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+
+        return model
+
+    def optimize_order_size(self):
+        # Get the trained ML model
+        model = self.train_ml_model()
+
+        # Predict APY for the next time step
+        next_dpy = model.predict([[len(self.dpy_history)]])[0]
+        print(f"next_dpy={pct(round(next_dpy * 100,2))}")
+
+        # Adjust order size based on predicted APY (replace with your own logic)
+        if next_dpy > self.dpy_history[-1]:
+            self.order_size += 0.001
+        else:
+            self.order_size -= 0.001
+
+        # Ensure order size is within acceptable limits
+        self.order_size = round(max(self.min_quantity, min(self.order_size, self.max_quantity)), 3)
+
     def execute_market_making_strategy(self):
         forever = True
         turn = 1
         fee = 0.05 / 100.0
         buy_orders_num = 100
         sell_orders_num = 100
-        max_position = 10
         distance_pct = 0.5
-        delay_secs = 20
-        min_quantity = 0.003
-        order_quantity = max(min_quantity, round(max_position / (buy_orders_num + sell_orders_num), 3))
+        delay_secs = 60
         start_balance = get_db_from_file().balance
         start_time = datetime.datetime.now()
 
@@ -200,30 +255,8 @@ class MarketMaker:
                     crossWalletBalance = account_balance.crossWalletBalance
                     crossUnPnl = account_balance.crossUnPnl
 
-                    def vol(amount):
-                        return '[bold blue]{:,.4f} USDT[/bold blue]'.format(amount)
-
-                    def price(amount):
-                        return '[bold blue]{:,.1f} USDT[/bold blue]'.format(amount)
-
-                    def money(amount):
-                        if amount > 0:
-                            return '[bold green]{:,.2f} USDT[/bold green]'.format(amount)
-                        elif amount < 0:
-                            return '[bold red]-{:,.2f} USDT[/bold red]'.format(-amount)
-                        else:
-                            return '[bold blue]{:,.2f} USDT[/bold blue]'.format(amount)
-
-                    def pct(amount):
-                        if amount > 0:
-                            return '[bold green]{:}%[/bold green]'.format(amount)
-                        elif amount < 0:
-                            return '[bold red]-{:}%[/bold red]'.format(-amount)
-                        else:
-                            return '[bold blue]{:}%[/bold blue]'.format(amount)
-
                     print(
-                        f"mid_price={price(mid_price)}, order_quantity={vol(order_quantity)}, buy_price={price(buy_price)}, sell_price={price(sell_price)}, position={vol(position)}"
+                        f"mid_price={price(mid_price)}, order_quantity={vol(self.order_size)}, buy_price={price(buy_price)}, sell_price={price(sell_price)}, position={vol(position)}"
                     )
                     print(
                         f"balance={money(balance)}, availableBalance={money(availableBalance)}, crossWalletBalance={money(crossWalletBalance)}, crossUnPnl={money(crossUnPnl)}"
@@ -234,12 +267,12 @@ class MarketMaker:
 
                     def buy(price: float):
                         self.place_limit_order(
-                            side=Side.BUY, quantity=order_quantity, position_side=PositionSide.BOTH, price=price
+                            side=Side.BUY, quantity=self.order_size, position_side=PositionSide.BOTH, price=price
                         )
 
                     def sell(price: float):
                         self.place_limit_order(
-                            side=Side.SELL, quantity=order_quantity, position_side=PositionSide.BOTH, price=price
+                            side=Side.SELL, quantity=self.order_size, position_side=PositionSide.BOTH, price=price
                         )
 
                     def submit_work(work, prices):
@@ -252,11 +285,14 @@ class MarketMaker:
                     sell_price_max = mid_price * (1 + (distance_pct / 100.0))
                     buy_prices = np.linspace(buy_price_max, buy_price_min, buy_orders_num)
                     sell_prices = np.linspace(sell_price_min, sell_price_max, sell_orders_num)
-                    if position < max_position:
+                    if position < self.max_size:
                         submit_work(buy, buy_prices)
-                    if position > -max_position:
+                    if position > -self.max_size:
                         submit_work(sell, sell_prices)
                     turn = turn + 1
+                    self.dpy_history.append(dpy / 100)
+                    self.optimize_order_size()
+                    print(f"Order size: {self.order_size}, DPY: {pct(round(self.dpy_history[-1]*100,2))}")
                     if forever:
                         time.sleep(delay_secs)
                 except Exception as e:
